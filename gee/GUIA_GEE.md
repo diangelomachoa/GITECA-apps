@@ -1,6 +1,10 @@
 <!-- © 2026 Gino Machoa. Todos los derechos reservados. Autor y desarrollador: Gino Machoa · diangelomachoa@gmail.com -->
 # Guía de los scripts GEE de GITECA
 
+## App principal: `GITECA_monitor_amazonia.js`
+App con 7 pestañas (① Área, ② Cobertura, ③ Biomasa, ④ Fenología, ⑤ Alertas, ⑥ Inundación, ⑦ Ficha), barra de estado, leyenda, panel de resultados, descargas de la ficha (CSV, GeoJSON, KML, SHP) y avisos legales. Péguela en un script nuevo y presione **Run**; para publicarla use *Apps → New App*.
+
+
 © 2026 Gino Machoa. Todos los derechos reservados. Autor y desarrollador: Gino Machoa (GITECA).
 
 ## Puesta en marcha
