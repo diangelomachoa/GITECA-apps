@@ -1,4 +1,8 @@
 # =============================================================================
+# © 2026 Gino Machoa. Todos los derechos reservados.
+# Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
+# Contacto: diangelomachoa@gmail.com
+# Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | App 01 — Explorador bibliométrico de tesis FCF-UNAP
 # Fuente de datos: Repositorio Institucional UNAP (repositorio.unapiquitos.edu.pe),
 # comunidad Facultad de Ciencias Forestales. Metadatos Dublin Core vía API DSpace.
@@ -14,17 +18,27 @@ stop_es <- c("de","la","el","en","y","los","las","del","con","por","para","a","u
              "se","su","sus","que","como","entre","sobre","mediante","según","loreto","perú",
              "iquitos","distrito","provincia","región","maynas","departamento","tres","dos")
 
+raiz_legal <- if (dir.exists("R")) "." else "../.."
+source(file.path(raiz_legal, "R/legal.R"))
+LEGAL <- list(nombre = "Explorador de tesis FCF-UNAP", version = "1.0",
+  finalidad = "Explorar y analizar la producción de tesis de la Facultad de Ciencias Forestales de la UNAP.",
+  avisoResultados = "La clasificación temática es automática por palabras clave y puede contener errores.",
+  privacidadExtra = "",
+  fuentes = data.frame(matrix(c(
+  "Metadatos de tesis — Repositorio Institucional UNAP", "Metadatos públicos; cada tesis conserva la licencia de su autor (mayormente CC BY-NC-ND)", "Base de tesis, títulos, resúmenes y enlaces"), ncol = 3, byrow = TRUE, dimnames = list(NULL, c("fuente", "licencia", "uso")))))
+
 ui <- page_navbar(
-  title = "GITECA · Explorador de tesis FCF-UNAP",
+  title = giteca_logo("Explorador de tesis FCF-UNAP"),
   theme = bs_theme(version = 5, primary = "#1F5E3B", secondary = "#1C5D99", base_font = font_google("Inter")),
   sidebar = sidebar(
+    giteca_autor(),
     textInput("q", "Buscar en título / resumen", placeholder = "ej. shihuahuaco, carbono"),
     selectizeInput("esc", "Escuela", choices = sort(unique(tesis$escuela)), multiple = TRUE),
     selectizeInput("tema", "Tema principal", choices = sort(unique(tesis$tema_principal)), multiple = TRUE),
     sliderInput("anio", "Año", min(tesis$anio, na.rm = TRUE), max(tesis$anio, na.rm = TRUE),
                 value = range(tesis$anio, na.rm = TRUE), sep = ""),
     selectizeInput("ases", "Asesor", choices = NULL, multiple = TRUE),
-    hr(), downloadButton("dl", "Descargar selección (CSV)")
+    hr(), downloadButton("dl", "Descargar selección (CSV)"), giteca_pie()
   ),
   nav_panel("Resumen",
     layout_columns(
@@ -44,6 +58,7 @@ ui <- page_navbar(
 )
 
 server <- function(input, output, session) {
+  giteca_legal_server(input, LEGAL)
   ases_all <- tesis |> separate_rows(asesor, sep = " \\| ") |> filter(!is.na(asesor)) |> count(asesor, sort = TRUE)
   updateSelectizeInput(session, "ases", choices = ases_all$asesor, server = TRUE)
 
