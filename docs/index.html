@@ -49,6 +49,9 @@ section{padding-block:clamp(48px,7vw,84px)}
 .tags span{font:500 .74rem var(--f-mono);padding:3px 8px;border-radius:4px;background:var(--accent-soft);color:var(--fg)}
 .apps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
 .app{display:grid;gap:10px;min-width:0}
+.cred{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:flex-start;align-self:start}.cred span{display:inline-block;line-height:1.4;font-size:.8rem;padding:3px 9px;border:1px solid var(--line);border-radius:99px;background:#fff}.tl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:28px}.tl div{border-left:3px solid #1F5E3B;padding:4px 0 4px 12px;display:grid;gap:2px}.tl b{color:#1F5E3B}.tl span{font-size:.9rem;color:#444}
+.mapas{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:26px}.mapa{margin:0;display:grid;gap:8px}.mapa img{width:100%;aspect-ratio:9/10;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:6px;display:block}.mapa figcaption{display:grid;gap:2px;font-size:.95rem}.mapa figcaption span{color:#555;font-size:.88rem}.visor{display:grid;grid-template-columns:1fr 1.4fr;gap:24px;align-items:center;background:#F4F1EA;border-radius:10px;padding:20px}.visor img{width:100%;border-radius:6px;border:1px solid var(--line);display:block}@media (max-width:860px){.visor{grid-template-columns:1fr}}
+
 .app img{width:100%;border:1px solid var(--line);border-radius:6px;display:block}
 .app p{margin:0;color:var(--muted);font-size:.97rem}
 .gee{margin-top:36px;overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
@@ -82,7 +85,7 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
 </style>
 
 <nav><div class="wrap"><a class="brand" href="#inicio">GITECA</a>
-<ul><li><a href="#servicios">Servicios</a></li><li><a href="#proyectos">Proyectos</a></li><li><a href="#perfil">Perfil</a></li><li><a href="#cursos">Cursos</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
+<ul><li><a href="#servicios">Servicios</a></li><li><a href="#proyectos">Proyectos</a></li><li><a href="#mapas">Mapas</a></li><li><a href="#perfil">Perfil</a></li><li><a href="#cursos">Cursos</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
 
 <header class="wrap hero" id="inicio">
   <div>
@@ -127,16 +130,34 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
     <tbody><tr><td><b>Visor de tesis y cobertura</b></td><td>Sitios de tesis + Hansen GFC</td><td>Bosque 2000 y pérdida anual alrededor de sitios de tesis FCF-UNAP</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---visor-de-tesis-fcf-unap-y-perdida-de-bosque" target="_blank" rel="noopener">Abrir app</a></td></tr><tr><td><b>Monitor de biomasa GEDI</b></td><td>GEDI L4B</td><td>Biomasa aérea, error estándar y carbono del área de trabajo</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---monitor-de-biomasa-gedi" target="_blank" rel="noopener">Abrir app</a></td></tr><tr><td><b>Fenología de aguajales</b></td><td>MODIS EVI, Sentinel-2</td><td>Series de tiempo y perfil mensual de aguajales y otros bosques</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---fenologia-de-aguajales" target="_blank" rel="noopener">Abrir app</a></td></tr><tr><td><b>Alertas de deforestación</b></td><td>Alertas RADD</td><td>Hectáreas alertadas por año y prioridad de atención</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---alertas-de-deforestacion-y-degradacion" target="_blank" rel="noopener">Abrir app</a></td></tr><tr><td><b>Hidroperíodo</b></td><td>JRC GSW, Sentinel-1</td><td>Meses de inundación bajo el dosel en várzea e igapó</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---hidroperiodo-de-bosques-inundables" target="_blank" rel="noopener">Abrir app</a></td></tr></tbody></table></div>
 </section>
 
+<section class="wrap" id="mapas">
+  <div class="head"><span class="eyebrow">Cartografía · R (sf, ggplot2, leaflet)</span><h2>Mapas con datos abiertos del sector forestal</h2><p>Láminas y visores elaborados en R con fuentes oficiales y abiertas: geoservicios de SERFOR, NASA FIRMS y GBIF. Clic en una lámina para verla en alta resolución.</p></div>
+  <div class="visor"><div><span class="eyebrow">Visor interactivo</span><h3>Visor del patrimonio forestal del Perú</h3><p>Concesiones, Bosques de Producción Permanente, deforestación con filtro por año, incendios, focos de calor, especies CITES y puestos de control en un solo mapa.</p><a class="btn pri" href="mapas/visor_forestal.html" target="_blank" rel="noopener">Abrir visor</a></div><a href="mapas/visor_forestal.html" target="_blank" rel="noopener"><img src="mapas/img/visor.jpg" alt="Captura del visor interactivo con concesiones y densidad de deforestación" loading="lazy"></a></div>
+  <div class="mapas"><figure class="mapa"><a href="mapas/img/01_concesiones.png" target="_blank" rel="noopener"><img src="mapas/img/01_concesiones.jpg" alt="Mapa de concesiones forestales por modalidad sobre Bosques de Producción Permanente en la Amazonía peruana" loading="lazy"></a><figcaption><b>Concesiones forestales por modalidad</b><span>1 781 concesiones y Bosques de Producción Permanente en la Amazonía (SERFOR).</span></figcaption></figure><figure class="mapa"><a href="mapas/img/02_deforestacion.png" target="_blank" rel="noopener"><img src="mapas/img/02_deforestacion.jpg" alt="Mapa de deforestación en hexágonos con gráficos de causas y hectáreas por año" loading="lazy"></a><figcaption><b>Deforestación por monitoreo satelital</b><span>36 158 polígonos 2017–2026: densidad en hexágonos, causa directa y hectáreas por año (UFMS-SERFOR).</span></figcaption></figure><figure class="mapa"><a href="mapas/img/03_incendios.png" target="_blank" rel="noopener"><img src="mapas/img/03_incendios.jpg" alt="Mapa coroplético de incendios forestales por departamento con Apurímac como el más afectado" loading="lazy"></a><figcaption><b>Incendios forestales por departamento</b><span>Registros de incendios forestales 2026 por departamento (SERFOR).</span></figcaption></figure><figure class="mapa"><a href="mapas/img/04_focos_calor.png" target="_blank" rel="noopener"><img src="mapas/img/04_focos_calor.jpg" alt="Mapa de focos de calor VIIRS de los últimos siete días en el Perú" loading="lazy"></a><figcaption><b>Focos de calor de los últimos 7 días</b><span>Detecciones VIIRS S-NPP con densidad relativa (NASA FIRMS).</span></figcaption></figure><figure class="mapa"><a href="mapas/img/05_especies_cites.png" target="_blank" rel="noopener"><img src="mapas/img/05_especies_cites.jpg" alt="Seis mapas pequeños con registros de especies maderables CITES en el Perú" loading="lazy"></a><figcaption><b>Especies maderables CITES</b><span>Ocurrencias de caoba, cedro, shihuahuaco, tahuarí y ishpingo en el Perú (GBIF).</span></figcaption></figure></div>
+  <p class="note" style="margin-top:20px">Código: carpeta <code>mapas/</code> del repositorio (01 preparación de datos, 02 láminas, 03 capas del visor). Los datos son de referencia y no reemplazan la información oficial de cada entidad.</p>
+</section>
+
 <section class="wrap" id="perfil">
   <div class="about">
     <div class="head"><span class="eyebrow">Perfil</span><h2>Gino Di Angelo Machoa Flores</h2>
-      <p>Ingeniero en Ecología de Bosques Tropicales y Magíster en Ciencias en Gestión Ambiental, especializado en Sistemas de Información Geográfica, teledetección y ciencia de datos aplicada al sector forestal.</p></div>
+      <p>Ingeniero en Ecología de Bosques Tropicales (UNAP, CIP N.° 285808) con estudios de Maestría en Ciencias en Gestión Ambiental. Más de seis años convirtiendo datos forestales en información para el control, la supervisión y la toma de decisiones en la Amazonía peruana: SIG, teledetección, bases de datos, tableros y automatización con R.</p>
+      <div class="cred"><span>SERFOR</span><span>OSINFOR</span><span>GORE Loreto · Madre de Dios</span><span>USAID / USFS FOREST+</span><span>PROFONANPE</span><span>SERNANP</span></div></div>
     <ul>
-      <li>Especialista SIG y de bases de datos en el Servicio Nacional Forestal y de Fauna Silvestre (SERFOR).</li>
-      <li>Control de calidad espacial y automatización de inspecciones oculares de especies forestales CITES.</li>
-      <li>Diseño de tableros de control para el seguimiento y la toma de decisiones en la gestión del patrimonio forestal.</li>
-      <li>Herramientas de trabajo diario: R, Power BI, QGIS, ArcGIS, Google Earth Engine, Excel y Google Sheets.</li>
+      <li>Especialista SIG y de bases de datos en SERFOR: control de calidad y cartografía de inspecciones oculares CITES, reportes y tableros del Módulo de Control del SNIFFS.</li>
+      <li>Asistencia técnica y capacitación a ARFFS, regentes y titulares en planes de manejo forestal (PGMF, PO, PMFI, DEMA) en Loreto, San Martín y Selva Central.</li>
+      <li>Unidad de Monitoreo Satelital Regional de Madre de Dios: base de datos de deforestación antrópica y reportes multitemporales para la FEMA y la Mesa Regional de Control y Vigilancia.</li>
+      <li>Estadística forestal: consolidación y control de calidad de registros administrativos (RAFFS) y plataformas estadísticas de Loreto, Ucayali y Madre de Dios.</li>
+      <li>Investigación en distribución de especies (shihuahuaco <i>Dipteryx</i>, tornillo <i>Cedrelinga</i>) con SERFOR, OSINFOR y CONCYTEC-FONDECYT; intercambio técnico USFS/USAID en Colorado, EE. UU.</li>
+      <li>Piloto de RPAS acreditado (drones DJI y Autel) y herramientas: R, Python, Power BI, Looker Studio, QGIS, ArcGIS, Google Earth Engine y SQL Server.</li>
     </ul>
+  </div>
+  <div class="tl">
+    <div><b>2026</b><span>SERFOR · SIG, control de calidad y tableros de inspecciones CITES y del Módulo de Control SNIFFS</span></div>
+    <div><b>2025</b><span>SERFOR · Análisis geoespacial y despliegue del Gestiona Forestal (MC-SNIFFS)</span></div>
+    <div><b>2024</b><span>PROFONANPE / GORE Madre de Dios · Monitoreo satelital de deforestación · GORE Loreto · estadística forestal</span></div>
+    <div><b>2023</b><span>USAID-USFS FOREST+ · Estadística forestal, Power BI y reportes reproducibles en R/Python</span></div>
+    <div><b>2022</b><span>OSINFOR · Monitoreo de planes de manejo (SISFOR) · GIDIT · GERFOR Loreto</span></div>
+    <div><b>2019–2021</b><span>SERNANP · DAR · FOREST+ · RAFFS de Loreto, Ucayali y Madre de Dios</span></div>
   </div>
 </section>
 
