@@ -29,7 +29,7 @@ LEGAL <- list(nombre = "Explorador de tesis FCF-UNAP", version = "1.0",
 
 ui <- page_navbar(
   title = giteca_logo("Explorador de tesis FCF-UNAP"),
-  theme = bs_theme(version = 5, primary = "#1F5E3B", secondary = "#1C5D99", base_font = font_google("Inter")),
+  theme = bs_theme(version = 5, primary = "#1F5E3B", secondary = "#1C5D99"),
   sidebar = sidebar(
     giteca_autor(),
     textInput("q", "Buscar en título / resumen", placeholder = "ej. shihuahuaco, carbono"),
