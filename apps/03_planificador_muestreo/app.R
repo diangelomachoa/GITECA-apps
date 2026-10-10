@@ -1,4 +1,8 @@
 # =============================================================================
+# © 2026 Gino Machoa. Todos los derechos reservados.
+# Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
+# Contacto: diangelomachoa@gmail.com
+# Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | App 03 — Planificador de muestreo para inventarios forestales
 # Calcula el tamaño de muestra (n parcelas) y el error de muestreo esperado a partir
 # del coeficiente de variación (CV) de un inventario piloto o de un CV de referencia.
@@ -10,10 +14,20 @@ raiz <- if (dir.exists("R")) "." else "../.."
 source(file.path(raiz, "R/forestal.R"))
 ejemplo <- readr::read_csv(file.path(raiz, "data/ejemplo_inventario.csv"), show_col_types = FALSE)
 
+raiz_legal <- if (dir.exists("R")) "." else "../.."
+source(file.path(raiz_legal, "R/legal.R"))
+LEGAL <- list(nombre = "Planificador de muestreo forestal", version = "1.0",
+  finalidad = "Estimar el tamaño de muestra y el error de muestreo de inventarios forestales.",
+  avisoResultados = "Verifique el error máximo e intensidad mínima que exija la normativa aplicable. Los datos de ejemplo son sintéticos.",
+  privacidadExtra = "",
+  fuentes = data.frame(matrix(c(
+  "Datos de ejemplo", "Sintéticos, generados por GITECA", "Prueba de la app"), ncol = 3, byrow = TRUE, dimnames = list(NULL, c("fuente", "licencia", "uso")))))
+
 ui <- page_sidebar(
-  title = "GITECA · Planificador de muestreo forestal",
+  title = giteca_logo("Planificador de muestreo forestal"),
   theme = bs_theme(version = 5, primary = "#1F5E3B", secondary = "#1C5D99"),
   sidebar = sidebar(width = 330,
+    giteca_autor(),
     radioButtons("fuente", "Origen del CV", c("Inventario piloto (CSV)" = "piloto", "Ingresar CV manualmente" = "manual")),
     conditionalPanel("input.fuente == 'piloto'",
       fileInput("f", "CSV piloto (parcela, especie, dap, altura)", accept = ".csv"),
@@ -25,7 +39,7 @@ ui <- page_sidebar(
     sliderInput("e", "Error de muestreo admisible (%)", 5, 30, 10),
     selectInput("conf", "Nivel de confianza", c("90 %" = .90, "95 %" = .95, "99 %" = .99), .95),
     numericInput("area", "Superficie a inventariar (ha)", 1000, 1),
-    numericInput("tam_def", "Tamaño de parcela definitiva (ha)", 0.1, 0.01, 10, 0.01)
+    numericInput("tam_def", "Tamaño de parcela definitiva (ha)", 0.1, 0.01, 10, 0.01), giteca_pie()
   ),
   layout_columns(fill = FALSE,
     value_box("CV usado", textOutput("cv")),
@@ -38,6 +52,7 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
+  giteca_legal_server(input, LEGAL)
   cv <- reactive({
     if (input$fuente == "manual") return(input$cv_man)
     d <- if (is.null(input$f)) ejemplo else readr::read_csv(input$f$datapath, show_col_types = FALSE)
