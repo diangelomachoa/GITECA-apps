@@ -1,4 +1,8 @@
 # =============================================================================
+# © 2026 Gino Machoa. Todos los derechos reservados.
+# Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
+# Contacto: diangelomachoa@gmail.com
+# Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | Descarga de metadatos de tesis — Repositorio Institucional UNAP
 # Fuente: https://repositorio.unapiquitos.edu.pe (DSpace 9, API REST pública)
 # Comunidad: Facultad de Ciencias Forestales (423976d4-55de-4c58-a436-56380b978891)
