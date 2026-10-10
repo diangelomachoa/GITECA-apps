@@ -1,7 +1,7 @@
 # GITECA · Apps para la investigación forestal en la Amazonía peruana
 
 **GITECA — Gestión de Información, Tecnología y Ciencias Ambientales**  
-Autor: Gino Di Angelo Machoa Flores · diangelomachoa@gmail.com
+© 2026 Gino Machoa. Todos los derechos reservados. Autor y desarrollador: Gino Machoa · Ing. en Ecología de Bosques Tropicales (UNAP, Iquitos) · diangelomachoa@gmail.com
 
 Herramientas abiertas en R/Shiny y Google Earth Engine construidas sobre la producción
 científica de la Facultad de Ciencias Forestales de la Universidad Nacional de la Amazonía
@@ -40,7 +40,7 @@ install.packages(c("shiny","bslib","dplyr","tidyr","stringr","ggplot2","DT",
 shiny::runApp("apps/01_explorador_tesis")
 ```
 
-Despliegue en shinyapps.io: copie `data/` y `R/` dentro de la carpeta de la app (cada app los busca primero en su propia carpeta) y use `rsconnect::deployApp()`.
+Despliegue en shinyapps.io: copie `data/`, `R/` y `recursos/` dentro de la carpeta de la app (cada app los busca primero en su propia carpeta) y use `rsconnect::deployApp()`.
 
 ## Datos y fuentes
 
@@ -52,10 +52,30 @@ Despliegue en shinyapps.io: copie `data/` y `R/` dentro de la carpeta de la app 
 - `data/tesis_localidades.csv` / `gazetteer_loreto.csv`: localidades detectadas en título/resumen, con **coordenadas aproximadas** (a nivel de localidad).
 - `data/ejemplo_inventario.csv`: **datos sintéticos**, solo para probar las apps 02 y 03.
 
+## Licencias de datos
+
+| Fuente | Licencia | Dónde se usa |
+|---|---|---|
+| Metadatos de tesis — Repositorio Institucional UNAP | Metadatos públicos; cada tesis conserva la licencia de su autor (mayormente CC BY-NC-ND) | Apps 01 y 04, GEE 01 |
+| Hansen et al. (2013) Global Forest Change v1.11 | CC BY 4.0 | GEE 01 |
+| GEDI L4B v2.1 (NASA / ORNL DAAC) | Datos abiertos NASA, cita requerida | GEE 02 |
+| MODIS MOD13Q1 v6.1 (NASA) | Datos abiertos NASA, cita requerida | GEE 03 |
+| Copernicus Sentinel-1 y Sentinel-2 | Contiene datos modificados de Copernicus Sentinel | GEE 03, 04, 05 |
+| Cloud Score+ (Google) | CC BY 4.0 | GEE 03 |
+| Alertas RADD (Wageningen University) | CC BY 4.0 | GEE 04 |
+| JRC Global Surface Water v1.4 | Uso libre con atribución (Source: EC JRC/Google) | GEE 05 |
+| FAO GAUL 2015 | Uso no comercial con atribución | GEE 02 |
+| Esri World Imagery; CARTO / OpenStreetMap | Términos de Esri; © OpenStreetMap contributors (ODbL), © CARTO | App 04 (mapas base) |
+| Chave et al. (2014) | Publicación científica, cita obligatoria | App 02 |
+
+## Avisos legales
+
+Cada app incluye la línea de autoría, el pie «© … Todos los derechos reservados» y un panel de **Avisos legales** (autoría y cita, términos y condiciones, privacidad según la Ley N.° 29733, cookies y licencias de datos). En Shiny lo genera `R/legal.R`; en Earth Engine, `gee/recursos/legal_fn.js` con el bloque `LEGAL` de cada script (plantilla en `gee/recursos/legal_cfg_plantilla.js`). Para el logo en GEE ver `gee/GUIA_GEE.md`.
+
 ## Cómo citar
 
-Machoa Flores, G. D. A. (2026). *GITECA: apps para la investigación forestal en la Amazonía peruana* [software]. GitHub.
+Machoa, G. (2026). *GITECA: apps para la investigación forestal en la Amazonía peruana* [software]. GITECA. https://github.com/diangelomachoa/GITECA-apps
 
 ## Licencia
 
-Código: MIT. Metadatos de tesis: según las licencias de origen del Repositorio UNAP.
+© 2026 Gino Machoa. Todos los derechos reservados. Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor (ver `LICENSE`). Los datos de terceros conservan sus licencias.
