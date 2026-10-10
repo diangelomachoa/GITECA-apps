@@ -309,10 +309,10 @@ function moduloHidro() {
   capa(jrc.select('occurrence').selfMask().clip(S.aoi), {min: 0, max: 100, palette: ['c6dbef', '08306b']}, 'JRC: ocurrencia de agua (%)', false);
   var s1 = ee.ImageCollection(CFG.ds.s1).filterBounds(S.aoi).filter(ee.Filter.eq('instrumentMode', 'IW'))
     .filter(ee.Filter.listContains('transmitterReceiverPolarisation', 'VV')).select('VV');
-  var base = s1.filterDate(a + '-08-01', a + '-10-31').median();
+  var base = s1.filterDate(a + '-08-01', a + '-10-31').median().focalMedian(50, 'circle', 'meters'); // filtro de moteado
   var mensual = ee.ImageCollection(ee.List.sequence(1, 12).map(function(m) {
     var ini = ee.Date.fromYMD(a, m, 1);
-    var img = s1.filterDate(ini, ini.advance(1, 'month')).median();
+    var img = s1.filterDate(ini, ini.advance(1, 'month')).median().focalMedian(50, 'circle', 'meters');
     return img.subtract(base).gt(CFG.umbralInundDb).rename('inundado').set('system:time_start', ini.advance(14, 'day').millis());
   }));
   var hp = mensual.sum().rename('meses').clip(S.aoi);
@@ -331,7 +331,7 @@ function moduloHidro() {
         S.res.hidro = {anio: a, inundadoHa: r.ha, aguaPermHa: r.agua};
         cont.add(kv('Área con ≥ 1 mes inundado bajo dosel', num(r.ha, 1) + ' ha', AZUL));
         cont.add(kv('Agua abierta frecuente (JRC > 50 %)', num(r.agua, 1) + ' ha'));
-        cont.add(nota('Umbral referencial de ' + CFG.umbralInundDb + ' dB sobre aguas bajas (ago–oct): calíbrelo con puntos de campo inundados y no inundados.'));
+        cont.add(nota('Umbral referencial de ' + CFG.umbralInundDb + ' dB sobre aguas bajas (ago–oct), con filtro de moteado de 50 m. En tierra firme pueden quedar píxeles aislados por ruido del radar: calibre el umbral con puntos de campo inundados y no inundados.'));
       } catch (e) { aviso(String(e)); return; }
       estado('Hidroperíodo calculado.');
     });
