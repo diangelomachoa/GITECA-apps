@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+  © 2026 Gino Machoa. Todos los derechos reservados.
+  Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
+  Contacto: diangelomachoa@gmail.com
+  Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
+  GITECA | Visor del patrimonio forestal del Perú — capas generadas con R (mapas/01 y 03).
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GITECA · Visor del patrimonio forestal</title>
+<meta name="description" content="Visor interactivo de concesiones forestales, deforestación, incendios, focos de calor y especies maderables CITES en el Perú. GITECA.">
+<link rel="icon" href="logo_giteca.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
+<style>
+:root{--verde:#1F5E3B;--fondo:#F4F1EA;--txt:#1d2a22}
+*{box-sizing:border-box}html,body{margin:0;height:100%;font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--txt);background:#fff}
+#app{display:flex;flex-direction:column;height:100%}
+header{display:flex;align-items:center;gap:10px;background:var(--verde);color:#fff;padding:8px 14px}
+header img{height:40px;width:40px;border-radius:6px;background:#fff}
+header h1{font-size:16px;margin:0}header small{opacity:.85}
+header a{margin-left:auto;color:#fff;font-size:13px}
+main{flex:1;display:flex;min-height:0}
+#panel{width:300px;overflow:auto;padding:12px;background:var(--fondo);border-right:1px solid #ddd}
+#map{flex:1}
+.capa{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer}
+.capa .sw{width:14px;height:14px;border-radius:3px;flex:none}
+.capa .n{margin-left:auto;font:12px ui-monospace,monospace;color:#555}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--verde);margin:14px 0 6px}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.kpi div{background:#fff;border-radius:6px;padding:6px 8px}.kpi b{display:block;font-size:17px;color:var(--verde)}
+select{width:100%;padding:5px;margin:4px 0}
+.leg{font-size:12px}.leg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+footer{font-size:11px;color:#444;padding:6px 14px;border-top:1px solid #ddd;background:#fff}
+#cargando{position:absolute;z-index:999;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 2px 10px #0003}
+@media(max-width:760px){main{flex-direction:column}#panel{width:100%;max-height:38vh;border-right:0;border-bottom:1px solid #ddd}header a{display:none}}
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+  <img src="logo_giteca.png" alt="Logo de GITECA">
+  <div><h1>Visor del patrimonio forestal del Perú</h1><small>Autor y desarrollador: Gino Machoa · GITECA</small></div>
+  <a href="../index.html#mapas">← Volver al portafolio</a>
+</header>
+<main>
+<aside id="panel">
+  <h2>Resumen</h2>
+  <div class="kpi" id="kpi"></div>
+  <h2>Capas</h2>
+  <div id="capas"></div>
+  <h2>Deforestación por año</h2>
+  <select id="anio" aria-label="Filtrar deforestación por año"><option value="">Todos los años</option></select>
+  <h2>Especies CITES (GBIF)</h2>
+  <div class="leg" id="legCites"></div>
+  <p style="font-size:12px;color:#555">Clic en cualquier elemento para ver su ficha. Datos de referencia: no constituyen documento oficial.</p>
+</aside>
+<div id="map" role="region" aria-label="Mapa interactivo"></div>
+</main>
+<footer>Fuentes: Geoservicios SERFOR (concesiones, BPP, deforestación UFMS, incendios, puestos de control, límites INEI) · NASA FIRMS VIIRS S-NPP (focos de calor, 7 días) · GBIF.org (especies CITES). Actualizado: <span id="act">—</span>. © 2026 Gino Machoa. Todos los derechos reservados.</footer>
+</div>
+<div id="cargando">Cargando capas…</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+const D='datos/';
+const map=L.map('map',{preferCanvas:true}).setView([-8.5,-75],6);
+const claro=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri, HERE, Garmin, © OpenStreetMap contributors',maxZoom:16}).addTo(map);
+const sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri, Maxar, Earthstar Geographics',maxZoom:19});
+L.control.layers({'Mapa claro':claro,'Imagen satelital':sat},null,{position:'topright'}).addTo(map);
+L.control.scale({imperial:false}).addTo(map);
+const fmt=(x,d=0)=>Number(x).toLocaleString('es-PE',{maximumFractionDigits:d});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const csv=f=>fetch(D+f).then(r=>r.text()).then(t=>Papa.parse(t,{header:true,dynamicTyping:true,skipEmptyLines:true}).data);
+const gj=f=>fetch(D+f).then(r=>r.json());
+const pc={'Conservación':'#1C5D99','Ecoturismo':'#E67E22','Fines maderables':'#7A5C1E','Forestación y/o reforestación':'#8E44AD','Manejo de fauna silvestre':'#E84393','Plantaciones forestales':'#C0392B','Productos diferentes a la madera':'#2E8B57'};
+const pe={'Cedrela odorata':'#1B5E20','Cedrela fissilis':'#00897B','Dipteryx micrantha':'#6D4C41','Handroanthus serratifolius':'#F9A825','Swietenia macrophylla':'#AD1457','Amburana cearensis':'#283593'};
+const capas={};
+function addCapa(id,nombre,color,layer,n,on){capas[id]=layer;if(on)layer.addTo(map);
+  const el=document.createElement('label');el.className='capa';
+  el.innerHTML=`<input type="checkbox" ${on?'checked':''}><span class="sw" style="background:${color}"></span>${nombre}<span class="n">${fmt(n)}</span>`;
+  el.querySelector('input').onchange=e=>e.target.checked?map.addLayer(capas[id]):map.removeLayer(capas[id]);
+  document.getElementById('capas').appendChild(el);}
+let defData=[];
+function capaDef(anio){const d=anio?defData.filter(r=>r.anio==anio):defData;
+  return L.heatLayer(d.map(r=>[r.lat,r.lon,Math.min(r.ha/5,1)]),{radius:10,blur:14,minOpacity:.35,gradient:{.3:'#FFE082',.6:'#FB8C00',1:'#B71C1C'}});}
+Promise.all([gj('departamentos.geojson'),gj('bpp.geojson'),gj('concesiones.geojson'),csv('deforestacion.csv'),csv('incendios.csv'),csv('focos_calor.csv'),csv('especies_cites.csv'),csv('puestos_control.csv'),fetch(D+'actualizado.txt').then(r=>r.text())])
+.then(([dep,bpp,conc,def,inc,fc,cites,pcs,act])=>{
+  document.getElementById('act').textContent=act.trim();
+  L.geoJSON(dep,{style:{color:'#555',weight:1,fill:false},onEachFeature:(f,l)=>l.bindTooltip(f.properties.NOMBDEP,{sticky:true})}).addTo(map);
+  addCapa('bpp','Bosques de Producción Permanente','#8BC34A',L.geoJSON(bpp,{style:{stroke:false,fillColor:'#8BC34A',fillOpacity:.35},onEachFeature:(f,l)=>l.bindPopup(`<b>BPP</b><br>${esc(f.properties.dep)}<br>${fmt(f.properties.ha)} ha`)}),bpp.features.length,true);
+  addCapa('conc','Concesiones forestales','#7A5C1E',L.geoJSON(conc,{style:f=>({color:pc[f.properties.tipo]||'#666',weight:1.2,fillOpacity:.12}),onEachFeature:(f,l)=>l.bindPopup(`<b>Concesión forestal</b><br>Modalidad: ${esc(f.properties.tipo)}<br>Superficie SIG: ${fmt(f.properties.ha,1)} ha`)}),conc.features.length,true);
+  defData=def;const años=[...new Set(def.map(r=>r.anio))].filter(Boolean).sort();
+  const sel=document.getElementById('anio');años.forEach(a=>sel.add(new Option(a,a)));
+  addCapa('def','Deforestación (densidad)','#B71C1C',capaDef(''),def.length,true);
+  sel.onchange=()=>{const on=map.hasLayer(capas.def);map.removeLayer(capas.def);capas.def=capaDef(sel.value);if(on)capas.def.addTo(map);};
+  const ci=L.markerClusterGroup({chunkedLoading:true});inc.forEach(r=>ci.addLayer(L.circleMarker([r.lat,r.lon],{radius:4,color:'#7B241C',weight:1,fillColor:'#E74C3C',fillOpacity:.85}).bindPopup(`<b>Incendio forestal</b><br>${esc(r.NOMDIS)}, ${esc(r.NOMPRO)}, ${esc(r.NOMDEP)}<br>${esc(r.TIPCOB)}`)));
+  addCapa('inc','Incendios forestales','#E74C3C',ci,inc.length,false);
+  const cf=L.layerGroup(fc.map(r=>L.circleMarker([r.lat,r.lon],{radius:2.5,stroke:false,fillColor:'#FF6F00',fillOpacity:.85}).bindPopup(`<b>Foco de calor VIIRS</b><br>Fecha: ${esc(r.acq_date)}<br>Confianza: ${esc(r.confidence)}<br>FRP: ${esc(r.frp)} MW`)));
+  addCapa('fc','Focos de calor (7 días)','#FF6F00',cf,fc.length,false);
+  const cc=L.layerGroup(cites.map(r=>L.circleMarker([r.lat,r.lon],{radius:4.5,color:'#fff',weight:.7,fillColor:pe[r.especie]||'#333',fillOpacity:.95}).bindPopup(`<b><i>${esc(r.especie)}</i></b><br>Año: ${esc(r.anio)}<br><a href="https://www.gbif.org/occurrence/${encodeURIComponent(r.gbif)}" target="_blank" rel="noopener">Ver registro en GBIF</a>`)));
+  addCapa('cites','Especies maderables CITES','#1B5E20',cc,cites.length,false);
+  const cp=L.layerGroup(pcs.map(r=>L.marker([r.lat,r.lon],{title:r.NOMBPC}).bindPopup(`<b>Puesto de control</b><br>${esc(r.NOMBPC)} (${esc(r.NOMDEP)})`)));
+  addCapa('pc','Puestos de control','#2C3E50',cp,pcs.length,false);
+  document.getElementById('legCites').innerHTML=Object.entries(pe).map(([k,v])=>`<div><i style="background:${v}"></i><em>${k}</em></div>`).join('');
+  const haDef=def.reduce((s,r)=>s+(r.ha||0),0);
+  document.getElementById('kpi').innerHTML=[[conc.features.length,'concesiones'],[haDef,'ha deforestadas'],[inc.length,'incendios'],[fc.length,'focos de calor 7 d']].map(([v,t])=>`<div><b>${fmt(v)}</b>${t}</div>`).join('');
+  document.getElementById('cargando').remove();
+}).catch(e=>{document.getElementById('cargando').textContent='No se pudieron cargar las capas. Recargue la página.';console.error(e);});
+</script>
+</body>
+</html>
