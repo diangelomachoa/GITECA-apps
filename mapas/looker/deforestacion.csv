@@ -1,0 +1,153 @@
+anio,departamento,causa,poligonos,hectareas
+2017,Amazonas,Agricultura,33,72.55
+2017,Cusco,Agricultura,39,87.22
+2017,Huanuco,Agricultura,17,122.39
+2017,Loreto,Agricultura,289,667.19
+2017,Madre De Dios,Agricultura,170,598.33
+2017,Pasco,Agricultura,78,204
+2017,San Martin,Agricultura,18,494.32
+2017,San Martin,Minería,10,7.1
+2017,Ucayali,Agricultura,378,1236.57
+2017,Ucayali,Caminos,42,86.33
+2017,Ucayali,Minería,39,292.26
+2018,Amazonas,Agricultura,3,11.79
+2018,Cusco,Agricultura,194,277.83
+2018,Huanuco,Agricultura,144,715.16
+2018,Junin,Agricultura,17,29.51
+2018,Junin,Caminos,2,24.1
+2018,Loreto,Agricultura,244,527.28
+2018,Loreto,Caminos,35,139.25
+2018,Madre De Dios,Agricultura,350,602.52
+2018,Madre De Dios,Caminos,76,85.95
+2018,Pasco,Agricultura,230,673.16
+2018,Puno,Agricultura,41,77.14
+2018,San Martin,Agricultura,71,331.25
+2018,Ucayali,Agricultura,402,1212.78
+2018,Ucayali,Caminos,65,91.66
+2019,Loreto,Agricultura,6,10.23
+2019,San Martin,Agricultura,9,10.17
+2019,Ucayali,Agricultura,38,83.74
+2020,Amazonas,Agricultura,153,452.01
+2020,Cusco,Agricultura,861,1829.19
+2020,Cusco,Minería,6,5.16
+2020,Huanuco,Agricultura,338,2027.79
+2020,Junin,Agricultura,91,135.25
+2020,Loreto,Agricultura,1380,3653.34
+2020,Loreto,Caminos,18,879.96
+2020,Madre De Dios,Agricultura,110,321.64
+2020,Madre De Dios,Minería,84,165.39
+2020,Pasco,Agricultura,33,151.68
+2020,Puno,Agricultura,24,31.11
+2020,Puno,Minería,6,5.49
+2020,San Martin,Agricultura,2741,8424.58
+2020,Ucayali,Agricultura,3353,12354.54
+2020,Ucayali,Caminos,14,143.33
+2020,Ucayali,Otros,14,15.88
+2021,Amazonas,Agricultura,389,220.53
+2021,Amazonas,Caminos,1,0.39
+2021,Huanuco,Agricultura,492,1380.98
+2021,Huanuco,Caminos,6,5.47
+2021,Huanuco,Otros,2,1.94
+2021,Junin,Agricultura,333,464.43
+2021,Junin,Otros,50,492.28
+2021,Loreto,Agricultura,660,1102.9
+2021,Loreto,Caminos,4,0.63
+2021,Madre De Dios,Agricultura,145,307.38
+2021,Madre De Dios,Caminos,6,29.04
+2021,San Martin,Agricultura,662,1742.75
+2021,San Martin,Caminos,25,83.48
+2021,San Martin,Otros,2,165.03
+2021,Ucayali,Agricultura,2937,9475.62
+2021,Ucayali,Caminos,22,50.82
+2021,Ucayali,Otros,5,93.19
+2022,San Martin,Agricultura,87,189.66
+2022,San Martin,Caminos,2,2.39
+2022,San Martin,Otros,139,320.34
+2022,Ucayali,Agricultura,547,2110.01
+2022,Ucayali,Caminos,16,11.76
+2022,Ucayali,Otros,27,50.09
+2023,Amazonas,Agricultura,607,293.65
+2023,Amazonas,Infraestructura,1,1.44
+2023,Cusco,Agricultura,25,34.48
+2023,Huanuco,Agricultura,457,2859.41
+2023,Junin,Agricultura,341,756.15
+2023,Junin,Caminos,3,1.6
+2023,Loreto,Agricultura,631,495.6
+2023,Loreto,Caminos,5,7.81
+2023,Loreto,Cultivos ilícitos,173,843.5
+2023,Loreto,Ganadería,62,149.55
+2023,Loreto,Minería,7,2.75
+2023,Madre De Dios,Agricultura,366,1500.41
+2023,Madre De Dios,Caminos,4,2.48
+2023,Madre De Dios,Ganadería,23,136.33
+2023,Madre De Dios,Minería,165,284.63
+2023,Pasco,Agricultura,156,608.19
+2023,Puno,Agricultura,27,12.5
+2023,Puno,Minería,11,1.11
+2023,Puno,Otros,12,86.93
+2023,San Martin,Agricultura,400,1936.59
+2023,Ucayali,Agricultura,577,4907.41
+2024,Amazonas,Agricultura,9,19.85
+2024,Ayacucho,Agricultura,2,2.1
+2024,Ayacucho,Cultivos ilícitos,18,29.03
+2024,Cusco,Agricultura,34,37.28
+2024,Huanuco,Agricultura,286,1193.19
+2024,Huanuco,Cultivos ilícitos,25,178.53
+2024,Huanuco,Minería,13,9.37
+2024,Junin,Agricultura,26,113.52
+2024,Loreto,Agricultura,740,2111.24
+2024,Loreto,Caminos,3,15.38
+2024,Loreto,Cultivos ilícitos,84,255.42
+2024,Loreto,Infraestructura,2,3.28
+2024,Madre De Dios,Agricultura,200,683.07
+2024,Madre De Dios,Cultivos ilícitos,51,121.71
+2024,Madre De Dios,Minería,40,35.26
+2024,Pasco,Agricultura,50,111.4
+2024,Pasco,Cultivos ilícitos,1,2.28
+2024,San Martin,Agricultura,560,1157
+2024,San Martin,Cultivos ilícitos,3,6.44
+2024,Ucayali,Agricultura,1474,5703.23
+2024,Ucayali,Cultivos ilícitos,159,866.35
+2024,Ucayali,Infraestructura,1,1.63
+2025,Amazonas,Agricultura,3,4.04
+2025,Cusco,Agricultura,2,2.31
+2025,Huanuco,Agricultura,592,1563.48
+2025,Junin,Agricultura,1,1.15
+2025,Loreto,Agricultura,143,385.21
+2025,Loreto,Cultivos ilícitos,1,0.38
+2025,Loreto,Minería,5,7.55
+2025,Madre De Dios,Agricultura,232,724.37
+2025,Madre De Dios,Cultivos ilícitos,9,23.27
+2025,Madre De Dios,Infraestructura,1,2.44
+2025,Madre De Dios,Minería,1108,1151.61
+2025,Pasco,Agricultura,3,4.86
+2025,San Martin,Agricultura,380,747.56
+2025,Ucayali,Agricultura,1984,6179.81
+2025,Ucayali,Cultivos ilícitos,77,195.99
+2025,Ucayali,Ganadería,8,10.16
+2025,Ucayali,Minería,1,3.56
+2026,Amazonas,Agricultura,180,150.84
+2026,Ayacucho,Agricultura,2,5.85
+2026,Cajamarca,Agricultura,17,16.39
+2026,Cusco,Agricultura,9,86.89
+2026,Cusco,Caminos,2,6.94
+2026,Cusco,Otros,7,32.35
+2026,Huancavelica,Agricultura,1,1.44
+2026,Huanuco,Agricultura,772,1317.87
+2026,Huanuco,Caminos,11,6.98
+2026,Huanuco,Minería,62,50.97
+2026,Junin,Agricultura,532,720.21
+2026,Junin,Caminos,2,2.29
+2026,Junin,Minería,2,2.07
+2026,Loreto,Agricultura,123,148.26
+2026,Madre De Dios,Agricultura,45,107.58
+2026,Madre De Dios,Minería,1727,2055.38
+2026,Pasco,Agricultura,119,115.63
+2026,Puno,Agricultura,5,8.06
+2026,Puno,Caminos,1,7.46
+2026,Puno,Otros,1,0.52
+2026,San Martin,Agricultura,676,1270.39
+2026,Ucayali,Agricultura,587,1558.62
+2026,Ucayali,Cultivos ilícitos,21,27.63
+2026,Ucayali,Minería,1,0.44
+2026,Ucayali,Otros,1,0.14

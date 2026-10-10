@@ -1,0 +1,82 @@
+departamento,provincia,cobertura,incendios
+Ancash,Aija,Cobertura Agrícola,4
+Ancash,Aija,Cobertura Forestal,6
+Ancash,Carhuaz,Cobertura Agrícola,9
+Ancash,Carhuaz,Cobertura Forestal,2
+Ancash,Carlos Fermin Fitzcarrald,Cobertura Forestal,48
+Ancash,Huaylas,Cobertura Forestal,23
+Ancash,Pallasca,Cobertura Forestal,9
+Ancash,Recuay,Cobertura Forestal,5
+Ancash,Sihuas,,2
+Apurimac,Abancay,Cobertura Forestal,563
+Apurimac,Andahuaylas,Cobertura Agrícola,3
+Apurimac,Andahuaylas,Cobertura Forestal,53
+Apurimac,Aymaraes,Cobertura Forestal,71
+Apurimac,Chincheros,Cobertura Agrícola,5
+Apurimac,Chincheros,Cobertura Forestal,47
+Apurimac,Cotabambas,Cobertura Agrícola,3
+Apurimac,Cotabambas,Cobertura Forestal,75
+Apurimac,Grau,Cobertura Agrícola,6
+Apurimac,Grau,Cobertura Forestal,81
+Arequipa,La Union,Cobertura Forestal,3
+Ayacucho,Huamanga,Cobertura Agrícola,1
+Ayacucho,Huamanga,Cobertura Forestal,6
+Ayacucho,Huanca Sancos,Cobertura Forestal,5
+Ayacucho,Huanta,Cobertura Agrícola,2
+Ayacucho,Huanta,Cobertura Forestal,17
+Ayacucho,Lucanas,Cobertura Agrícola,2
+Ayacucho,Parinacochas,Cobertura Forestal,4
+Ayacucho,Sucre,Cobertura Forestal,2
+Cajamarca,Chota,Cobertura Agrícola,4
+Cajamarca,Chota,Cobertura Forestal,27
+Cajamarca,Cutervo,Cobertura Forestal,3
+Cajamarca,Jaen,Cobertura Forestal,17
+Cajamarca,San Ignacio,Cobertura Forestal,7
+Cusco,Anta,Cobertura Forestal,19
+Cusco,Calca,Cobertura Forestal,27
+Cusco,Canas,Cobertura Forestal,11
+Cusco,Canchis,Cobertura Agrícola,3
+Cusco,Canchis,Cobertura Forestal,87
+Cusco,Chumbivilcas,Cobertura Forestal,8
+Cusco,La Convencion,Cobertura Agrícola,1
+Cusco,La Convencion,Cobertura Forestal,65
+Cusco,Quispicanchi,Cobertura Agrícola,1
+Huancavelica,Acobamba,Cobertura Forestal,5
+Huancavelica,Angaraes,Cobertura Forestal,13
+Huancavelica,Castrovirreyna,Cobertura Forestal,1
+Huancavelica,Churcampa,Cobertura Agrícola,1
+Huancavelica,Churcampa,Cobertura Forestal,24
+Huancavelica,Huancavelica,Cobertura Agrícola,5
+Huancavelica,Huancavelica,Cobertura Forestal,5
+Huancavelica,Huaytara,Cobertura Forestal,56
+Huancavelica,Tayacaja,Cobertura Agrícola,2
+Huancavelica,Tayacaja,Cobertura Forestal,10
+Huanuco,Ambo,Cobertura Forestal,8
+Huanuco,Huanuco,Cobertura Forestal,3
+Huanuco,Lauricocha,Cobertura Forestal,5
+Huanuco,Marañon,Cobertura Forestal,14
+Ica,Chincha,Cobertura Forestal,6
+Junin,Concepcion,Cobertura Agrícola,11
+Junin,Concepcion,Cobertura Forestal,7
+Junin,Huancayo,Cobertura Forestal,5
+Junin,Jauja,Cobertura Forestal,3
+Junin,Satipo,Cobertura Forestal,324
+Junin,Tarma,Cobertura Agrícola,8
+Junin,Tarma,Cobertura Forestal,5
+La Libertad,Pataz,Cobertura Forestal,3
+La Libertad,Santiago De Chuco,Cobertura Forestal,8
+Lambayeque,Ferreñafe,Cobertura Agrícola,2
+Lambayeque,Ferreñafe,Cobertura Forestal,2
+Lima,Huarochiri,Cobertura Forestal,14
+Lima,Huaura,Cobertura Forestal,3
+Lima,Oyon,Cobertura Forestal,10
+Lima,Yauyos,Cobertura Forestal,16
+Loreto,Requena,Cobertura Forestal,13
+Pasco,Pasco,Cobertura Forestal,118
+Piura,Huancabamba,Cobertura Agrícola,1
+Piura,Huancabamba,Cobertura Forestal,4
+Puno,Lampa,Cobertura Agrícola,1
+Puno,Lampa,Cobertura Forestal,57
+Puno,Puno,Cobertura Forestal,13
+Puno,San Roman,Cobertura Forestal,10
+Ucayali,Atalaya,Cobertura Forestal,20
