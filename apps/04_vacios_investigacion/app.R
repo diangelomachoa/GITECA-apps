@@ -1,4 +1,8 @@
 # =============================================================================
+# © 2026 Gino Machoa. Todos los derechos reservados.
+# Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
+# Contacto: diangelomachoa@gmail.com
+# Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | App 04 — Detector de vacíos de investigación
 # Ubica las tesis FCF-UNAP por las localidades citadas en título/resumen (gazetteer
 # aproximado, data/gazetteer_loreto.csv) y muestra dónde y en qué temas hay poca
@@ -14,17 +18,29 @@ loc   <- readr::read_csv(file.path(raiz, "data/tesis_localidades.csv"), show_col
   left_join(select(tesis, uuid, titulo, anio, tema_principal, escuela, url), by = "uuid")
 temas <- sort(unique(tesis$tema_principal))
 
+raiz_legal <- if (dir.exists("R")) "." else "../.."
+source(file.path(raiz_legal, "R/legal.R"))
+LEGAL <- list(nombre = "Vacíos de investigación forestal en Loreto", version = "1.0",
+  finalidad = "Ubicar las tesis por localidad y detectar zonas y temas poco estudiados.",
+  avisoResultados = "Las coordenadas son aproximadas a nivel de localidad y la clasificación temática es automática.",
+  privacidadExtra = "",
+  fuentes = data.frame(matrix(c(
+  "Metadatos de tesis — Repositorio Institucional UNAP", "Metadatos públicos; cada tesis conserva la licencia de su autor (mayormente CC BY-NC-ND)", "Base de tesis, títulos, resúmenes y enlaces",
+  "Esri World Imagery", "Términos de uso de Esri (atribución obligatoria)", "Mapa base satelital",
+  "CARTO / OpenStreetMap", "© OpenStreetMap contributors (ODbL), © CARTO", "Mapa base"), ncol = 3, byrow = TRUE, dimnames = list(NULL, c("fuente", "licencia", "uso")))))
+
 ui <- page_sidebar(
-  title = "GITECA · Vacíos de investigación forestal en Loreto",
+  title = giteca_logo("Vacíos de investigación forestal en Loreto"),
   theme = bs_theme(version = 5, primary = "#1F5E3B", secondary = "#1C5D99"),
   sidebar = sidebar(width = 320,
+    giteca_autor(),
     selectizeInput("tema", "Tema", temas, multiple = TRUE, options = list(placeholder = "Todos")),
     sliderInput("anio", "Año", min(tesis$anio, na.rm = TRUE), max(tesis$anio, na.rm = TRUE),
                 range(tesis$anio, na.rm = TRUE), sep = ""),
     checkboxInput("excl_gen", "Excluir menciones genéricas (Maynas, Iquitos)", TRUE),
     fileInput("capa", "Capa opcional (.gpkg o .geojson)", accept = c(".gpkg", ".geojson")),
     helpText(sprintf("%d de %d tesis tienen al menos una localidad identificada.",
-                     n_distinct(loc$uuid), nrow(tesis)))
+                     n_distinct(loc$uuid), nrow(tesis))), giteca_pie()
   ),
   layout_columns(col_widths = c(12, 12),
     card(card_header("Tesis por localidad (tamaño = n° de tesis)"), leafletOutput("mapa", height = 560)),
@@ -33,6 +49,7 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
+  giteca_legal_server(input, LEGAL)
   sel <- reactive({
     d <- loc |> filter(between(anio, input$anio[1], input$anio[2]))
     if (input$excl_gen) d <- filter(d, !localidad %in% c("Maynas", "Iquitos"))
