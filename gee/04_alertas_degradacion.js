@@ -54,7 +54,7 @@ Map.addLayer(dVH.clip(unidades.geometry().bounds()), {min: -4, max: 4, palette: 
 
 // ============================ LEGAL Y MARCA GITECA ============================
 var CFG = {nombre: 'Alertas de deforestación y degradación', subtitulo: 'Prioridad de atención por unidad de manejo', version: '1.0',
-  logo: '' // asset de imagen del logo GITECA (ver GUIA_GEE.md); vacío = cabecera en texto
+  logo: 'projects/gitecapps-511217/assets/giteca_logo_gee' // asset de imagen del logo GITECA (ver GUIA_GEE.md); vacío = cabecera en texto
 };
 var LEGAL = {
   para: '',

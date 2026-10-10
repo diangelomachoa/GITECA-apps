@@ -14,7 +14,7 @@ App con 7 pestañas (① Área, ② Cobertura, ③ Biomasa, ④ Fenología, ⑤ 
 ## Assets que hay que subir
 | Asset | Archivo | Para qué |
 |---|---|---|
-| Logo GITECA | `recursos/giteca_logo_gee.tif` (bandas b1,b2,b3, 0–255) | Cabecera de las apps: suba como *Image* en Assets → NEW → GeoTIFF y pegue el ID en `CFG.logo` |
+| Logo GITECA | `recursos/giteca_logo_gee.tif` (bandas b1,b2,b3, 0–255) | Cabecera de las apps: suba como *Image* en Assets → NEW → GeoTIFF y pegue el ID en `CFG.logo` (ya configurado: `projects/gitecapps-511217/assets/giteca_logo_gee`) |
 | Parcelas de campo (opcional) | su shapefile/CSV con `agb_campo` | GEE 02: `PARCELAS_ASSET` |
 | Unidades de manejo (opcional) | su shapefile | GEE 04: `UNIDADES_ASSET` |
 

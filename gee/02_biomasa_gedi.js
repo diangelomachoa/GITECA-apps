@@ -46,7 +46,7 @@ if (PARCELAS_ASSET !== '') {
 
 // ============================ LEGAL Y MARCA GITECA ============================
 var CFG = {nombre: 'Monitor de biomasa GEDI', subtitulo: 'Biomasa aérea en Loreto y validación con parcelas', version: '1.0',
-  logo: '' // asset de imagen del logo GITECA (ver GUIA_GEE.md); vacío = cabecera en texto
+  logo: 'projects/gitecapps-511217/assets/giteca_logo_gee' // asset de imagen del logo GITECA (ver GUIA_GEE.md); vacío = cabecera en texto
 };
 var LEGAL = {
   para: '',

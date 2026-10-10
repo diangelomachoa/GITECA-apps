@@ -22,7 +22,7 @@ var CFG = {
   nombre: 'Alertas de deforestación y degradación',
   subtitulo: 'Prioridad de atención por área de trabajo',
   version: '1.0',
-  logo: '', // ID del asset del logo GITECA (recursos/giteca_logo_gee.tif); vacío = cabecera en texto
+  logo: 'projects/gitecapps-511217/assets/giteca_logo_gee', // ID del asset del logo GITECA (recursos/giteca_logo_gee.tif); vacío = cabecera en texto
   planet: '', // no se usa en apps abiertas
   ds: {
     gfc: 'UMD/hansen/global_forest_change_2023_v1_11',

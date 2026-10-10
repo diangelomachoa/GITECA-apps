@@ -51,7 +51,7 @@ Export.table.toDrive({collection: clim, description: 'GITECA_fenologia_EVI_mensu
 
 // ============================ LEGAL Y MARCA GITECA ============================
 var CFG = {nombre: 'Fenología de aguajales', subtitulo: 'Series EVI/NDVI de bosques amazónicos', version: '1.0',
-  logo: '' // asset de imagen del logo GITECA (ver GUIA_GEE.md); vacío = cabecera en texto
+  logo: 'projects/gitecapps-511217/assets/giteca_logo_gee' // asset de imagen del logo GITECA (ver GUIA_GEE.md); vacío = cabecera en texto
 };
 var LEGAL = {
   para: '',
