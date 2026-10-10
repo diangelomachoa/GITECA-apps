@@ -16,6 +16,17 @@ Peruana (UNAP).
 | 03 | `apps/03_planificador_muestreo` | Tamaño de muestra y error de muestreo a partir de un inventario piloto o de un CV |
 | 04 | `apps/04_vacios_investigacion` | Mapa de tesis por localidad y matriz localidad × tema para detectar vacíos |
 
+## Apps Shiny en línea
+
+Corren en el navegador con webR/Shinylive (sin servidor; la primera carga tarda 1–2 min). Versión web de un solo archivo en `web_shinylive/`.
+
+| App | Enlace |
+|---|---|
+| Explorador de tesis | https://diangelomachoa.github.io/GITECA-apps/apps/explorador.html |
+| Calculadora de inventarios | https://diangelomachoa.github.io/GITECA-apps/apps/inventarios.html |
+| Planificador de muestreo | https://diangelomachoa.github.io/GITECA-apps/apps/muestreo.html |
+| Vacíos de investigación | https://diangelomachoa.github.io/GITECA-apps/apps/vacios.html |
+
 ## Bloque 2 — Scripts de Google Earth Engine (`gee/`)
 
 **Apps publicadas (abrir en el navegador):**
