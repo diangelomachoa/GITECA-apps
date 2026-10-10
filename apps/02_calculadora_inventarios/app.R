@@ -13,6 +13,8 @@ library(shiny); library(bslib); library(dplyr); library(ggplot2); library(DT)
 raiz <- if (dir.exists("R")) "." else "../.."
 source(file.path(raiz, "R/forestal.R"))
 ejemplo <- readr::read_csv(file.path(raiz, "data/ejemplo_inventario.csv"), show_col_types = FALSE)
+# Densidad básica por especie de la Biblioteca de coeficientes GITECA (tesis FCF-UNAP)
+dens_lib <- readr::read_csv(file.path(raiz, "data/densidad_por_especie.csv"), show_col_types = FALSE)
 
 raiz_legal <- if (dir.exists("R")) "." else "../.."
 source(file.path(raiz_legal, "R/legal.R"))
@@ -36,7 +38,9 @@ ui <- page_sidebar(
     numericInput("dmin", "DAP mínimo (cm)", 10, 1, 100),
     numericInput("ff", "Factor de forma", 0.65, 0.3, 1, 0.01),
     numericInput("rho0", "Densidad por defecto (g/cm³)", 0.6, 0.2, 1.2, 0.01),
-    helpText("La densidad por defecto se usa solo cuando falta el dato por especie."),
+    checkboxInput("usar_lib", "Completar densidad con la Biblioteca de coeficientes GITECA", TRUE),
+    helpText("Orden: densidad del CSV → Biblioteca GITECA (mediana por especie, tesis FCF-UNAP) → densidad por defecto."),
+    textOutput("dens_info"),
     downloadButton("dl", "Descargar resultados (CSV)"), giteca_pie()
   ),
   layout_columns(fill = FALSE,
@@ -56,7 +60,8 @@ ui <- page_sidebar(
 **Área basal:** g = π/4 · (DAP/100)²
 **Volumen:** V = g · H · ff
 **IVI:** abundancia relativa + frecuencia relativa + dominancia relativa (Curtis & McIntosh, 1951)
-**Biomasa aérea:** Chave et al. (2014), ec. 4: AGB = 0.0673 · (ρ·D²·H)^0.976
+**Biomasa aérea:** Chave et al. (2014), ec. 4: AGB = 0.0673 · (ρ·D²·H)^0.976  
+**Densidad (ρ):** del CSV; si falta, mediana por especie de la Biblioteca de coeficientes GITECA (tesis FCF-UNAP); si no hay, el valor por defecto
 **Diversidad:** Shannon (ln) y Simpson (1 − Σp²)
 **Acumulación:** 100 permutaciones aleatorias del orden de parcelas, IC 95 %
 *Los datos de ejemplo son sintéticos y solo sirven para probar la app.*")))
@@ -71,9 +76,12 @@ server <- function(input, output, session) {
     if (!"altura" %in% names(d))   d$altura <- NA_real_
     if (!"densidad" %in% names(d)) d$densidad <- NA_real_
     d |> filter(dap >= input$dmin) |>
-      mutate(densidad = coalesce(densidad, input$rho0), g = area_basal(dap),
+      mutate(dens_lib = if (isTRUE(input$usar_lib)) dens_lib$densidad_mediana[match(especie, dens_lib$especie)] else NA_real_,
+             origen_dens = dplyr::case_when(!is.na(densidad) ~ "CSV", !is.na(dens_lib) ~ "Biblioteca GITECA", TRUE ~ "Por defecto"),
+             densidad = coalesce(densidad, dens_lib, input$rho0), g = area_basal(dap),
              v = volumen(dap, altura, input$ff), agb = agb_chave14(dap, altura, densidad))
   })
+  output$dens_info <- renderText({ o <- table(factor(datos()$origen_dens, c("CSV", "Biblioteca GITECA", "Por defecto"))); sprintf("Densidad usada: %d del CSV, %d de la Biblioteca, %d por defecto (individuos).", o[1], o[2], o[3]) })
   area <- reactive(n_distinct(datos()$parcela) * input$tam)
   t_ivi <- reactive(ivi(datos(), area()))
 
