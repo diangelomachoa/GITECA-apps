@@ -26,6 +26,7 @@ Corren en el navegador con webR/Shinylive (sin servidor; la primera carga tarda 
 | Calculadora de inventarios | https://diangelomachoa.github.io/GITECA-apps/apps/inventarios.html |
 | Planificador de muestreo | https://diangelomachoa.github.io/GITECA-apps/apps/muestreo.html |
 | Vacíos de investigación | https://diangelomachoa.github.io/GITECA-apps/apps/vacios.html |
+| Biblioteca de coeficientes de madera | https://diangelomachoa.github.io/GITECA-apps/apps/coeficientes.html |
 
 ## Bloque 2 — Scripts de Google Earth Engine (`gee/`)
 
@@ -53,7 +54,11 @@ Copie cada script en el Code Editor (code.earthengine.google.com) y ejecútelo.
 
 Las áreas de ejemplo son rectángulos referenciales: cámbielos por su área de estudio. El umbral de inundación del script 05 debe calibrarse con datos de campo.
 
-Próximo bloque: **3** — biblioteca de coeficientes de madera extraídos de las tesis.
+## Bloque 3 — Biblioteca de coeficientes de madera
+
+`apps/05_coeficientes_madera` y `data/coeficientes_madera.csv`: 111 valores de 43 especies (densidad básica, contracciones, relación T/R, MOE, MOR) extraídos de los PDF de 23 tesis FCF-UNAP y **curados manualmente**. Cada registro indica si es *resultado de la tesis* o *referencia citada en la tesis* e incluye el enlace a la tesis. `data/densidad_por_especie.csv` resume la mediana por especie; la Calculadora de inventarios la usa para completar la densidad cuando falta en el CSV.
+
+Limitaciones: cobertura parcial (muchas tesis tienen sus resultados en tablas o imágenes que no se leen automáticamente) y aún no hay CV de inventarios extraídos para el Planificador de muestreo.
 
 ## Uso
 
