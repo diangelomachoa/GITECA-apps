@@ -60,6 +60,17 @@ Las áreas de ejemplo son rectángulos referenciales: cámbielos por su área de
 
 Limitaciones: cobertura parcial (muchas tesis tienen sus resultados en tablas o imágenes que no se leen automáticamente) y aún no hay CV de inventarios extraídos para el Planificador de muestreo.
 
+## Bloque 4 — Mapas con datos abiertos (`mapas/`)
+
+| Script | Qué hace |
+|---|---|
+| `01_preparar_datos.R` | Descarga capas oficiales: geoservicios SERFOR (límites INEI, concesiones, BPP, deforestación UFMS, incendios, puestos de control), NASA FIRMS VIIRS (7 días) y GBIF (especies maderables CITES). No guarda datos personales de titulares. |
+| `02_mapas_estaticos.R` | 5 láminas en ggplot2 + ggspatial → `docs/mapas/img/` |
+| `03_datos_visor.R` | Capas livianas (GeoJSON/CSV) para el visor web `docs/mapas/visor_forestal.html` (Leaflet) |
+| `04_tablas_looker.R` | Tablas agregadas para el reporte estadístico en Looker Studio (`mapas/looker/`) |
+
+Visor: https://diangelomachoa.github.io/GITECA-apps/mapas/visor_forestal.html
+
 ## Uso
 
 ```r
@@ -94,6 +105,9 @@ Despliegue en shinyapps.io: copie `data/`, `R/` y `recursos/` dentro de la carpe
 | JRC Global Surface Water v1.4 | Uso libre con atribución (Source: EC JRC/Google) | GEE 05 |
 | FAO GAUL 2015 | Uso no comercial con atribución | GEE 02 |
 | Esri World Imagery; CARTO / OpenStreetMap | Términos de Esri; © OpenStreetMap contributors (ODbL), © CARTO | App 04 (mapas base) |
+| Geoservicios SERFOR (geo.serfor.gob.pe) | Información pública del Estado, cita de la fuente | Mapas y visor |
+| NASA FIRMS (VIIRS S-NPP) | Datos abiertos NASA, cita requerida | Mapas y visor |
+| GBIF.org | Licencia de cada registro (CC0 / CC BY / CC BY-NC) | Mapas y visor |
 | Chave et al. (2014) | Publicación científica, cita obligatoria | App 02 |
 
 ## Avisos legales
