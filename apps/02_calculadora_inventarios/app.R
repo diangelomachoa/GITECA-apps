@@ -1,4 +1,8 @@
 # =============================================================================
+# © 2026 Gino Machoa. Todos los derechos reservados.
+# Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
+# Contacto: diangelomachoa@gmail.com
+# Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | App 02 — Calculadora de inventarios forestales
 # Estandariza el procesamiento que se repite en cientos de tesis de estructura y
 # composición: N/ha, G/ha, volumen, IVI, diversidad, acumulación de especies y biomasa.
@@ -10,10 +14,21 @@ raiz <- if (dir.exists("R")) "." else "../.."
 source(file.path(raiz, "R/forestal.R"))
 ejemplo <- readr::read_csv(file.path(raiz, "data/ejemplo_inventario.csv"), show_col_types = FALSE)
 
+raiz_legal <- if (dir.exists("R")) "." else "../.."
+source(file.path(raiz_legal, "R/legal.R"))
+LEGAL <- list(nombre = "Calculadora de inventarios forestales", version = "1.0",
+  finalidad = "Procesar datos de inventarios forestales: estructura, composición, diversidad y biomasa.",
+  avisoResultados = "La biomasa se estima con Chave et al. (2014); la calidad depende de los datos de campo cargados. Los datos de ejemplo son sintéticos.",
+  privacidadExtra = "",
+  fuentes = data.frame(matrix(c(
+  "Ecuación de biomasa — Chave et al. (2014), Global Change Biology 20:3177–3190", "Publicación científica (cita obligatoria)", "Cálculo de biomasa aérea",
+  "Datos de ejemplo", "Sintéticos, generados por GITECA", "Prueba de la app"), ncol = 3, byrow = TRUE, dimnames = list(NULL, c("fuente", "licencia", "uso")))))
+
 ui <- page_sidebar(
-  title = "GITECA · Calculadora de inventarios forestales",
+  title = giteca_logo("Calculadora de inventarios forestales"),
   theme = bs_theme(version = 5, primary = "#1F5E3B", secondary = "#1C5D99"),
   sidebar = sidebar(width = 320,
+    giteca_autor(),
     fileInput("f", "CSV de inventario", accept = ".csv"),
     helpText("Columnas: parcela, especie, dap (cm). Opcionales: altura (m), densidad (g/cm³)."),
     checkboxInput("usar_ej", "Usar datos de ejemplo (sintéticos)", TRUE),
@@ -22,7 +37,7 @@ ui <- page_sidebar(
     numericInput("ff", "Factor de forma", 0.65, 0.3, 1, 0.01),
     numericInput("rho0", "Densidad por defecto (g/cm³)", 0.6, 0.2, 1.2, 0.01),
     helpText("La densidad por defecto se usa solo cuando falta el dato por especie."),
-    downloadButton("dl", "Descargar resultados (CSV)")
+    downloadButton("dl", "Descargar resultados (CSV)"), giteca_pie()
   ),
   layout_columns(fill = FALSE,
     value_box("Individuos/ha", textOutput("nha")),
@@ -48,6 +63,7 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
+  giteca_legal_server(input, LEGAL)
   datos <- reactive({
     d <- if (!is.null(input$f) && !input$usar_ej) readr::read_csv(input$f$datapath, show_col_types = FALSE) else ejemplo
     names(d) <- tolower(names(d))
