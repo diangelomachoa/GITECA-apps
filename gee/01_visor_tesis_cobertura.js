@@ -73,16 +73,17 @@ function arriba() {
 }
 
 // ------------------------------ Constructores UI ------------------------------
+var FONDO = '#F0F2ED'; // color de fondo del logo GITECA
 var VERDE = '#2E7D3E', AZUL = '#1C5D99', ROJO = '#B23A48', NARANJA = '#E07B00';
-function h2(t) { return ui.Label(t, {fontSize: '15px', fontWeight: 'bold', color: AZUL, margin: '10px 6px 4px'}); }
-function h3(t) { return ui.Label(t, {fontSize: '13px', fontWeight: 'bold', margin: '8px 6px 2px'}); }
-function nota(t) { return ui.Label(t, {fontSize: '11px', color: '#555', whiteSpace: 'pre-wrap', margin: '2px 6px'}); }
+function h2(t) { return ui.Label(t, {backgroundColor: FONDO, fontSize: '15px', fontWeight: 'bold', color: AZUL, margin: '10px 6px 4px'}); }
+function h3(t) { return ui.Label(t, {backgroundColor: FONDO, fontSize: '13px', fontWeight: 'bold', margin: '8px 6px 2px'}); }
+function nota(t) { return ui.Label(t, {backgroundColor: FONDO, fontSize: '11px', color: '#555', whiteSpace: 'pre-wrap', margin: '2px 6px'}); }
 function kv(k, v, color) {
-  return ui.Panel([ui.Label(k, {fontSize: '12px', width: '190px', margin: '2px 6px'}),
-    ui.Label(v, {fontSize: '12px', fontWeight: 'bold', color: color || '#222', margin: '2px 6px'})], ui.Panel.Layout.flow('horizontal'));
+  return ui.Panel([ui.Label(k, {backgroundColor: FONDO, fontSize: '12px', width: '190px', margin: '2px 6px'}),
+    ui.Label(v, {backgroundColor: FONDO, fontSize: '12px', fontWeight: 'bold', color: color || '#222', margin: '2px 6px'})], ui.Panel.Layout.flow('horizontal'), {backgroundColor: FONDO});
 }
 function boton(t, fn, color) { return ui.Button({label: t, onClick: fn, style: {color: color || VERDE, margin: '4px 6px'}}); }
-function fila(ws) { return ui.Panel(ws, ui.Panel.Layout.flow('horizontal', true)); }
+function fila(ws) { return ui.Panel(ws, ui.Panel.Layout.flow('horizontal', true), {backgroundColor: FONDO}); }
 function selector(items, ph, fn) { return ui.Select({items: items, placeholder: ph, onChange: fn, style: {margin: '4px 6px', width: '330px'}}); }
 function deslizador(min, max, val, paso, fn) { return ui.Slider({min: min, max: max, value: val, step: paso, onChange: fn, style: {width: '330px', margin: '2px 6px'}}); }
 function campoFechas(ini, fin) {
@@ -96,20 +97,20 @@ function leerFechas(c) {
   if (a >= b) { aviso('La fecha inicial debe ser anterior a la final.'); return null; }
   return [a, b];
 }
-function enlace(t, url) { return ui.Label(t, {fontSize: '12px', color: AZUL, margin: '2px 6px'}, url); }
+function enlace(t, url) { return ui.Label(t, {backgroundColor: FONDO, fontSize: '12px', color: AZUL, margin: '2px 6px'}, url); }
 
 // -------------------------------- Estructura ----------------------------------
-var panelIzq = ui.Panel({style: {width: '385px', padding: '6px'}});
-var panelDer = ui.Panel({style: {width: '395px', padding: '8px', shown: false}});
+var panelIzq = ui.Panel({style: {width: '385px', padding: '6px', backgroundColor: FONDO}});
+var panelDer = ui.Panel({style: {width: '395px', padding: '8px', shown: false, backgroundColor: FONDO}});
 var mapa = ui.Map();
 mapa.setOptions('HYBRID');
 mapa.setCenter(CFG.centro[0], CFG.centro[1], CFG.zoom);
 mapa.style().set('cursor', 'crosshair');
 ui.root.clear();
-ui.root.setLayout(ui.Panel.Layout.flow('horizontal'));
+ui.root.setLayout(ui.Panel.Layout.flow('horizontal'), {backgroundColor: FONDO});
 ui.root.add(panelIzq); ui.root.add(mapa); ui.root.add(panelDer);
 
-var lblEstado = ui.Label('Listo. Defina un área de trabajo.', {fontSize: '12px', margin: '2px 8px'});
+var lblEstado = ui.Label('Listo. Defina un área de trabajo.', {backgroundColor: FONDO, fontSize: '12px', margin: '2px 8px'});
 mapa.add(ui.Panel([lblEstado], null, {position: 'bottom-center', padding: '2px 6px'}));
 function estado(t) { lblEstado.setValue(t || 'Listo.'); lblEstado.style().set('color', '#222'); }
 function trabajando(t) { lblEstado.setValue('⏳ ' + t); lblEstado.style().set('color', NARANJA); }
@@ -119,17 +120,17 @@ var leyenda = ui.Panel({style: {position: 'top-right', padding: '6px', shown: fa
 mapa.add(leyenda);
 function setLeyenda(titulo, colores, etiquetas) {
   leyenda.clear(); leyenda.style().set('shown', true);
-  leyenda.add(ui.Label(titulo, {fontWeight: 'bold', fontSize: '12px', margin: '0 0 4px'}));
+  leyenda.add(ui.Label(titulo, {backgroundColor: FONDO, fontWeight: 'bold', fontSize: '12px', margin: '0 0 4px'}));
   for (var i = 0; i < colores.length; i++) {
     leyenda.add(ui.Panel([ui.Label('', {backgroundColor: colores[i], padding: '7px', margin: '2px 4px'}),
-      ui.Label(etiquetas[i], {fontSize: '11px', margin: '2px 4px'})], ui.Panel.Layout.flow('horizontal')));
+      ui.Label(etiquetas[i], {backgroundColor: FONDO, fontSize: '11px', margin: '2px 4px'})], ui.Panel.Layout.flow('horizontal'), {backgroundColor: FONDO}));
   }
 }
 
 function abrirDer(titulo) {
   panelDer.clear(); panelDer.style().set('shown', true);
-  panelDer.add(ui.Panel([ui.Label(titulo, {fontWeight: 'bold', fontSize: '15px', color: AZUL}),
-    ui.Button({label: '✕', onClick: function() { panelDer.style().set('shown', false); }})], ui.Panel.Layout.flow('horizontal')));
+  panelDer.add(ui.Panel([ui.Label(titulo, {backgroundColor: FONDO, fontWeight: 'bold', fontSize: '15px', color: AZUL}),
+    ui.Button({label: '✕', onClick: function() { panelDer.style().set('shown', false); }})], ui.Panel.Layout.flow('horizontal'), {backgroundColor: FONDO}));
 }
 
 // --------------------------- ① Área de trabajo --------------------------------
@@ -173,7 +174,7 @@ function moduloCobertura() {
   capa(anio.clip(S.aoi), {min: 2001, max: 2023, palette: ['FFFF66', 'FF8C00', 'B22222']}, 'Año de pérdida (Hansen)');
   setLeyenda('Año de pérdida', ['#FFFF66', '#FF8C00', '#B22222'], ['2001', '2012', '2023']);
   abrirDer('② Cobertura de bosque');
-  var cont = ui.Panel(); panelDer.add(cont); cont.add(nota('Calculando…'));
+  var cont = ui.Panel({style: {backgroundColor: FONDO}}); panelDer.add(cont); cont.add(nota('Calculando…'));
   trabajando('Calculando bosque y pérdida…');
   var px = ee.Image.pixelArea().divide(1e4);
   var st = px.updateMask(bosque).rename('b').addBands(px.updateMask(perdida).rename('p'))
@@ -208,7 +209,7 @@ function moduloBiomasa() {
   capa(mu.clip(S.aoi.buffer(2000)), {min: 0, max: 350, palette: ['f7fcf5', 'a1d99b', '41ab5d', '006d2c', '00441b']}, 'Biomasa GEDI L4B (Mg/ha)');
   setLeyenda('Biomasa aérea (Mg/ha)', ['#f7fcf5', '#41ab5d', '#00441b'], ['0', '175', '≥ 350']);
   abrirDer('③ Biomasa aérea (GEDI L4B)');
-  var cont = ui.Panel(); panelDer.add(cont); cont.add(nota('Calculando…'));
+  var cont = ui.Panel({style: {backgroundColor: FONDO}}); panelDer.add(cont); cont.add(nota('Calculando…'));
   trabajando('Consultando GEDI L4B…');
   var r = mu.rename('mu').addBands(g.select('SE').rename('se'))
     .reduceRegion({reducer: ee.Reducer.mean().combine(ee.Reducer.count(), '', true), geometry: S.aoi, scale: 1000, maxPixels: 1e9, bestEffort: true});
@@ -272,7 +273,7 @@ function moduloAlertas() {
   capa(anio.updateMask(conf.gte(2)).clip(S.aoi), {min: 2019, max: 2026, palette: ['ffffb2', 'fd8d3c', 'bd0026']}, 'Alertas RADD (año)');
   setLeyenda('Alertas RADD', ['#ffffb2', '#fd8d3c', '#bd0026'], ['2019', '2022', '2026']);
   abrirDer('⑤ Alertas de pérdida de bosque (RADD)');
-  var cont = ui.Panel(); panelDer.add(cont); cont.add(nota('Calculando…'));
+  var cont = ui.Panel({style: {backgroundColor: FONDO}}); panelDer.add(cont); cont.add(nota('Calculando…'));
   trabajando('Contando alertas RADD…');
   var px = ee.Image.pixelArea().divide(1e4);
   px.updateMask(alta).rename('alta').addBands(px.updateMask(baja).rename('baja'))
@@ -319,7 +320,7 @@ function moduloHidro() {
   capa(hp.selfMask(), {min: 1, max: 8, palette: ['d9f0a3', '41ab5d', '004529']}, 'Meses inundados bajo dosel (' + a + ')');
   setLeyenda('Meses inundados (' + a + ')', ['#d9f0a3', '#41ab5d', '#004529'], ['1', '4', '≥ 8']);
   abrirDer('⑥ Hidroperíodo ' + a);
-  var cont = ui.Panel(); panelDer.add(cont); cont.add(nota('Calculando…'));
+  var cont = ui.Panel({style: {backgroundColor: FONDO}}); panelDer.add(cont); cont.add(nota('Calculando…'));
   trabajando('Procesando Sentinel-1…');
   hp.gte(1).multiply(ee.Image.pixelArea().divide(1e4)).rename('ha')
     .addBands(jrc.select('occurrence').gt(50).multiply(ee.Image.pixelArea().divide(1e4)).rename('agua'))
@@ -360,7 +361,7 @@ function moduloFicha() {
     biomasa_mgha: R.biomasa ? R.biomasa.media : null, alertas_ha: R.alertas ? R.alertas.total : null,
     inund_ha: R.hidro ? R.hidro.inundadoHa : null, fuente: 'GITECA - ' + CFG.nombre + ' v' + CFG.version})]);
   var formatos = ['CSV', 'GeoJSON', 'KML', 'SHP'];
-  var pnl = ui.Panel(); panelDer.add(pnl);
+  var pnl = ui.Panel({style: {backgroundColor: FONDO}}); panelDer.add(pnl);
   trabajando('Preparando enlaces de descarga…');
   formatos.forEach(function(fm) {
     fc.getDownloadURL({format: fm, filename: 'GITECA_ficha'}, function(url, err) {
@@ -391,26 +392,26 @@ var GITECA_MARCA = 'GITECA · Gestión de Información, Tecnología y Ciencias A
 var GITECA_WEB = 'https://diangelomachoa.github.io/GITECA-apps/';
 var GITECA_ANIO = '2026';
 var GITECA_VERDE = '#2E7D3E', GITECA_AZUL = '#1C5D99';
-function _p(txt, negrita) { return ui.Label(txt, {fontSize: '12px', whiteSpace: 'pre-wrap', fontWeight: negrita ? 'bold' : 'normal', margin: '4px 6px'}); }
-function _enl(txt, url) { return ui.Label(txt, {fontSize: '12px', color: GITECA_AZUL, margin: '2px 6px'}, url); }
+function _p(txt, negrita) { return ui.Label(txt, {backgroundColor: FONDO, fontSize: '12px', whiteSpace: 'pre-wrap', fontWeight: negrita ? 'bold' : 'normal', margin: '4px 6px'}); }
+function _enl(txt, url) { return ui.Label(txt, {backgroundColor: FONDO, fontSize: '12px', color: GITECA_AZUL, margin: '2px 6px'}, url); }
 function cabeceraGiteca() {
-  var p = ui.Panel({style: {padding: '4px 0'}});
+  var p = ui.Panel({style: {padding: '4px 0', backgroundColor: FONDO}});
   if (CFG.logo && CFG.logo !== '') {
     p.add(ui.Thumbnail({image: ee.Image(CFG.logo).visualize({bands: ['b1', 'b2', 'b3'], min: 0, max: 255}),
-      params: {dimensions: 120, format: 'png'}, style: {width: '120px', height: '133px', margin: '0 auto'}}));
+      params: {dimensions: '180x200', format: 'png'}, style: {width: '180px', height: '200px', margin: '0 0 0 92px', backgroundColor: FONDO}}));
   } else {
-    p.add(ui.Label('GITECA', {fontSize: '26px', fontWeight: 'bold', color: GITECA_AZUL, margin: '0 6px'}));
-    p.add(ui.Label('Gestión de Información, Tecnología y Ciencias Ambientales', {fontSize: '11px', color: GITECA_VERDE, margin: '0 6px'}));
+    p.add(ui.Label('GITECA', {backgroundColor: FONDO, fontSize: '26px', fontWeight: 'bold', color: GITECA_AZUL, margin: '0 6px'}));
+    p.add(ui.Label('Gestión de Información, Tecnología y Ciencias Ambientales', {backgroundColor: FONDO, fontSize: '11px', color: GITECA_VERDE, margin: '0 6px'}));
   }
-  p.add(ui.Label(CFG.nombre, {fontSize: '17px', fontWeight: 'bold', margin: '8px 6px 0'}));
-  if (CFG.subtitulo) { p.add(ui.Label(CFG.subtitulo, {fontSize: '12px', color: '#555', margin: '2px 6px'})); }
+  p.add(ui.Label(CFG.nombre, {backgroundColor: FONDO, fontSize: '17px', fontWeight: 'bold', margin: '8px 6px 0'}));
+  if (CFG.subtitulo) { p.add(ui.Label(CFG.subtitulo, {backgroundColor: FONDO, fontSize: '12px', color: '#555', margin: '2px 6px'})); }
   return p;
 }
-function lineaAutor() { return ui.Label('Autor y desarrollador: ' + GITECA_AUTOR + ' · ' + GITECA_CORREO + ' · v' + CFG.version, {fontSize: '11px', color: '#666', margin: '0 6px 8px'}); }
+function lineaAutor() { return ui.Label('Autor y desarrollador: ' + GITECA_AUTOR + ' · ' + GITECA_CORREO + ' · v' + CFG.version, {backgroundColor: FONDO, fontSize: '11px', color: '#666', margin: '0 6px 8px'}); }
 function _filaFuente(f) {
-  return ui.Panel([ui.Label(f[0], {fontSize: '11px', fontWeight: 'bold', width: '130px', margin: '2px 4px'}),
-    ui.Label(f[1], {fontSize: '11px', width: '120px', margin: '2px 4px'}),
-    ui.Label(f[2], {fontSize: '11px', width: '100px', margin: '2px 4px'})], ui.Panel.Layout.flow('horizontal'));
+  return ui.Panel([ui.Label(f[0], {backgroundColor: FONDO, fontSize: '11px', fontWeight: 'bold', width: '130px', margin: '2px 4px'}),
+    ui.Label(f[1], {backgroundColor: FONDO, fontSize: '11px', width: '120px', margin: '2px 4px'}),
+    ui.Label(f[2], {backgroundColor: FONDO, fontSize: '11px', width: '100px', margin: '2px 4px'})], ui.Panel.Layout.flow('horizontal'), {backgroundColor: FONDO});
 }
 function verLegal(seccion) {
   abrirDer('Avisos legales · ' + CFG.nombre + ' v' + CFG.version);
@@ -449,14 +450,14 @@ function verLegal(seccion) {
 function pieLegal() {
   var b = function(txt, s) { return ui.Button({label: txt, onClick: function() { verLegal(s); }, style: {fontSize: '10px', margin: '2px', padding: '0'}}); };
   return ui.Panel([
-    ui.Label('© ' + GITECA_ANIO + ' ' + GITECA_AUTOR + '. Todos los derechos reservados.', {fontSize: '11px', color: '#666', margin: '8px 6px 2px'}),
-    ui.Panel([b('Autoría', 'autoria'), b('Términos', 'terminos'), b('Privacidad', 'privacidad'), b('Cookies', 'cookies'), b('Licencias', 'licencias')], ui.Panel.Layout.flow('horizontal', true))
-  ], null, {border: '1px solid #ddd', margin: '10px 0 0'});
+    ui.Label('© ' + GITECA_ANIO + ' ' + GITECA_AUTOR + '. Todos los derechos reservados.', {backgroundColor: FONDO, fontSize: '11px', color: '#666', margin: '8px 6px 2px'}),
+    ui.Panel([b('Autoría', 'autoria'), b('Términos', 'terminos'), b('Privacidad', 'privacidad'), b('Cookies', 'cookies'), b('Licencias', 'licencias')], ui.Panel.Layout.flow('horizontal', true), {backgroundColor: FONDO})
+  ], null, {border: '1px solid #d6dccd', margin: '10px 0 0', backgroundColor: FONDO});
 }
 
 // -------------------------------- Arranque ------------------------------------
-var lblArea = ui.Label('Sin área definida', {fontSize: '12px', fontWeight: 'bold', color: AZUL, margin: '2px 6px'});
-var cuerpo = ui.Panel();
+var lblArea = ui.Label('Sin área definida', {backgroundColor: FONDO, fontSize: '12px', fontWeight: 'bold', color: AZUL, margin: '2px 6px'});
+var cuerpo = ui.Panel({style: {backgroundColor: FONDO}});
 var pestanas = [
   {t: '① Área', fn: vistaArea}, {t: '② Cobertura', fn: vistaCobertura}, {t: '③ Biomasa', fn: vistaBiomasa},
   {t: '④ Fenología', fn: vistaFeno}, {t: '⑤ Alertas', fn: vistaAlertas}, {t: '⑥ Inundación', fn: vistaHidro}, {t: '⑦ Ficha', fn: vistaFicha}
