@@ -18,6 +18,18 @@ Peruana (UNAP).
 
 ## Bloque 2 — Scripts de Google Earth Engine (`gee/`)
 
+**Apps publicadas (abrir en el navegador):**
+
+| App | Enlace |
+|---|---|
+| Visor de tesis y cobertura | https://gitecapps-511217.projects.earthengine.app/view/giteca---visor-de-tesis-fcf-unap-y-perdida-de-bosque |
+| Monitor de biomasa GEDI | https://gitecapps-511217.projects.earthengine.app/view/giteca---monitor-de-biomasa-gedi |
+| Fenología de aguajales | https://gitecapps-511217.projects.earthengine.app/view/giteca---fenologia-de-aguajales |
+| Alertas de deforestación | https://gitecapps-511217.projects.earthengine.app/view/giteca---alertas-de-deforestacion-y-degradacion |
+| Hidroperíodo | https://gitecapps-511217.projects.earthengine.app/view/giteca---hidroperiodo-de-bosques-inundables |
+
+**App principal:** `gee/GITECA_monitor_amazonia.js` integra los 5 análisis en una sola interfaz con pestañas, ficha y descargas.
+
 Copie cada script en el Code Editor (code.earthengine.google.com) y ejecútelo.
 
 | # | Script | Datos | Qué hace |
