@@ -117,10 +117,29 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
 @media (max-width:1100px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.modulos{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.plat-top{grid-template-columns:1fr}.portada::before{background:linear-gradient(180deg,rgba(8,28,18,.85),rgba(8,28,18,.7))}}
 @media (max-width:540px){.kpis,.modulos{grid-template-columns:1fr 1fr}}
+
+section{border-top:1px solid var(--line);scroll-margin-top:56px}
+section.alt{background:#EEF3EC;box-shadow:0 0 0 100vmax #EEF3EC;clip-path:inset(0 -100vmax)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) section.alt{background:#122019;box-shadow:0 0 0 100vmax #122019}}
+:root[data-theme="dark"] section.alt{background:#122019;box-shadow:0 0 0 100vmax #122019}
+.head{margin-bottom:36px!important;max-width:80ch}
+.head h2{font-size:clamp(2.1rem,4.2vw,3.1rem)!important;position:relative;padding-left:20px}
+.head h2::before{content:"";position:absolute;left:0;top:.12em;bottom:.12em;width:6px;border-radius:3px;background:linear-gradient(#1F5E3B,#1C5D99)}
+.head .eyebrow{font-size:.85rem;padding-left:20px}
+.head>p{padding-left:20px;font-size:1.08rem}
+.sub2{font-size:1.45rem!important;color:#1F5E3B;margin:0 0 16px!important;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.bloque{margin-top:48px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.bloque .about .head{margin-bottom:0!important}.bloque .about .head>p{padding-left:0}.bloque .about .sub2{border:0;padding:0;margin:4px 0 10px!important}.bloque .about .head h3,.bloque .about .head .eyebrow{padding-left:0}
+.pub{grid-template-columns:150px 1fr!important;align-items:center!important}
+.pub img{width:150px!important;max-width:150px!important;height:200px!important;object-fit:cover;border-radius:6px;display:block}
+.pub img[src*="dipteryx"]{object-fit:contain;background:#fff}
+nav ul a{font-size:1.02rem!important}
+nav .brand{font-size:1.35rem!important}
+@media (max-width:860px){.pub{grid-template-columns:1fr!important}.pub img{width:100%!important;max-width:240px!important}}
 </style>
 
 <nav><div class="wrap"><a class="brand" href="#inicio">GITECA</a>
-<ul><li><a href="#servicios">Servicios</a></li><li><a href="#plataforma">Plataforma</a></li><li><a href="#proyectos">Proyectos</a></li><li><a href="#mapas">Mapas</a></li><li><a href="#perfil">Perfil</a></li><li><a href="#equipo">Equipo</a></li><li><a href="#cursos">Cursos</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
+<ul><li><a href="#servicios">Servicios</a></li><li><a href="#plataforma">Plataforma</a></li><li><a href="#proyectos">Proyectos</a></li><li><a href="#mapas">Mapas</a></li><li><a href="#equipo">Equipo</a></li><li><a href="#cursos">Cursos</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
 
 <header class="portada" id="inicio" role="img" aria-label="Bosque amazónico con mapas, drones y el logo de GITECA">
   <div class="wrap"><div class="txt">
@@ -138,7 +157,7 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
   <a class="kpi" href="#mapas"><small>Cartografía</small><b>5 + 1</b><span>láminas temáticas y un visor interactivo</span></a>
   <a class="kpi" href="#mapas"><small>Tablero</small><b>3</b><span>páginas de reporte en Data Studio con filtros</span></a>
   <a class="kpi" href="#mapas"><small>Monitoreo</small><b>36 158</b><span>polígonos de deforestación analizados (2017–2026)</span></a>
-  <a class="kpi" href="#perfil"><small>Territorio</small><b>3</b><span>regiones: Loreto, Ucayali y Madre de Dios</span></a>
+  <a class="kpi" href="#equipo"><small>Territorio</small><b>3</b><span>regiones: Loreto, Ucayali y Madre de Dios</span></a>
 </div></div>
 
 <section class="wrap" id="servicios">
@@ -154,7 +173,7 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
   </div>
 </section>
 
-<section class="wrap" id="plataforma">
+<section class="wrap alt" id="plataforma">
   <div class="plat-top">
     <div class="head" style="margin:0"><span class="eyebrow">En desarrollo · Plataforma GITECA</span><h2>Del censo forestal al informe técnico, en un solo flujo</h2>
       <p>Una plataforma para el trabajo completo del regente forestal y del titular del título habilitante: cargas los datos de campo una sola vez y los mapas, cálculos, informes y tableros se generan a partir de ellos, sin reconstruir cada análisis a mano.</p>
@@ -195,7 +214,7 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
     <tbody><tr><td><b>Visor de tesis y cobertura</b></td><td>Sitios de tesis + Hansen GFC</td><td>Bosque 2000 y pérdida anual alrededor de sitios de tesis FCF-UNAP</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---visor-de-tesis-fcf-unap-y-perdida-de-bosque" target="_blank" rel="noopener">Abrir app</a></td></tr><tr><td><b>Monitor de biomasa GEDI</b></td><td>GEDI L4B</td><td>Biomasa aérea, error estándar y carbono del área de trabajo</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---monitor-de-biomasa-gedi" target="_blank" rel="noopener">Abrir app</a></td></tr><tr><td><b>Fenología de aguajales</b></td><td>MODIS EVI, Sentinel-2</td><td>Series de tiempo y perfil mensual de aguajales y otros bosques</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---fenologia-de-aguajales" target="_blank" rel="noopener">Abrir app</a></td></tr><tr><td><b>Alertas de deforestación</b></td><td>Alertas RADD</td><td>Hectáreas alertadas por año y prioridad de atención</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---alertas-de-deforestacion-y-degradacion" target="_blank" rel="noopener">Abrir app</a></td></tr><tr><td><b>Hidroperíodo</b></td><td>JRC GSW, Sentinel-1</td><td>Meses de inundación bajo el dosel en várzea e igapó</td><td><a class="btn pri btn-sm" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---hidroperiodo-de-bosques-inundables" target="_blank" rel="noopener">Abrir app</a></td></tr></tbody></table></div>
 </section>
 
-<section class="wrap" id="mapas">
+<section class="wrap alt" id="mapas">
   <div class="head"><span class="eyebrow">Cartografía · R (sf, ggplot2, leaflet)</span><h2>Mapas con datos abiertos del sector forestal</h2><p>Láminas y visores elaborados en R con fuentes oficiales y abiertas: geoservicios de SERFOR, NASA FIRMS y GBIF. Clic en una lámina para verla en alta resolución.</p></div>
   <div class="visor"><div><span class="eyebrow">Visor interactivo</span><h3>Visor del patrimonio forestal del Perú</h3><p>Concesiones, Bosques de Producción Permanente, deforestación con filtro por año, incendios, focos de calor, especies CITES y puestos de control en un solo mapa.</p><a class="btn pri" href="mapas/visor_forestal.html" target="_blank" rel="noopener">Abrir visor</a></div><a href="mapas/visor_forestal.html" target="_blank" rel="noopener"><img src="mapas/img/visor.jpg" alt="Captura del visor interactivo con concesiones y densidad de deforestación" loading="lazy"></a></div>
   <div class="mapas"><figure class="mapa"><a href="mapas/img/01_concesiones.png" target="_blank" rel="noopener"><img src="mapas/img/01_concesiones.jpg" alt="Mapa de concesiones forestales por modalidad sobre Bosques de Producción Permanente en la Amazonía peruana" loading="lazy"></a><figcaption><b>Concesiones forestales por modalidad</b><span>1 781 concesiones y Bosques de Producción Permanente en la Amazonía (SERFOR).</span></figcaption></figure><figure class="mapa"><a href="mapas/img/02_deforestacion.png" target="_blank" rel="noopener"><img src="mapas/img/02_deforestacion.jpg" alt="Mapa de deforestación en hexágonos con gráficos de causas y hectáreas por año" loading="lazy"></a><figcaption><b>Deforestación por monitoreo satelital</b><span>36 158 polígonos 2017–2026: densidad en hexágonos, causa directa y hectáreas por año (UFMS-SERFOR).</span></figcaption></figure><figure class="mapa"><a href="mapas/img/03_incendios.png" target="_blank" rel="noopener"><img src="mapas/img/03_incendios.jpg" alt="Mapa coroplético de incendios forestales por departamento con Apurímac como el más afectado" loading="lazy"></a><figcaption><b>Incendios forestales por departamento</b><span>Registros de incendios forestales 2026 por departamento (SERFOR).</span></figcaption></figure><figure class="mapa"><a href="mapas/img/04_focos_calor.png" target="_blank" rel="noopener"><img src="mapas/img/04_focos_calor.jpg" alt="Mapa de focos de calor VIIRS de los últimos siete días en el Perú" loading="lazy"></a><figcaption><b>Focos de calor de los últimos 7 días</b><span>Detecciones VIIRS S-NPP con densidad relativa (NASA FIRMS).</span></figcaption></figure><figure class="mapa"><a href="mapas/img/05_especies_cites.png" target="_blank" rel="noopener"><img src="mapas/img/05_especies_cites.jpg" alt="Seis mapas pequeños con registros de especies maderables CITES en el Perú" loading="lazy"></a><figcaption><b>Especies maderables CITES</b><span>Ocurrencias de caoba, cedro, shihuahuaco, tahuarí y ishpingo en el Perú (GBIF).</span></figcaption></figure></div>
@@ -203,9 +222,16 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
   <p class="note" style="margin-top:20px">Código: carpeta <code>mapas/</code> del repositorio (01 preparación de datos, 02 láminas, 03 capas del visor). Los datos son de referencia y no reemplazan la información oficial de cada entidad.</p>
 </section>
 
-<section class="wrap" id="perfil">
+<section class="wrap" id="equipo">
+  <div class="head"><span class="eyebrow">Equipo técnico</span><h2>Quiénes trabajamos en GITECA</h2><p>Especialistas en SIG, monitoreo satelital, gestión de información y manejo forestal.</p></div>
+  <div class="equipo">
+    <div class="miembro"><img class="foto" src="img/gino.jpg" alt="Foto del Ing. Gino Di Ángelo Machoa Flores" loading="lazy"><h3>Ing. Gino Di Ángelo Machoa Flores</h3><p class="rol">Fundador · SIG, teledetección y ciencia de datos</p><p>Ingeniero en Ecología de Bosques Tropicales (UNAP). Investigación en Sistemas de Información Geográfica y teledetección aplicados al monitoreo de bosques y la ecología forestal; automatización con R y tableros de control.</p></div>
+    <div class="miembro"><img class="foto" src="img/manuel.jpg" alt="Foto del Ing. Manuel Galán Gonzales" loading="lazy"><h3>Ing. Manuel Galán Gonzales</h3><p class="rol">CIP N.° 246815 · Cartografía forestal y monitoreo satelital</p><p>Ingeniero Forestal (Universidad Nacional de Ucayali), especialista en SIG y regente forestal, con experiencia en cartografía forestal, análisis espacial, teledetección y monitoreo satelital de recursos forestales.</p></div>
+    <div class="miembro"><img class="foto" src="img/carlos.jpg" alt="Foto del Ing. Carlos Ángel Torres Ramírez" loading="lazy"><h3>Ing. Carlos Ángel Torres Ramírez</h3><p class="rol">Gestión de información y Power BI</p><p>Ingeniero de Sistemas con experiencia en consultorías de gestión de la información, análisis de datos, gestión de procesos y tableros interactivos en Power BI para el sector forestal (USFS FOREST – USAID). Especialista en la Secretaría de Gestión Pública de la PCM.</p></div>
+  </div>
+  <div class="bloque"><h3 class="sub2">Trayectoria del fundador</h3>
   <div class="about">
-    <div class="head"><span class="eyebrow">Perfil</span><h2>Gino Di Angelo Machoa Flores</h2>
+    <div class="head"><span class="eyebrow">Fundador</span><h3 class="sub2">Gino Di Angelo Machoa Flores</h3>
       <p>Ingeniero en Ecología de Bosques Tropicales (UNAP, CIP N.° 285808) con estudios de Maestría en Ciencias en Gestión Ambiental. Más de seis años convirtiendo datos forestales en información para el control, la supervisión y la toma de decisiones en la Amazonía peruana: SIG, teledetección, bases de datos, tableros y automatización con R.</p>
       <div class="cred"><span>SERFOR</span><span>OSINFOR</span><span>GORE Loreto · Madre de Dios</span><span>USAID / USFS FOREST+</span><span>PROFONANPE</span><span>SERNANP</span></div></div>
     <ul>
@@ -217,8 +243,6 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
       <li>Piloto de RPAS acreditado (drones DJI y Autel) y herramientas: R, Python, Power BI, Looker Studio, QGIS, ArcGIS, Google Earth Engine y SQL Server.</li>
     </ul>
   </div>
-  <div class="pub"><a href="https://cutt.ly/QQ8NfxV" target="_blank" rel="noopener"><img class="portada-pub" src="img/libro_osinfor.jpg" alt="Portada del Estudio ecológico de la estructura vertical de las principales especies forestales maderables en la Amazonía peruana" loading="lazy"></a><div><span class="eyebrow">Publicaciones</span><h3>Estudio ecológico de la estructura vertical de las principales especies forestales maderables en la Amazonía peruana</h3><p>OSINFOR; UNAP. 2021. Con financiamiento CONCYTEC–FONDECYT.</p><a class="btn pri btn-sm" href="https://cutt.ly/QQ8NfxV" target="_blank" rel="noopener">Ver publicación</a></div></div>
-  <div class="pub"><a href="https://drive.google.com/file/d/1s1wI_xwoiKQqtoIdUXDyviwLg15XihWL/view" target="_blank" rel="noopener"><img class="portada-pub" src="img/pub_dipteryx.jpg" alt="Mapas de distribución del género Dipteryx, D. micrantha y D. ferrea en el Perú" loading="lazy" style="width:100%;border-radius:6px"></a><div><span class="eyebrow">Investigación · Forest Data Connect – FCF-UNAP</span><h3>Estudio de la distribución espacial y estado de conservación de los ecosistemas idóneos para <i>Dipteryx ferrea</i> (Ducke) Ducke y <i>Dipteryx micrantha</i> Harms "shihuahuaco" (Fabaceae) en la Amazonía del Perú</h3><p>Participación como parte del equipo de Forest Data Connect – Facultad de Ciencias Forestales, UNAP. Superficie idónea aproximada: género <i>Dipteryx</i> 6 223 400 ha; <i>D. micrantha</i> 2 358 100 ha; <i>D. ferrea</i> 1 773 500 ha.</p><a class="btn pri btn-sm" href="https://drive.google.com/file/d/1s1wI_xwoiKQqtoIdUXDyviwLg15XihWL/view" target="_blank" rel="noopener">Ver estudio</a></div></div>
   <div class="tl">
     <div><b>2026</b><span>SERFOR · SIG, control de calidad y tableros de inspecciones CITES y del Módulo de Control SNIFFS</span></div>
     <div><b>2025</b><span>SERFOR · Análisis geoespacial y despliegue del Gestiona Forestal (MC-SNIFFS)</span></div>
@@ -227,18 +251,14 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
     <div><b>2022</b><span>OSINFOR · Monitoreo de planes de manejo (SISFOR) · GIDIT · GERFOR Loreto</span></div>
     <div><b>2019–2021</b><span>SERNANP · DAR · FOREST+ · RAFFS de Loreto, Ucayali y Madre de Dios</span></div>
   </div>
-</section>
-
-<section class="wrap" id="equipo">
-  <div class="head"><span class="eyebrow">Equipo técnico</span><h2>Quiénes trabajamos en GITECA</h2></div>
-  <div class="equipo">
-    <div class="miembro"><img class="foto" src="img/gino.jpg" alt="Foto del Ing. Gino Di Ángelo Machoa Flores" loading="lazy"><h3>Ing. Gino Di Ángelo Machoa Flores</h3><p class="rol">Fundador · SIG, teledetección y ciencia de datos</p><p>Ingeniero en Ecología de Bosques Tropicales (UNAP). Investigación en Sistemas de Información Geográfica y teledetección aplicados al monitoreo de bosques y la ecología forestal; automatización con R y tableros de control.</p></div>
-    <div class="miembro"><img class="foto" src="img/manuel.jpg" alt="Foto del Ing. Manuel Galán Gonzales" loading="lazy"><h3>Ing. Manuel Galán Gonzales</h3><p class="rol">CIP N.° 246815 · Cartografía forestal y monitoreo satelital</p><p>Ingeniero Forestal (Universidad Nacional de Ucayali), especialista en SIG y regente forestal, con experiencia en cartografía forestal, análisis espacial, teledetección y monitoreo satelital de recursos forestales.</p></div>
-    <div class="miembro"><img class="foto" src="img/carlos.jpg" alt="Foto del Ing. Carlos Ángel Torres Ramírez" loading="lazy"><h3>Ing. Carlos Ángel Torres Ramírez</h3><p class="rol">Gestión de información y Power BI</p><p>Ingeniero de Sistemas con experiencia en consultorías de gestión de la información, análisis de datos, gestión de procesos y tableros interactivos en Power BI para el sector forestal (USFS FOREST – USAID). Especialista en la Secretaría de Gestión Pública de la PCM.</p></div>
+  </div>
+  <div class="bloque"><h3 class="sub2">Publicaciones e investigación</h3>
+  <div class="pub"><a href="https://cutt.ly/QQ8NfxV" target="_blank" rel="noopener"><img class="portada-pub" src="img/libro_osinfor.jpg" alt="Portada del Estudio ecológico de la estructura vertical de las principales especies forestales maderables en la Amazonía peruana" loading="lazy"></a><div><span class="eyebrow">Publicaciones</span><h3>Estudio ecológico de la estructura vertical de las principales especies forestales maderables en la Amazonía peruana</h3><p>OSINFOR; UNAP. 2021. Con financiamiento CONCYTEC–FONDECYT.</p><a class="btn pri btn-sm" href="https://cutt.ly/QQ8NfxV" target="_blank" rel="noopener">Ver publicación</a></div></div>
+  <div class="pub"><a href="https://drive.google.com/file/d/1s1wI_xwoiKQqtoIdUXDyviwLg15XihWL/view" target="_blank" rel="noopener"><img class="portada-pub" src="img/pub_dipteryx.jpg" alt="Mapas de distribución del género Dipteryx, D. micrantha y D. ferrea en el Perú" loading="lazy" style="width:100%;border-radius:6px"></a><div><span class="eyebrow">Investigación · Forest Data Connect – FCF-UNAP</span><h3>Estudio de la distribución espacial y estado de conservación de los ecosistemas idóneos para <i>Dipteryx ferrea</i> (Ducke) Ducke y <i>Dipteryx micrantha</i> Harms "shihuahuaco" (Fabaceae) en la Amazonía del Perú</h3><p>Participación como parte del equipo de Forest Data Connect – Facultad de Ciencias Forestales, UNAP. Superficie idónea aproximada: género <i>Dipteryx</i> 6 223 400 ha; <i>D. micrantha</i> 2 358 100 ha; <i>D. ferrea</i> 1 773 500 ha.</p><a class="btn pri btn-sm" href="https://drive.google.com/file/d/1s1wI_xwoiKQqtoIdUXDyviwLg15XihWL/view" target="_blank" rel="noopener">Ver estudio</a></div></div>
   </div>
 </section>
 
-<section class="wrap" id="cursos">
+<section class="wrap alt" id="cursos">
   <div class="head"><span class="eyebrow">Capacitación</span><h2>Cursos</h2><p>Talleres prácticos con datos reales de la Amazonía, dictados por el equipo técnico de GITECA.</p></div>
   <h3 class="sub">Cursos realizados · en convenio con el Colegio de Ingenieros del Perú – Consejo Departamental Ucayali, Capítulo de Ingenieros Forestales</h3>
   <div class="pasados">
