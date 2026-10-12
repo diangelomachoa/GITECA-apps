@@ -143,10 +143,11 @@ nav .brand{font-size:1.35rem!important}
 .gf{margin-top:32px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left:6px solid #3F9A3A;border-radius:12px;padding:24px}
 .gf img{width:100%;border-radius:8px;display:block}.gf>div{display:grid;gap:10px}.gf p{margin:0;color:var(--muted)}.gf h3{font-size:1.4rem}
 @media (max-width:860px){.gf{grid-template-columns:1fr}}
+.cifras-frame{position:relative;width:100%;max-width:1200px;aspect-ratio:4/3;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 8px 24px rgba(15,40,25,.12);background:#fff}.cifras-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 </style>
 
 <nav><div class="wrap"><a class="brand" href="#inicio">GITECA</a>
-<ul><li><a href="#servicios">Servicios</a></li><li><a href="#plataforma">Plataforma</a></li><li><a href="#proyectos">Proyectos</a></li><li><a href="#mapas">Mapas</a></li><li><a href="#equipo">Equipo</a></li><li><a href="#cursos">Cursos</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
+<ul><li><a href="#servicios">Servicios</a></li><li><a href="#plataforma">Plataforma</a></li><li><a href="#proyectos">Proyectos</a></li><li><a href="#mapas">Mapas</a></li><li><a href="#equipo">Equipo</a></li><li><a href="#cursos">Cursos</a></li><li><a href="#cifras">Cifras</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
 
 <header class="portada" id="inicio" role="img" aria-label="Bosque amazónico con mapas, drones y el logo de GITECA">
   <div class="wrap"><div class="txt">
@@ -289,6 +290,12 @@ nav .brand{font-size:1.35rem!important}
     <div class="curso"><span class="eyebrow">Curso 2</span><h3>Google Earth Engine para monitoreo forestal</h3><p class="note">Deforestación, biomasa, fenología e inundación con imágenes de satélite.</p></div>
     <div class="curso"><span class="eyebrow">Curso 3</span><h3>Tableros con Power BI y Shiny</h3><p class="note">Visualización y seguimiento de indicadores ambientales.</p></div>
   </div>
+</section>
+
+<section class="wrap alt" id="cifras">
+  <div class="head"><span class="eyebrow">Transparencia · Google Analytics 4 + Data Studio</span><h2>El sitio en cifras</h2><p>Quién nos visita, desde dónde y qué consulta: visitas por país y ciudad, tendencia, dispositivos, secciones y apps más vistas, y canales de llegada. Datos reales desde octubre de 2026, sin cifras estimadas.</p></div>
+  <div class="cifras-frame"><iframe src="https://datastudio.google.com/embed/reporting/d1bbe0a4-eafd-48c3-9a25-6683c300fe02/page/TlJ0C" title="Reporte de visitas al sitio web de GITECA" loading="lazy" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe></div>
+  <p class="note" style="margin-top:12px">Medición con Google Analytics 4 sin datos personales identificables. <a href="https://datastudio.google.com/reporting/d1bbe0a4-eafd-48c3-9a25-6683c300fe02" target="_blank" rel="noopener">Abrir el reporte completo</a>.</p>
 </section>
 
 <section class="wrap" id="contacto">
