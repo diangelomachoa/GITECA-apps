@@ -51,6 +51,7 @@ Copie cada script en el Code Editor (code.earthengine.google.com) y ejecútelo.
 | 03 | `03_fenologia_aguajales.js` | MODIS MOD13Q1, Sentinel-2 + Cloud Score+ | Series EVI/NDVI y perfil mensual de un polígono |
 | 04 | `04_alertas_degradacion.js` | Alertas RADD, Sentinel-1 | Hectáreas alertadas por unidad de manejo y año; ΔVH como indicador de degradación |
 | 05 | `05_hidroperiodo.js` | JRC GSW v1.4, Sentinel-1 | Meses con inundación bajo el dosel (várzea/igapó) |
+| 07 | `07_rio_vivo.js` (RÍO VIVO · Amazonía peruana) | Landsat, Sentinel-2, JRC GSW, GHSL P2023A, Dynamic World, Hansen | Erosión y sedimentación de cauces, retroceso de orillas con transectos tipo DSAS, playas en aguas bajas y ocupación a lo largo de carreteras. Guía: `GUIA_RIO_VIVO.md` |
 
 Las áreas de ejemplo son rectángulos referenciales: cámbielos por su área de estudio. El umbral de inundación del script 05 debe calibrarse con datos de campo.
 
