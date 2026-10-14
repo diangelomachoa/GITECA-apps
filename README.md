@@ -39,6 +39,7 @@ Corren en el navegador con webR/Shinylive (sin servidor; la primera carga tarda 
 | Fenología de aguajales | https://gitecapps-511217.projects.earthengine.app/view/giteca---fenologia-de-aguajales |
 | Alertas de deforestación | https://gitecapps-511217.projects.earthengine.app/view/giteca---alertas-de-deforestacion-y-degradacion |
 | Hidroperíodo | https://gitecapps-511217.projects.earthengine.app/view/giteca---hidroperiodo-de-bosques-inundables |
+| RÍO VIVO · Amazonía peruana | https://gitecapps-511217.projects.earthengine.app/view/giteca---riovivo |
 
 **App principal:** `gee/GITECA_monitor_amazonia.js` integra los 5 análisis en una sola interfaz con pestañas, ficha y descargas.
 
@@ -51,6 +52,7 @@ Copie cada script en el Code Editor (code.earthengine.google.com) y ejecútelo.
 | 03 | `03_fenologia_aguajales.js` | MODIS MOD13Q1, Sentinel-2 + Cloud Score+ | Series EVI/NDVI y perfil mensual de un polígono |
 | 04 | `04_alertas_degradacion.js` | Alertas RADD, Sentinel-1 | Hectáreas alertadas por unidad de manejo y año; ΔVH como indicador de degradación |
 | 05 | `05_hidroperiodo.js` | JRC GSW v1.4, Sentinel-1 | Meses con inundación bajo el dosel (várzea/igapó) |
+| 07 | `07_rio_vivo.js` (RÍO VIVO · Amazonía peruana) | Landsat, Sentinel-2, JRC GSW, GHSL P2023A, Dynamic World, Hansen | Erosión y sedimentación de cauces, retroceso de orillas con transectos tipo DSAS, playas en aguas bajas y ocupación a lo largo de carreteras. Guía: `GUIA_RIO_VIVO.md` |
 
 Las áreas de ejemplo son rectángulos referenciales: cámbielos por su área de estudio. El umbral de inundación del script 05 debe calibrarse con datos de campo.
 
@@ -102,7 +104,10 @@ Despliegue en shinyapps.io: copie `data/`, `R/` y `recursos/` dentro de la carpe
 | Copernicus Sentinel-1 y Sentinel-2 | Contiene datos modificados de Copernicus Sentinel | GEE 03, 04, 05 |
 | Cloud Score+ (Google) | CC BY 4.0 | GEE 03 |
 | Alertas RADD (Wageningen University) | CC BY 4.0 | GEE 04 |
-| JRC Global Surface Water v1.4 | Uso libre con atribución (Source: EC JRC/Google) | GEE 05 |
+| JRC Global Surface Water v1.4 | Uso libre con atribución (Source: EC JRC/Google) | GEE 05 y 07 |
+| Landsat 5, 7, 8 y 9 (USGS) | Dominio público | GEE 07 |
+| GHSL P2023A (JRC) | CC BY 4.0 | GEE 07 |
+| Dynamic World (Google / WRI) | CC BY 4.0 | GEE 07 |
 | FAO GAUL 2015 | Uso no comercial con atribución | GEE 02 |
 | Esri World Imagery; CARTO / OpenStreetMap | Términos de Esri; © OpenStreetMap contributors (ODbL), © CARTO | App 04 (mapas base) |
 | Geoservicios SERFOR (geo.serfor.gob.pe) | Información pública del Estado, cita de la fuente | Mapas y visor |
