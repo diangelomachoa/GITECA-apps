@@ -1,0 +1,65 @@
+<!doctype html><html lang="es" data-theme="light" style="color-scheme:light"><head>
+<!-- Google tag (gtag.js) · medición de visitas GITECA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diseño de inventarios PGMF · Blog GITECA</title>
+<meta name="description" content="Con un solo shapefile de tipos de bosque, la app calcula superficies, número e intensidad de parcelas, las distribuye por estrato y las exporta listas para el GPS.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Diseña el inventario de tu PGMF en minutos, no en días">
+<meta property="og:description" content="Con un solo shapefile de tipos de bosque, la app calcula superficies, número e intensidad de parcelas, las distribuye por estrato y las exporta listas para el GPS.">
+<meta property="og:image" content="https://diangelomachoa.github.io/GITECA-apps/blog/img/herramienta-inventario-pgmf.jpg">
+<meta property="og:url" content="https://diangelomachoa.github.io/GITECA-apps/blog/herramienta-inventario-pgmf.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="blog.css">
+</head><body>
+<nav><div class="wrap"><a class="brand" href="../index.html">GITECA</a>
+<ul><li><a href="../index.html#servicios">Servicios</a></li><li><a href="../index.html#proyectos">Proyectos</a></li><li><a href="../index.html#cursos">Cursos</a></li><li><a href="./" aria-current="page">Blog</a></li><li><a href="../index.html#contacto">Contacto</a></li></ul></div></nav>
+
+<main class="wrap"><article class="articulo promo">
+  <a class="volver" href="./">← Todas las entradas</a>
+  <header>
+    <span class="meta"><span class="sello">Herramienta GITECA</span><time datetime="2026-10-14">14 oct 2026</time><span>Equipo GITECA</span></span>
+    <h1>Diseña el inventario de tu PGMF en minutos, no en días</h1>
+    <p class="bajada">Con un solo shapefile de tipos de bosque, la app calcula superficies, número e intensidad de parcelas, las distribuye por estrato y las exporta listas para el GPS.</p>
+    <div class="cta-fila"><a class="btn pri" href="../apps/inventario_sig.html" target="_blank" rel="noopener">Abrir la app ↗</a><span class="acceso">Herramienta de acceso autorizado: pide tu código desde la misma app.</span></div>
+  </header>
+  <figure style="margin:0"><img class="portada" src="img/herramienta-inventario-pgmf.jpg" alt="Portada de Diseño de inventarios PGMF"></figure>
+
+  <p class="gancho">¿Cuánto tiempo le toma a tu equipo diseñar el inventario de un Plan General de Manejo Forestal?</p>
+  <p>El diseño del inventario es uno de los pasos más repetitivos del PGMF: calcular la superficie de cada tipo de bosque, definir cuántas parcelas van en cada estrato, ubicarlas respetando la separación mínima y entregar coordenadas para el trabajo de campo. Lo desarrolló el Ing. Manuel Galán Gonzales, del equipo GITECA, siguiendo la RDE N.° 046-2016-SERFOR-DE.</p>
+
+  <h2>Antes y ahora</h2>
+  <div class="antes-ahora">
+    <div class="antes"><b>El proceso de siempre</b><ol><li>Calcular en el SIG la superficie de cada tipo de bosque.</li><li>Pasar las cifras a la plantilla de Excel para obtener número, dimensiones, intensidad y distancia de parcelas.</li><li>Dibujar las parcelas a mano en cada estrato, cuidando la separación entre ellas.</li><li>Generar centroides, armar la tabla y exportar por separado a SHP, KML y Excel.</li></ol><span class="t">⏱ 1 a 2 días de gabinete</span></div>
+    <div class="ahora"><b>Con la herramienta</b><ol><li>Subes el shapefile de tipos de bosque (o usas la capa de prueba).</li><li>La app calcula superficies y el diseño de inventario en la misma pantalla.</li><li>Pulsas «Generar»: las parcelas se distribuyen de Este a Oeste en cada estrato.</li><li>Exportas parcelas y centroides en SHP, KML, Excel y GeoJSON.</li></ol><span class="t">⚡ unos minutos</span></div>
+  </div>
+  <p class="nota-t">Tiempos de referencia estimados por el equipo GITECA; varían según el tamaño del área y la experiencia del usuario.</p>
+  <p class="ejemplo"><b>En la práctica:</b> Con la capa de prueba incluida (9 520,79 ha y 5 tipos de bosque), la app genera 52 parcelas, con una intensidad de 0,27 % y una distancia de 1 353 m entre parcelas.</p>
+
+  <h2>Qué hace</h2>
+  <ul class="checks"><li>Lee SHP comprimido en ZIP, KML, KMZ o GeoJSON, en WGS 84 o UTM.</li><li>Calcula la superficie por tipo de bosque y el diseño: número, dimensiones, área inventariada, intensidad y distancia.</li><li>Distribuye las parcelas por estrato con separación mínima y avisa si alguna no pudo ubicarse.</li><li>Exporta parcelas y centroides a SHP, KML, Excel y GeoJSON.</li></ul>
+
+  <h2>Para quién es</h2>
+  <div class="tags publico"><span>Titulares de títulos habilitantes</span><span>Regentes forestales</span><span>Consultores de PGMF</span><span>Evaluadores de planes de manejo</span></div>
+
+  <h2>Empieza en 3 pasos</h2>
+  <ol class="pasos"><li>Solicita tu código de acceso por WhatsApp o correo.</li><li>Carga tu capa de tipos de bosque o prueba con la de ejemplo.</li><li>Genera las parcelas, revísalas en el mapa y exporta.</li></ol>
+
+  <div class="cta-box">
+    <div><b>Diseño de inventarios PGMF</b><span>Herramienta de acceso autorizado: pide tu código desde la misma app.</span></div>
+    <a class="btn pri" href="../apps/inventario_sig.html" target="_blank" rel="noopener">Abrir la app ↗</a>
+  </div>
+
+  <div class="fuente"><b>Ten en cuenta:</b> Referencia: RDE N.° 046-2016-SERFOR-DE. El diseño debe revisarlo el regente antes de presentarlo. ¿Necesitas adaptarla a tu proyecto o capacitar a tu equipo? <a href="../index.html#contacto">Escríbenos</a>.</div>
+
+  <div class="compartir">
+    <a class="btn pri" href="../index.html#contacto">Cotizar una adaptación</a>
+    <a class="btn" id="li" href="#" target="_blank" rel="noopener">Compartir en LinkedIn</a>
+  </div>
+</article></main>
+
+<footer><div class="wrap">© 2026 Gino Machoa. Todos los derechos reservados. GITECA · Iquitos, Perú · gitecaconsulting@gmail.com</div></footer>
+<script>document.getElementById('li').href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href);</script>
+</body></html>
