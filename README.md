@@ -39,6 +39,7 @@ Corren en el navegador con webR/Shinylive (sin servidor; la primera carga tarda 
 | Fenología de aguajales | https://gitecapps-511217.projects.earthengine.app/view/giteca---fenologia-de-aguajales |
 | Alertas de deforestación | https://gitecapps-511217.projects.earthengine.app/view/giteca---alertas-de-deforestacion-y-degradacion |
 | Hidroperíodo | https://gitecapps-511217.projects.earthengine.app/view/giteca---hidroperiodo-de-bosques-inundables |
+| RÍO VIVO · Amazonía peruana | https://gitecapps-511217.projects.earthengine.app/view/giteca---riovivo |
 
 **App principal:** `gee/GITECA_monitor_amazonia.js` integra los 5 análisis en una sola interfaz con pestañas, ficha y descargas.
 

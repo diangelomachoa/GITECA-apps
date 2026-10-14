@@ -1,0 +1,65 @@
+<!doctype html><html lang="es" data-theme="light" style="color-scheme:light"><head>
+<!-- Google tag (gtag.js) · medición de visitas GITECA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RÍO VIVO · Amazonía peruana · Blog GITECA</title>
+<meta name="description" content="App de Google Earth Engine que mide la erosión y sedimentación de los ríos amazónicos, el retroceso de las orillas hacia los pueblos, las playas en aguas bajas y la ocupación a lo largo de carreteras, de 1985 a hoy.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RÍO VIVO: cuánto avanza el río sobre tu pueblo, medido con 40 años de satélite">
+<meta property="og:description" content="App de Google Earth Engine que mide la erosión y sedimentación de los ríos amazónicos, el retroceso de las orillas hacia los pueblos, las playas en aguas bajas y la ocupación a lo largo de carreteras, de 1985 a hoy.">
+<meta property="og:image" content="https://diangelomachoa.github.io/GITECA-apps/blog/img/herramienta-rio-vivo.jpg">
+<meta property="og:url" content="https://diangelomachoa.github.io/GITECA-apps/blog/herramienta-rio-vivo.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="blog.css">
+</head><body>
+<nav><div class="wrap"><a class="brand" href="../index.html">GITECA</a>
+<ul><li><a href="../index.html#servicios">Servicios</a></li><li><a href="../index.html#proyectos">Proyectos</a></li><li><a href="../index.html#cursos">Cursos</a></li><li><a href="./" aria-current="page">Blog</a></li><li><a href="../index.html#contacto">Contacto</a></li></ul></div></nav>
+
+<main class="wrap"><article class="articulo promo">
+  <a class="volver" href="./">← Todas las entradas</a>
+  <header>
+    <span class="meta"><span class="sello">Herramienta GITECA</span><time datetime="2026-10-14">14 oct 2026</time><span>Equipo GITECA</span></span>
+    <h1>RÍO VIVO: cuánto avanza el río sobre tu pueblo, medido con 40 años de satélite</h1>
+    <p class="bajada">App de Google Earth Engine que mide la erosión y sedimentación de los ríos amazónicos, el retroceso de las orillas hacia los pueblos, las playas en aguas bajas y la ocupación a lo largo de carreteras, de 1985 a hoy.</p>
+    <div class="cta-fila"><a class="btn pri" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---riovivo" target="_blank" rel="noopener">Abrir RÍO VIVO ↗</a><span class="acceso">Gratis, en el navegador y sin instalar nada.</span></div>
+  </header>
+  <figure style="margin:0"><img class="portada" src="img/herramienta-rio-vivo.jpg" alt="Portada de RÍO VIVO · Amazonía peruana"></figure>
+
+  <p class="gancho">¿En cuántos años alcanzará el río las primeras casas de Tiruntán, Genaro Herrera o Nauta?</p>
+  <p>Los ríos Ucayali, Marañón, Amazonas y Huallaga migran decenas o cientos de metros al año: se comen orillas, abandonan meandros y forman playas e islas. RÍO VIVO lleva a la Amazonía el método que se usa para las líneas de costa: posición de la orilla año por año, transectos al estilo DSAS y tasas de cambio, con imágenes Landsat desde 1985 y Sentinel-2 desde 2019.</p>
+
+  <h2>Antes y ahora</h2>
+  <div class="antes-ahora">
+    <div class="antes"><b>El proceso de siempre</b><ol><li>Descargar y seleccionar imágenes de la misma época hidrológica, año por año.</li><li>Digitalizar a mano la orilla en cada imagen.</li><li>Trazar transectos y medir distancias en un SIG con extensiones especializadas.</li><li>Calcular tasas de retroceso y cruzarlas con las construcciones en hojas de cálculo.</li></ol><span class="t">⏱ semanas de digitalización</span></div>
+    <div class="ahora"><b>Con la herramienta</b><ol><li>Eliges un pueblo de referencia o dibujas tu zona, el periodo y la época (aguas bajas o altas).</li><li>La app detecta el agua de cada año y muestra la erosión, la sedimentación y el año en que se erosionó cada sector.</li><li>Dibujas una línea base detrás del pueblo y obtienes los transectos con NSM, EPR y LRR (m/año).</li><li>Si hay construcciones, la app estima los años hasta que la erosión las alcance; descargas en CSV, KML o SHP.</li></ol><span class="t">⚡ minutos</span></div>
+  </div>
+  <p class="nota-t">Tiempos de referencia estimados por el equipo GITECA; varían según el tamaño del área y la experiencia del usuario.</p>
+  <p class="ejemplo"><b>En la práctica:</b> Incluye lugares de referencia de Loreto y Ucayali (Tiruntán, Genaro Herrera, Requena, Contamana, Nauta, Iquitos, Pebas, Caballococha, Yurimaguas, Pucallpa y otros) y el eje aproximado de la carretera Iquitos–Nauta.</p>
+
+  <h2>Qué hace</h2>
+  <ul class="checks"><li>② Cauce: agua por año, erosión y sedimentación en hectáreas y ha/año, frecuencia de agua, año de erosión y timelapse.</li><li>③ Orillas: transectos tipo DSAS con NSM, EPR y LRR, y años estimados hasta alcanzar las construcciones (Dynamic World).</li><li>④ Playas: arena expuesta en aguas bajas, superficie por año y polígonos del último año.</li><li>⑤ Carreteras: población y superficie construida (GHSL 1975–2025), pérdida de bosque por año y construcción reciente por franjas de distancia a la vía.</li></ul>
+
+  <h2>Para quién es</h2>
+  <div class="tags publico"><span>Gobiernos locales y regionales</span><span>Gestión del riesgo de desastres</span><span>Investigadores de ríos y paisajes</span><span>Proyectos de infraestructura y transporte fluvial</span></div>
+
+  <h2>Empieza en 3 pasos</h2>
+  <ol class="pasos"><li>Abre la app en el navegador y elige un pueblo o dibuja tu zona.</li><li>Elige el periodo y la época hidrológica (compara siempre la misma época).</li><li>Recorre las pestañas Cauce, Orillas, Playas o Carreteras y descarga los resultados.</li></ol>
+
+  <div class="cta-box">
+    <div><b>RÍO VIVO · Amazonía peruana</b><span>Gratis, en el navegador y sin instalar nada.</span></div>
+    <a class="btn pri" href="https://gitecapps-511217.projects.earthengine.app/view/giteca---riovivo" target="_blank" rel="noopener">Abrir RÍO VIVO ↗</a>
+  </div>
+
+  <div class="fuente"><b>Ten en cuenta:</b> Las tasas de erosión y los años hasta las construcciones son extrapolaciones de tendencias: sirven para priorizar, no son pronósticos ni alertas oficiales. Landsat mide 30 m por píxel; compare siempre la misma época hidrológica. ¿Necesitas adaptarla a tu proyecto o capacitar a tu equipo? <a href="../index.html#contacto">Escríbenos</a>.</div>
+
+  <div class="compartir">
+    <a class="btn pri" href="../index.html#contacto">Cotizar una adaptación</a>
+    <a class="btn" id="li" href="#" target="_blank" rel="noopener">Compartir en LinkedIn</a>
+  </div>
+</article></main>
+
+<footer><div class="wrap">© 2026 Gino Machoa. Todos los derechos reservados. GITECA · Iquitos, Perú · gitecaconsulting@gmail.com</div></footer>
+<script>document.getElementById('li').href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href);</script>
+</body></html>
