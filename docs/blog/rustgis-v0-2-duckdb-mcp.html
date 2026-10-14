@@ -1,0 +1,71 @@
+<!doctype html><html lang="es" data-theme="light" style="color-scheme:light"><head>
+<!-- Google tag (gtag.js) · medición de visitas GITECA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RustGIS 0.2: SQL con DuckDB y mapas con agentes de IA · Blog GITECA</title>
+<meta name="description" content="RustGIS v0.2.0 abre GeoPackage, GeoParquet y File Geodatabase, consulta con SQL vía DuckDB y trae un servidor MCP para que agentes de IA hagan mapas. Cómo aprovecharlo en control y monitoreo forestal.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RustGIS 0.2: SQL con DuckDB y mapas hechos por agentes de IA">
+<meta property="og:description" content="Más formatos, consultas SQL y un servidor MCP: qué cambia para automatizar el control y monitoreo forestal.">
+<meta property="og:image" content="https://diangelomachoa.github.io/GITECA-apps/blog/img/rustgis-v0-2-0.jpg">
+<meta property="og:url" content="https://diangelomachoa.github.io/GITECA-apps/blog/rustgis-v0-2-duckdb-mcp.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="blog.css">
+</head><body>
+<nav><div class="wrap"><a class="brand" href="../index.html">GITECA</a>
+<ul><li><a href="../index.html#servicios">Servicios</a></li><li><a href="../index.html#proyectos">Proyectos</a></li><li><a href="../index.html#cursos">Cursos</a></li><li><a href="./" aria-current="page">Blog</a></li><li><a href="../index.html#contacto">Contacto</a></li></ul></div></nav>
+
+<main class="wrap"><article class="articulo">
+  <a class="volver" href="./">← Todas las entradas</a>
+  <header>
+    <span class="meta"><time datetime="2026-10-14">14 oct 2026</time><span>Gino Machoa</span><span>5 min de lectura</span></span>
+    <h1>RustGIS 0.2: SQL con DuckDB y mapas hechos por agentes de IA</h1>
+    <p class="bajada">Un día después de su primera versión, RustGIS sumó más formatos, consultas SQL y un servidor MCP para que asistentes como Claude Code generen mapas. Para quienes automatizamos reportes forestales, es la parte más interesante.</p>
+    <div class="tags"><span>SIG libre</span><span>Automatización</span><span>Inteligencia artificial</span><span>Bases de datos</span></div>
+  </header>
+  <figure style="margin:0"><img class="portada" src="img/rustgis-v0-2-0.jpg" alt="Interfaz de RustGIS con un globo terráqueo temático, panel de capas a la izquierda y el panel del asistente de IA a la derecha"><figcaption>Imagen: RustGIS / Qiusheng Wu, publicación en LinkedIn.</figcaption></figure>
+
+  <h2>La novedad</h2>
+  <p>RustGIS v0.2.0 amplía los datos que puede abrir, incluso en la versión web; agrega un servidor MCP para que agentes de IA hagan mapas, y reorganiza la cinta de opciones según el orden real del trabajo. Lo nuevo:</p>
+  <ul>
+    <li><b>Más formatos:</b> GeoPackage, GeoParquet, FlatGeobuf, KML/KMZ, GPX, Shapefiles comprimidos en ZIP y PMTiles se abren directamente; los archivos grandes se leen por partes según la vista, también en la web.</li>
+    <li><b>Exportación:</b> las capas se guardan como GeoPackage, GeoParquet, Shapefile o KMZ.</li>
+    <li><b>SQL con DuckDB:</b> consultas SQL, bases DuckDB con DuckDB Spatial y lectura de File Geodatabase, DXF y otros formatos mediante GDAL.</li>
+    <li><b>Servidor MCP:</b> agentes como Claude Code, Cursor o VS Code pueden manejar RustGIS y hacer mapas con <code>rustgis-cli mcp</code>.</li>
+    <li><b>Cinta por etapas:</b> Inicio, Datos, Estilo, Edición, Análisis, Vista y Publicar, en 15 idiomas.</li>
+    <li><b>Instalación y actualización:</b> Homebrew, AUR, Fedora COPR y winget, y búsqueda de actualizaciones desde la pestaña Ayuda.</li>
+  </ul>
+
+  <h2>Por qué importa para el bosque</h2>
+  <p>La información forestal oficial suele llegar en File Geodatabase, Shapefile o KMZ, y los cruces que más se repiten (censo contra parcelas de corta, alertas contra concesiones) son, en el fondo, consultas. Poder leer una geodatabase, cruzarla con SQL y exportar a KMZ en la misma herramienta, y además pedírselo a un agente de IA, acerca la automatización a equipos que hoy hacen estos pasos a mano.</p>
+
+  <h2>Cómo lo aplicaríamos</h2>
+  <div class="aplicacion">
+    <div><b>Cruces del censo con SQL</b>Con DuckDB, una sola consulta resume volumen y número de árboles por especie y por parcela de corta, o lista los árboles de especies CITES fuera del área autorizada. Es el mismo análisis que hacemos en R, ahora directo sobre el mapa.</div>
+    <div><b>Geodatabases institucionales sin licencia</b>Leer File Geodatabase permite revisar entregas de SERFOR u OSINFOR desde una computadora sin ArcGIS y exportarlas a GeoPackage o GeoParquet para analizarlas o publicarlas.</div>
+    <div><b>Monitoreo de deforestación con datos grandes</b>GeoParquet y PMTiles cargan por partes miles de polígonos de pérdida de bosque o alertas tempranas, incluso en el navegador, para revisarlos por departamento o por título habilitante.</div>
+    <div><b>Del escritorio al campo</b>La exportación a KMZ y la lectura de GPX facilitan el ida y vuelta con el inspector: se envía el KMZ con los árboles a verificar y se carga el recorrido del GPS al volver.</div>
+    <div><b>Láminas generadas por un agente</b>Con el servidor MCP, un agente como Claude Code podría preparar las láminas de una inspección ocular siguiendo una plantilla, y el especialista solo revisa y firma. Es el siguiente paso en la automatización de productos espaciales que trabajamos en GITECA.</div>
+  </div>
+
+  <h2>Limitaciones y cuidados</h2>
+  <ul>
+    <li><b>Proyecto muy reciente.</b> Dos versiones en dos días indican mucho movimiento; conviene esperar a que se estabilice antes de usarlo en procesos oficiales.</li>
+    <li><b>Revisión humana.</b> Un mapa hecho por un agente de IA debe revisarse siempre: proyección, leyenda, fuentes y cifras.</li>
+    <li><b>Confidencialidad.</b> Si un agente trabaja con datos de expedientes o ubicaciones de especies CITES, asegúrate de que el modelo y las capas no salgan del entorno institucional.</li>
+  </ul>
+
+  <div class="fuente"><b>Fuente:</b> Qiusheng Wu, «RustGIS v0.2.0 is here!», LinkedIn, octubre de 2026. <a href="https://www.linkedin.com/feed/update/urn:li:activity:7515608704507953152/" target="_blank" rel="noopener">Ver la publicación original</a> · App web: <a href="https://web.rustgis.app" target="_blank" rel="noopener">web.rustgis.app</a> · Documentación: <a href="https://rustgis.app" target="_blank" rel="noopener">rustgis.app</a>. Traducción y análisis de aplicación: GITECA.</div>
+
+  <div class="compartir">
+    <a class="btn pri" href="../index.html#contacto">¿Lo aplicamos en tu proyecto?</a>
+    <a class="btn" href="rustgis-sig-libre-en-rust.html">← Anterior: RustGIS v0.1.0</a>
+    <a class="btn" id="li" href="#" target="_blank" rel="noopener">Compartir en LinkedIn</a>
+  </div>
+</article></main>
+
+<footer><div class="wrap">© 2026 Gino Machoa. Todos los derechos reservados. GITECA · Iquitos, Perú · diangelomachoa@gmail.com<br>La noticia comentada pertenece a su autor original; el análisis de aplicación es de GITECA.</div></footer>
+<script>document.getElementById('li').href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href);</script>
+</body></html>
