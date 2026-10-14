@@ -62,3 +62,31 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
 .btn.pri{background:var(--green);color:#fff}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.pri,:root:not([data-theme="light"]) .filtros button[aria-pressed="true"]{color:#0E1A14}}
 :root[data-theme="dark"] .btn.pri,:root[data-theme="dark"] .filtros button[aria-pressed="true"]{color:#0E1A14}
+
+/* Entradas promocionales de herramientas GITECA */
+.sello{font:600 .72rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;background:var(--green);color:#fff;padding:2px 8px;border-radius:4px}
+.cta-fila{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:4px}
+.acceso{font-size:.9rem;color:var(--muted)}
+.promo .gancho{font:600 clamp(1.25rem,2.6vw,1.6rem)/1.3 var(--f-display);color:var(--green);margin:28px 0 12px;padding-left:14px;border-left:4px solid var(--green)}
+.antes-ahora{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:12px 0 6px}
+.antes-ahora>div{padding:16px 18px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;gap:8px;align-content:start}
+.antes-ahora .ahora{border:2px solid var(--green)}
+.antes-ahora b{font-family:var(--f-display);font-size:1.05rem}
+.antes-ahora ol{margin:0;padding-left:20px;font-size:.96rem;display:grid;gap:4px}
+.antes-ahora .t{font:600 .95rem var(--f-mono);color:var(--muted)}
+.antes-ahora .ahora .t{color:var(--green)}
+.nota-t{font-size:.82rem;color:var(--muted);margin:4px 0 0}
+.ejemplo{margin-top:16px;padding:12px 16px;background:var(--accent-soft);border-radius:8px}
+.checks{list-style:none;padding:0;display:grid;gap:8px}
+.checks li{padding-left:28px;position:relative}
+.checks li:before{content:'✓';position:absolute;left:4px;color:var(--green);font-weight:700}
+.tags.publico span{font-size:.85rem;padding:5px 10px}
+.pasos{counter-reset:p;list-style:none;padding:0;display:grid;gap:10px}
+.pasos li{counter-increment:p;display:flex;gap:12px;align-items:center}
+.pasos li:before{content:counter(p);flex:none;width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:700}
+.cta-box{margin-top:32px;padding:20px 22px;border-radius:12px;background:#0D2219;color:#F1F6F2;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.cta-box div{display:grid;gap:2px}
+.cta-box b{font:700 1.2rem var(--f-display)}
+.cta-box span{color:#B9CDBF;font-size:.92rem}
+.cta-box .btn.pri{background:#6CC07B;border-color:#6CC07B;color:#0D2219}
+@media (max-width:640px){.antes-ahora{grid-template-columns:1fr}}
