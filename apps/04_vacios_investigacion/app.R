@@ -1,7 +1,7 @@
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | App 04 — Detector de vacíos de investigación
 # Ubica las tesis FCF-UNAP por las localidades citadas en título/resumen (gazetteer

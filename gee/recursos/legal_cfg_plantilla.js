@@ -1,7 +1,7 @@
 // =============================================================================
 // © 2026 Gino Machoa. Todos los derechos reservados.
 // Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-// Contacto: diangelomachoa@gmail.com
+// Contacto: gitecaconsulting@gmail.com
 // Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 // GITECA | Plantilla del bloque LEGAL — copiar antes del arranque de la app y ajustar.
 // Debajo pegar recursos/legal_fn.js sin cambios.

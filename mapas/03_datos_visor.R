@@ -1,7 +1,7 @@
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | Mapas 03 — Capas livianas para el visor web (docs/mapas/visor_forestal.html)
 # Polígonos simplificados en GeoJSON y puntos en CSV compacto, para carga rápida en GitHub Pages.

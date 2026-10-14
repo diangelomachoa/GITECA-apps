@@ -1,7 +1,7 @@
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | App 01 — Explorador bibliométrico de tesis FCF-UNAP
 # Fuente de datos: Repositorio Institucional UNAP (repositorio.unapiquitos.edu.pe),
@@ -24,7 +24,7 @@ stop_es <- c("de","la","el","en","y","los","las","del","con","por","para","a","u
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # =============================================================================
 # Módulo legal y de marca para las apps Shiny de GITECA:
@@ -41,7 +41,7 @@ stop_es <- c("de","la","el","en","y","los","las","del","con","por","para","a","u
 GITECA <- list(
   autor  = "Gino Machoa",
   perfil = "Ing. en Ecología de Bosques Tropicales · Universidad Nacional de la Amazonía Peruana (UNAP), Iquitos",
-  correo = "diangelomachoa@gmail.com",
+  correo = "gitecaconsulting@gmail.com",
   marca  = "GITECA · Gestión de Información, Tecnología y Ciencias Ambientales",
   web    = "https://diangelomachoa.github.io/GITECA-apps/",
   anio   = format(Sys.Date(), "%Y")

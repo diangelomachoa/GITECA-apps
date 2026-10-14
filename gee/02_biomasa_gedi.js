@@ -1,7 +1,7 @@
 // =============================================================================
 // © 2026 Gino Machoa. Todos los derechos reservados.
 // Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-// Contacto: diangelomachoa@gmail.com
+// Contacto: gitecaconsulting@gmail.com
 // Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 // GITECA | GEE 02 — Monitor de biomasa aérea: GEDI L4B vs. parcelas de campo
 // GEDI L4B v2.1 (Dubayah et al.): biomasa aérea media (Mg/ha) en grilla de 1 km.
@@ -59,7 +59,7 @@ var LEGAL = {
   ]
 };
 var GITECA_AUTOR = 'Gino Machoa';
-var GITECA_CORREO = 'diangelomachoa@gmail.com';
+var GITECA_CORREO = 'gitecaconsulting@gmail.com';
 var GITECA_PERFIL = 'Ing. en Ecología de Bosques Tropicales · Universidad Nacional de la Amazonía Peruana (UNAP), Iquitos';
 var GITECA_MARCA = 'GITECA · Gestión de Información, Tecnología y Ciencias Ambientales';
 var GITECA_WEB = 'https://diangelomachoa.github.io/GITECA-apps/';
