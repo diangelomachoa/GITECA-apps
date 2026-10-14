@@ -103,7 +103,10 @@ Despliegue en shinyapps.io: copie `data/`, `R/` y `recursos/` dentro de la carpe
 | Copernicus Sentinel-1 y Sentinel-2 | Contiene datos modificados de Copernicus Sentinel | GEE 03, 04, 05 |
 | Cloud Score+ (Google) | CC BY 4.0 | GEE 03 |
 | Alertas RADD (Wageningen University) | CC BY 4.0 | GEE 04 |
-| JRC Global Surface Water v1.4 | Uso libre con atribución (Source: EC JRC/Google) | GEE 05 |
+| JRC Global Surface Water v1.4 | Uso libre con atribución (Source: EC JRC/Google) | GEE 05 y 07 |
+| Landsat 5, 7, 8 y 9 (USGS) | Dominio público | GEE 07 |
+| GHSL P2023A (JRC) | CC BY 4.0 | GEE 07 |
+| Dynamic World (Google / WRI) | CC BY 4.0 | GEE 07 |
 | FAO GAUL 2015 | Uso no comercial con atribución | GEE 02 |
 | Esri World Imagery; CARTO / OpenStreetMap | Términos de Esri; © OpenStreetMap contributors (ODbL), © CARTO | App 04 (mapas base) |
 | Geoservicios SERFOR (geo.serfor.gob.pe) | Información pública del Estado, cita de la fuente | Mapas y visor |
