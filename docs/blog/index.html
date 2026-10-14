@@ -1,0 +1,47 @@
+<!doctype html><html lang="es" data-theme="light" style="color-scheme:light"><head>
+<!-- Google tag (gtag.js) · medición de visitas GITECA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blog GITECA</title>
+<meta name="description" content="Novedades del mundo SIG y la teledetección, y cómo aplicarlas en el sector forestal y ambiental de la Amazonía peruana.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Blog GITECA · Novedades SIG para el bosque">
+<meta property="og:description" content="Novedades del mundo SIG y la teledetección, y cómo aplicarlas en el sector forestal y ambiental.">
+<meta property="og:url" content="https://diangelomachoa.github.io/GITECA-apps/blog/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="blog.css">
+</head><body>
+<nav><div class="wrap"><a class="brand" href="../index.html">GITECA</a>
+<ul><li><a href="../index.html#servicios">Servicios</a></li><li><a href="../index.html#proyectos">Proyectos</a></li><li><a href="../index.html#mapas">Mapas</a></li><li><a href="../index.html#cursos">Cursos</a></li><li><a href="./" aria-current="page">Blog</a></li><li><a href="../index.html#contacto">Contacto</a></li></ul></div></nav>
+
+<main class="wrap">
+  <div class="blog-head">
+    <span class="eyebrow">Blog · Novedades GIS</span>
+    <h1>Lo nuevo en SIG y teledetección, aterrizado al bosque</h1>
+    <p>Comentamos herramientas, datos y métodos que aparecen en el mundo geoespacial y explicamos cómo usarlos en el sector forestal y ambiental: control, monitoreo, inventarios y gestión del patrimonio.</p>
+  </div>
+  <div class="filtros" id="filtros" role="group" aria-label="Filtrar por tema"></div>
+  <div class="posts" id="posts"></div>
+</main>
+
+<footer><div class="wrap">© 2026 Gino Machoa. Todos los derechos reservados. GITECA · Gestión de Información, Tecnología y Ciencias Ambientales · Iquitos, Perú · diangelomachoa@gmail.com<br>Las noticias comentadas pertenecen a sus autores originales; cada entrada enlaza su fuente.</div></footer>
+
+<script src="entradas.js"></script>
+<script>
+(function(){
+  var posts=document.getElementById('posts'), filtros=document.getElementById('filtros');
+  var temas=GitecaBlog.etiquetas();
+  function pintar(t){
+    GitecaBlog.tarjetas(posts,{etiqueta:t,vacio:'Muy pronto: primeras entradas sobre novedades GIS aplicadas al sector forestal.'});
+    filtros.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',String((b.dataset.t||'')===(t||'')));});
+  }
+  if(temas.length>1){
+    filtros.innerHTML=['<button type="button" data-t="">Todos</button>'].concat(temas.map(function(t){return '<button type="button" data-t="'+t+'">'+t+'</button>';})).join('');
+    filtros.addEventListener('click',function(e){var b=e.target.closest('button');if(b)pintar(b.dataset.t);});
+  }
+  pintar('');
+})();
+</script>
+</body></html>

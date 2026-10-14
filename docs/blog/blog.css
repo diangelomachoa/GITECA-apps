@@ -1,0 +1,64 @@
+/* Blog GITECA · mismos tokens y tipografías que docs/index.html */
+:root{
+  --bg:#F5F8F4; --surface:#FFFFFF; --fg:#13261C; --muted:#4D6157; --line:#D5E0D7;
+  --green:#2E7D3E; --blue:#1C5D99; --accent-soft:#E3EFE5;
+  --f-display:"Outfit",system-ui,sans-serif; --f-body:"Source Sans 3",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1A14;--surface:#15241C;--fg:#E6EFE8;--muted:#9DB3A6;--line:#2A3D32;--green:#6CC07B;--blue:#78AEE3;--accent-soft:#1C3326;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1A14;--surface:#15241C;--fg:#E6EFE8;--muted:#9DB3A6;--line:#2A3D32;--green:#6CC07B;--blue:#78AEE3;--accent-soft:#1C3326;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:400 1.06rem/1.6 var(--f-body);margin:0}
+.wrap{max-width:1360px;margin:0 auto;padding-inline:clamp(16px,4vw,32px)}
+a{color:var(--blue)} a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+.eyebrow{font:500 .78rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px;flex-wrap:wrap}
+nav .brand{font:700 1.2rem var(--f-display);color:var(--fg);text-decoration:none;letter-spacing:.02em}
+nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+nav ul a{color:var(--muted);text-decoration:none;font-weight:600;font-size:.95rem} nav ul a:hover,nav ul a[aria-current]{color:var(--green)}
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);font-size:.85rem;margin-top:48px}
+
+/* Portada del blog */
+.blog-head{padding-block:clamp(36px,6vw,64px) 24px;display:grid;gap:10px;max-width:75ch}
+.blog-head h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:700}
+.blog-head p{color:var(--muted);margin:0;font-size:1.15rem}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.filtros button{font:600 .88rem var(--f-body);padding:6px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.filtros button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+
+/* Tarjetas (también se usan en la portada del sitio) */
+.posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:22px}
+.post-card{display:grid;grid-template-rows:auto 1fr;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
+.post-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.post-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--accent-soft)}
+.post-card .cuerpo{padding:18px;display:grid;gap:8px;align-content:start}
+.post-card h3{font-size:1.15rem;font-weight:600}
+.post-card p{margin:0;color:var(--muted);font-size:.96rem}
+.meta{font:500 .78rem var(--f-mono);color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font:500 .74rem var(--f-mono);padding:3px 8px;border-radius:4px;background:var(--accent-soft);color:var(--fg)}
+.vacio{color:var(--muted);font-style:italic}
+
+/* Artículo */
+.articulo{max-width:74ch;margin:0 auto;padding-block:clamp(32px,5vw,56px)}
+.articulo .volver{font-weight:600;text-decoration:none;font-size:.95rem}
+.articulo header{display:grid;gap:12px;margin:18px 0 24px}
+.articulo h1{font-size:clamp(1.9rem,4vw,2.6rem);font-weight:700}
+.articulo .bajada{font-size:1.2rem;color:var(--muted);margin:0}
+.articulo .portada{width:100%;border-radius:10px;margin-bottom:8px}
+.articulo figcaption{font-size:.85rem;color:var(--muted);margin-bottom:24px}
+.articulo h2{font-size:1.5rem;font-weight:700;margin:36px 0 12px}
+.articulo h3{margin:24px 0 8px}
+.articulo p,.articulo li{max-width:70ch}
+.articulo blockquote{margin:20px 0;padding:12px 18px;border-left:4px solid var(--green);background:var(--accent-soft);border-radius:0 8px 8px 0}
+.aplicacion{display:grid;gap:14px;margin:16px 0}
+.aplicacion div{padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--green);border-radius:8px}
+.aplicacion div:nth-child(even){border-top-color:var(--blue)}
+.aplicacion b{display:block;font-family:var(--f-display);margin-bottom:4px}
+.fuente{margin-top:36px;padding:16px 18px;border:1px dashed var(--line);border-radius:8px;font-size:.95rem;color:var(--muted)}
+.compartir{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;text-decoration:none;border:2px solid var(--green);cursor:pointer;font:600 .95rem var(--f-body);color:var(--green);background:transparent}
+.btn.pri{background:var(--green);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.pri,:root:not([data-theme="light"]) .filtros button[aria-pressed="true"]{color:#0E1A14}}
+:root[data-theme="dark"] .btn.pri,:root[data-theme="dark"] .filtros button[aria-pressed="true"]{color:#0E1A14}

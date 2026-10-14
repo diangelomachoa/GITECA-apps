@@ -1,0 +1,72 @@
+<!doctype html><html lang="es" data-theme="light" style="color-scheme:light"><head>
+<!-- Google tag (gtag.js) · medición de visitas GITECA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RustGIS: un SIG libre con asistente de IA · Blog GITECA</title>
+<meta name="description" content="Qiusheng Wu lanzó RustGIS v0.1.0, un SIG de escritorio y web libre, con más de 1 000 herramientas y un asistente de IA. Qué trae y cómo lo usaríamos en el sector forestal.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RustGIS: un SIG libre, en el navegador y con asistente de IA">
+<meta property="og:description" content="Qué trae RustGIS v0.1.0 y cómo aplicarlo en planes de manejo, supervisión y monitoreo forestal.">
+<meta property="og:image" content="https://diangelomachoa.github.io/GITECA-apps/blog/img/rustgis-v0-1-0.jpg">
+<meta property="og:url" content="https://diangelomachoa.github.io/GITECA-apps/blog/rustgis-sig-libre-en-rust.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="blog.css">
+</head><body>
+<nav><div class="wrap"><a class="brand" href="../index.html">GITECA</a>
+<ul><li><a href="../index.html#servicios">Servicios</a></li><li><a href="../index.html#proyectos">Proyectos</a></li><li><a href="../index.html#cursos">Cursos</a></li><li><a href="./" aria-current="page">Blog</a></li><li><a href="../index.html#contacto">Contacto</a></li></ul></div></nav>
+
+<main class="wrap"><article class="articulo">
+  <a class="volver" href="./">← Todas las entradas</a>
+  <header>
+    <span class="meta"><time datetime="2026-10-14">14 oct 2026</time><span>Gino Machoa</span><span>5 min de lectura</span></span>
+    <h1>RustGIS: un SIG libre, en el navegador y con asistente de IA</h1>
+    <p class="bajada">Qiusheng Wu, autor de geemap y leafmap, publicó la primera versión de RustGIS: un SIG de escritorio completo que también corre en el navegador. Revisamos qué trae y dónde podría ayudarnos en el trabajo forestal.</p>
+    <div class="tags"><span>SIG libre</span><span>Inteligencia artificial</span><span>Cartografía</span></div>
+  </header>
+  <figure style="margin:0"><img class="portada" src="img/rustgis-v0-1-0.jpg" alt="Captura promocional de RustGIS mostrando un mapa temático de países con su tabla de atributos y panel de simbología"><figcaption>Imagen: RustGIS / Qiusheng Wu, publicación en LinkedIn.</figcaption></figure>
+
+  <h2>La novedad</h2>
+  <p>RustGIS v0.1.0 es un SIG gratuito y de código abierto escrito íntegramente en Rust, para hacer mapas, analizar y compartir datos geoespaciales. Funciona de forma nativa en Windows, macOS y Linux, y también en el navegador (<a href="https://web.rustgis.app" target="_blank" rel="noopener">web.rustgis.app</a>), sin instalar nada. Los datos se quedan en tu computadora, salvo que decidas enviarlos a un modelo de IA, y cada acción es un comando que se puede automatizar.</p>
+  <p>Lo que incluye esta primera versión, según su autor:</p>
+  <ul>
+    <li><b>Datos:</b> GeoJSON, CSV, Shapefile, GeoParquet, FlatGeobuf, PMTiles, GeoTIFF y COG, teselas web y vectoriales con estilos MapLibre, en globo 3D o en cualquier proyección.</li>
+    <li><b>Cartografía:</b> simbología temática, etiquetas sin superposición, diseños de página, <b>series de mapas</b>, exportación a PDF, reportes y presentaciones.</li>
+    <li><b>Análisis:</b> superposición y proximidad, flujos guiados, ModelBuilder y más de 1 000 herramientas de GeoLibre y Whitebox para terreno, hidrología y LiDAR, incluso dentro del navegador.</li>
+    <li><b>Edición:</b> ajuste (snapping), plantillas, dominios y reglas de atributos, con deshacer en cada cambio.</li>
+    <li><b>Asistente de IA:</b> preguntas o instrucciones en lenguaje natural con el modelo que elijas (Anthropic, OpenAI, Gemini, Ollama y otros).</li>
+    <li><b>Automatización:</b> cualquier comando desde la línea de comandos y complementos en WebAssembly.</li>
+    <li>Instaladores para Windows, macOS y Linux, e interfaz en 15 idiomas.</li>
+  </ul>
+
+  <h2>Por qué importa para el bosque</h2>
+  <p>En el sector forestal peruano, buena parte del trabajo SIG lo hacen regentes, consultores pequeños y técnicos de campo que no siempre tienen licencias comerciales ni computadoras potentes. Un SIG libre que abre en el navegador, con herramientas de terreno e hidrología y con series de mapas, cubre justo lo que piden los planes de manejo y las supervisiones: láminas repetitivas, análisis de pendiente y drenaje, y control de calidad de los datos del censo.</p>
+
+  <h2>Cómo lo aplicaríamos</h2>
+  <div class="aplicacion">
+    <div><b>Láminas del plan operativo en serie</b>Con las series de mapas se puede generar una lámina por parcela de corta (ubicación, censo, red hídrica, caminos) a partir de una sola plantilla, en lugar de armar cada lámina a mano. Es el mismo flujo que enseñamos en el curso de mapas para planes operativos, ahora con una herramienta libre.</div>
+    <div><b>Control de calidad del censo forestal</b>Los dominios y las reglas de atributos permiten validar al editar: que la especie pertenezca a la lista autorizada, que el DAP no sea menor al diámetro mínimo de corta o que la condición del árbol (aprovechable, semillero) esté siempre llena. Así los errores se detectan antes de llegar al expediente.</div>
+    <div><b>Terreno e hidrología para caminos y fajas marginales</b>Las herramientas de Whitebox (pendiente, acumulación de flujo, red de drenaje) ayudan a trazar caminos forestales y a delimitar las fajas de protección de quebradas con un modelo de elevación, sin salir del programa.</div>
+    <div><b>Consultas en lenguaje natural</b>El asistente puede responder «¿cuántos árboles semilleros hay a menos de 50 m de una quebrada?» o «etiqueta los árboles por especie». Para datos sensibles conviene usar un modelo local como Ollama, para que la información no salga de la computadora.</div>
+  </div>
+
+  <h2>Limitaciones y cuidados</h2>
+  <ul>
+    <li><b>Es una versión 0.1.</b> Recién sale; hay que probarla con datos reales y comparar resultados con QGIS o ArcGIS antes de usarla en un expediente o informe oficial.</li>
+    <li><b>Datos sensibles y IA.</b> Las ubicaciones de árboles CITES, los datos de titulares o la información de expedientes no deben enviarse a un modelo en la nube. Usa un modelo local o no actives el asistente para esas capas.</li>
+    <li><b>Formatos oficiales.</b> Verifica que las capas exportadas respeten el sistema de coordenadas y la estructura que exige SERFOR (por ejemplo, WGS 84 / UTM 18S o 19S).</li>
+  </ul>
+
+  <div class="fuente"><b>Fuente:</b> Qiusheng Wu, «Introducing RustGIS v0.1.0, the first release!», LinkedIn, octubre de 2026. <a href="https://www.linkedin.com/feed/update/urn:li:activity:7515391442081619968/" target="_blank" rel="noopener">Ver la publicación original</a> · Documentación: <a href="https://rustgis.app" target="_blank" rel="noopener">rustgis.app</a>. Traducción y análisis de aplicación: GITECA.</div>
+
+  <div class="compartir">
+    <a class="btn pri" href="../index.html#contacto">¿Lo aplicamos en tu proyecto?</a>
+    <a class="btn" href="rustgis-v0-2-duckdb-mcp.html">Siguiente: RustGIS v0.2.0 →</a>
+    <a class="btn" id="li" href="#" target="_blank" rel="noopener">Compartir en LinkedIn</a>
+  </div>
+</article></main>
+
+<footer><div class="wrap">© 2026 Gino Machoa. Todos los derechos reservados. GITECA · Iquitos, Perú · diangelomachoa@gmail.com<br>La noticia comentada pertenece a su autor original; el análisis de aplicación es de GITECA.</div></footer>
+<script>document.getElementById('li').href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href);</script>
+</body></html>

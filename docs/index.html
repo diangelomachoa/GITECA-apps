@@ -144,10 +144,11 @@ nav .brand{font-size:1.35rem!important}
 .gf img{width:100%;border-radius:8px;display:block}.gf>div{display:grid;gap:10px}.gf p{margin:0;color:var(--muted)}.gf h3{font-size:1.4rem}
 @media (max-width:860px){.gf{grid-template-columns:1fr}}
 .cifras-frame{position:relative;width:100%;max-width:1200px;aspect-ratio:4/3;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 8px 24px rgba(15,40,25,.12);background:#fff}.cifras-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:22px}.post-card{display:grid;grid-template-rows:auto 1fr;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}.post-card:hover{border-color:var(--green);transform:translateY(-2px)}.post-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--accent-soft)}.post-card .cuerpo{padding:18px;display:grid;gap:8px;align-content:start}.post-card p{margin:0;color:var(--muted);font-size:.96rem}.post-card .meta{font:500 .78rem var(--f-mono);color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px}.vacio{color:var(--muted);font-style:italic}
 </style>
 
 <nav><div class="wrap"><a class="brand" href="#inicio">GITECA</a>
-<ul><li><a href="#servicios">Servicios</a></li><li><a href="#plataforma">Plataforma</a></li><li><a href="#proyectos">Proyectos</a></li><li><a href="#mapas">Mapas</a></li><li><a href="#equipo">Equipo</a></li><li><a href="#cursos">Cursos</a></li><li><a href="#cifras">Cifras</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
+<ul><li><a href="#servicios">Servicios</a></li><li><a href="#plataforma">Plataforma</a></li><li><a href="#proyectos">Proyectos</a></li><li><a href="#mapas">Mapas</a></li><li><a href="#equipo">Equipo</a></li><li><a href="#cursos">Cursos</a></li><li><a href="#blog">Blog</a></li><li><a href="#cifras">Cifras</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
 
 <header class="portada" id="inicio" role="img" aria-label="Bosque amazónico con mapas, drones y el logo de GITECA">
   <div class="wrap"><div class="txt">
@@ -294,6 +295,14 @@ nav .brand{font-size:1.35rem!important}
     <div class="curso"><span class="eyebrow">Curso 3</span><h3>Tableros con Power BI y Shiny</h3><p class="note">Visualización y seguimiento de indicadores ambientales.</p></div>
   </div>
 </section>
+
+<section class="wrap" id="blog">
+  <div class="head"><span class="eyebrow">Blog · Novedades GIS</span><h2>Lo nuevo en SIG y teledetección, aterrizado al bosque</h2><p>Herramientas, datos y métodos que aparecen en el mundo geoespacial, y cómo aplicarlos en el control, monitoreo y gestión del patrimonio forestal y ambiental.</p></div>
+  <div class="posts" id="blog-ultimas"></div>
+  <div class="btns" style="margin-top:24px"><a class="btn sec" href="blog/">Ver todas las entradas</a></div>
+</section>
+<script src="blog/entradas.js"></script>
+<script>GitecaBlog.tarjetas(document.getElementById('blog-ultimas'),{base:'blog/',limite:3,vacio:'Muy pronto: primeras entradas sobre novedades GIS aplicadas al sector forestal.'});</script>
 
 <section class="wrap alt" id="cifras">
   <div class="head"><span class="eyebrow">Transparencia · Google Analytics 4 + Data Studio</span><h2>El sitio en cifras</h2><p>Quién nos visita, desde dónde y qué consulta: visitas por país y ciudad, tendencia, dispositivos, secciones y apps más vistas, y canales de llegada. Datos reales desde octubre de 2026, sin cifras estimadas.</p></div>
