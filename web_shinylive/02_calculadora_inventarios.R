@@ -1,7 +1,7 @@
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | App 02 — Calculadora de inventarios forestales
 # Estandariza el procesamiento que se repite en cientos de tesis de estructura y
@@ -17,7 +17,7 @@ gh_csv <- function(f) { tmp <- tempfile(fileext = ".csv"); download.file(paste0(
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | Funciones forestales compartidas
 # Referencias:
@@ -101,7 +101,7 @@ dens_lib <- gh_csv("densidad_por_especie.csv")
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # =============================================================================
 # Módulo legal y de marca para las apps Shiny de GITECA:
@@ -118,7 +118,7 @@ dens_lib <- gh_csv("densidad_por_especie.csv")
 GITECA <- list(
   autor  = "Gino Machoa",
   perfil = "Ing. en Ecología de Bosques Tropicales · Universidad Nacional de la Amazonía Peruana (UNAP), Iquitos",
-  correo = "diangelomachoa@gmail.com",
+  correo = "gitecaconsulting@gmail.com",
   marca  = "GITECA · Gestión de Información, Tecnología y Ciencias Ambientales",
   web    = "https://diangelomachoa.github.io/GITECA-apps/",
   anio   = format(Sys.Date(), "%Y")

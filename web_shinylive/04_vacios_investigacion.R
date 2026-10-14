@@ -1,7 +1,7 @@
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # GITECA | App 04 — Detector de vacíos de investigación
 # Ubica las tesis FCF-UNAP por las localidades citadas en título/resumen (gazetteer
@@ -24,7 +24,7 @@ temas <- sort(unique(tesis$tema_principal))
 # =============================================================================
 # © 2026 Gino Machoa. Todos los derechos reservados.
 # Autor y desarrollador: Gino Machoa · GITECA (Gestión de Información, Tecnología y Ciencias Ambientales)
-# Contacto: diangelomachoa@gmail.com
+# Contacto: gitecaconsulting@gmail.com
 # Prohibida su reproducción, modificación o redistribución sin autorización escrita del autor.
 # =============================================================================
 # Módulo legal y de marca para las apps Shiny de GITECA:
@@ -41,7 +41,7 @@ temas <- sort(unique(tesis$tema_principal))
 GITECA <- list(
   autor  = "Gino Machoa",
   perfil = "Ing. en Ecología de Bosques Tropicales · Universidad Nacional de la Amazonía Peruana (UNAP), Iquitos",
-  correo = "diangelomachoa@gmail.com",
+  correo = "gitecaconsulting@gmail.com",
   marca  = "GITECA · Gestión de Información, Tecnología y Ciencias Ambientales",
   web    = "https://diangelomachoa.github.io/GITECA-apps/",
   anio   = format(Sys.Date(), "%Y")
