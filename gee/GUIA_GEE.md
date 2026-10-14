@@ -1,4 +1,4 @@
-<!-- © 2026 Gino Machoa. Todos los derechos reservados. Autor y desarrollador: Gino Machoa · diangelomachoa@gmail.com -->
+<!-- © 2026 Gino Machoa. Todos los derechos reservados. Autor y desarrollador: Gino Machoa · gitecaconsulting@gmail.com -->
 # Guía de los scripts GEE de GITECA
 
 ## App principal: `GITECA_monitor_amazonia.js`

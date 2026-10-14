@@ -1,7 +1,7 @@
 # GITECA · Apps para la investigación forestal en la Amazonía peruana
 
 **GITECA — Gestión de Información, Tecnología y Ciencias Ambientales**  
-© 2026 Gino Machoa. Todos los derechos reservados. Autor y desarrollador: Gino Machoa · Ing. en Ecología de Bosques Tropicales (UNAP, Iquitos) · diangelomachoa@gmail.com
+© 2026 Gino Machoa. Todos los derechos reservados. Autor y desarrollador: Gino Machoa · Ing. en Ecología de Bosques Tropicales (UNAP, Iquitos) · gitecaconsulting@gmail.com
 
 Herramientas abiertas en R/Shiny y Google Earth Engine construidas sobre la producción
 científica de la Facultad de Ciencias Forestales de la Universidad Nacional de la Amazonía
