@@ -136,7 +136,7 @@ window.GITECA_BLOG = [
     fecha: '2026-10-14',
     etiquetas: ['SIG libre', 'Automatización', 'Inteligencia artificial'],
     imagen: 'img/rustgis-v0-2-0.jpg',
-    autor: 'Gino Machoa'
+    autor: 'Equipo GITECA'
   },
   {
     slug: 'rustgis-sig-libre-en-rust',
@@ -145,7 +145,7 @@ window.GITECA_BLOG = [
     fecha: '2026-10-14',
     etiquetas: ['SIG libre', 'Inteligencia artificial', 'Cartografía'],
     imagen: 'img/rustgis-v0-1-0.jpg',
-    autor: 'Gino Machoa'
+    autor: 'Equipo GITECA'
   },
   /* {
     slug: 'ejemplo-novedad',                 // nombre del archivo, sin .html
@@ -154,7 +154,7 @@ window.GITECA_BLOG = [
     fecha: '2026-10-14',                      // AAAA-MM-DD
     etiquetas: ['Teledetección', 'Monitoreo'],
     imagen: 'img/ejemplo-novedad.jpg',        // 1200×675 px, relativa a blog/
-    autor: 'Gino Machoa'
+    autor: 'Equipo GITECA'
   }, */
 ];
 
