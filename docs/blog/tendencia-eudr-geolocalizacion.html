@@ -1,0 +1,67 @@
+<!doctype html><html lang="es" data-theme="light" style="color-scheme:light"><head>
+<!-- Google tag (gtag.js) · medición de visitas GITECA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EUDR: desde el 30 de diciembre de 2026, cada parcela exportada a Europa necesita su geolocalización · Blog GITECA</title>
+<meta name="description" content="El Reglamento europeo contra la deforestación (EUDR) se aplica desde el 30 de diciembre de 2026 y exige la geolocalización de cada parcela de origen. Qué implica para madera, cacao y café del Perú y cómo apoyar con SIG.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EUDR: geolocalización de cada parcela desde el 30 de diciembre de 2026">
+<meta property="og:description" content="Qué exige el EUDR, a quién afecta en el Perú y cómo prepararse con SIG y teledetección.">
+<meta property="og:image" content="https://diangelomachoa.github.io/GITECA-apps/blog/img/tendencia-eudr-geolocalizacion.jpg">
+<meta property="og:url" content="https://diangelomachoa.github.io/GITECA-apps/blog/tendencia-eudr-geolocalizacion.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="blog.css">
+</head><body>
+<nav><div class="wrap"><a class="brand" href="../index.html">GITECA</a>
+<ul><li><a href="../index.html#servicios">Servicios</a></li><li><a href="../index.html#proyectos">Proyectos</a></li><li><a href="../index.html#cursos">Cursos</a></li><li><a href="./" aria-current="page">Blog</a></li><li><a href="../index.html#contacto">Contacto</a></li></ul></div></nav>
+
+<main class="wrap"><article class="articulo">
+  <a class="volver" href="./">← Todas las entradas</a>
+  <header>
+    <span class="meta"><time datetime="2026-11-18">18 nov 2026</time><span>Equipo GITECA</span><span>6 min de lectura</span></span>
+    <h1>EUDR: desde el 30 de diciembre de 2026, cada parcela exportada a Europa necesita su geolocalización</h1>
+    <p class="bajada">El reglamento europeo contra la deforestación entra en aplicación este 30 de diciembre. Madera, cacao y café que se vendan en la Unión Europea tendrán que demostrar, con coordenadas, que no vienen de áreas deforestadas después de 2020.</p>
+    <div class="tags"><span>Tendencias SIG</span><span>Trazabilidad</span><span>Deforestación</span><span>Normativa</span></div>
+  </header>
+  <figure style="margin:0"><img class="portada" src="img/tendencia-eudr-geolocalizacion.jpg" alt="Parcelas agrícolas dibujadas como polígonos verdes con un punto amarillo de geolocalización en cada una"><figcaption>Ilustración: GITECA.</figcaption></figure>
+
+  <h2>La novedad</h2>
+  <p>El Reglamento (UE) 2023/1115, conocido como <b>EUDR</b>, fue postergado y simplificado por el Reglamento (UE) 2025/2650. Según la Comisión Europea, los operadores grandes y medianos deben cumplir sus obligaciones principales desde el <b>30 de diciembre de 2026</b>, y las micro y pequeñas empresas desde el <b>30 de junio de 2027</b>; en el caso de la madera, que ya estaba regulada, las fechas para los más pequeños pueden ser distintas, así que conviene revisar el texto legal.</p>
+  <ul>
+    <li><b>Productos:</b> ganado, cacao, café, palma aceitera, caucho, soya y madera, y sus derivados.</li>
+    <li><b>Requisito central:</b> demostrar que el producto no proviene de tierras deforestadas después del 31 de diciembre de 2020 y que se produjo conforme a la ley del país.</li>
+    <li><b>Geolocalización:</b> cada declaración de diligencia debida incluye la ubicación de todas las parcelas de origen, con coordenadas de al menos seis decimales; las parcelas más grandes se describen con un polígono.</li>
+  </ul>
+
+  <h2>Por qué importa para el bosque</h2>
+  <p>El Perú exporta café, cacao y madera a Europa, muchas veces desde pequeños productores de la selva. La EUDR convierte el SIG en una condición para vender: quien no pueda entregar polígonos confiables y un análisis de cambio de cobertura queda fuera de la cadena. Al mismo tiempo, es una oportunidad para ordenar catastros, cruzar parcelas con títulos habilitantes y demostrar el valor del bosque en pie.</p>
+
+  <h2>Cómo lo aplicaríamos</h2>
+  <div class="aplicacion">
+    <div><b>Levantamiento y depuración de polígonos</b>Formularios de campo en QField o en el celular para registrar cada parcela, con reglas de calidad: polígonos cerrados, sin superposiciones, seis decimales y área coherente con lo declarado.</div>
+    <div><b>Análisis de deforestación posterior a 2020</b>Cruzar cada polígono con GEOBOSQUES, Hansen y los embeddings satelitales para marcar las parcelas con pérdida de bosque después del 31 de diciembre de 2020.</div>
+    <div><b>Legalidad y ordenamiento</b>Superponer las parcelas con áreas naturales protegidas, concesiones, bosques de producción permanente y comunidades nativas para detectar conflictos antes de exportar.</div>
+    <div><b>Expedientes por lote</b>Generar automáticamente, para cada lote exportado, el GeoJSON de parcelas, el mapa y un reporte de riesgo listos para la declaración de diligencia debida.</div>
+  </div>
+
+  <h2>Limitaciones y cuidados</h2>
+  <ul>
+    <li><b>Norma en movimiento.</b> El reglamento tuvo varias postergaciones y la Comisión preparó revisiones de simplificación; confirma siempre la versión vigente en fuentes oficiales.</li>
+    <li><b>Definición de bosque.</b> La EUDR usa la definición de la FAO, que puede no coincidir con las clases de los mapas nacionales; un análisis automático no reemplaza la verificación.</li>
+    <li><b>Datos de productores.</b> Polígonos y nombres de productores son datos personales: protégelos y compártelos solo con quien corresponde.</li>
+  </ul>
+
+  <div class="fuente"><b>Fuentes:</b> Comisión Europea, «Delay until December 2026 and other developments in the implementation of the EUDR Regulation», <a href="https://trade.ec.europa.eu/access-to-markets/en/news/delay-until-december-2026-and-other-developments-implementation-eudr-regulation" target="_blank" rel="noopener">Access2Markets</a> · EY, «EU Deforestation Regulation application postponed to 30 December 2026», <a href="https://taxnews.ey.com/news/2026-0237-eu-deforestation-regulation-application-postponed-to-30-december-2026" target="_blank" rel="noopener">enero de 2026</a> · Coolset, «EUDR geolocation requirements», <a href="https://www.coolset.com/academy/eudr-geolocation-requirements-how-to-collect-and-validate-gps-polygon-data-for-your-dds" target="_blank" rel="noopener">guía</a>. Este artículo es informativo y no constituye asesoría legal. Análisis de aplicación: GITECA.</div>
+
+  <div class="compartir">
+    <a class="btn pri" href="../index.html#contacto">¿Lo aplicamos en tu proyecto?</a>
+    <a class="btn" href="tendencia-sig-nativo-nube.html">← Anterior: SIG nativo en la nube</a>
+    <a class="btn" id="li" href="#" target="_blank" rel="noopener">Compartir en LinkedIn</a>
+  </div>
+</article></main>
+
+<footer><div class="wrap">© 2026 GITECA. Todos los derechos reservados. Iquitos, Perú · gitecaconsulting@gmail.com<br>Las fuentes citadas pertenecen a sus autores originales; el análisis de aplicación es de GITECA.</div></footer>
+<script>document.getElementById('li').href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href);</script>
+</body></html>

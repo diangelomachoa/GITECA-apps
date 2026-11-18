@@ -1,0 +1,68 @@
+<!doctype html><html lang="es" data-theme="light" style="color-scheme:light"><head>
+<!-- Google tag (gtag.js) · medición de visitas GITECA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SIG nativo en la nube: GeoParquet, DuckDB y PMTiles para datos forestales grandes · Blog GITECA</title>
+<meta name="description" content="GeoParquet, DuckDB Spatial y PMTiles permiten consultar y publicar millones de registros geográficos sin servidor. Qué es el SIG nativo en la nube y cómo aprovecharlo en el sector forestal.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SIG nativo en la nube: GeoParquet, DuckDB y PMTiles">
+<meta property="og:description" content="Consultar y publicar millones de registros geográficos sin servidor: cómo aprovecharlo en el sector forestal.">
+<meta property="og:image" content="https://diangelomachoa.github.io/GITECA-apps/blog/img/tendencia-sig-nativo-nube.jpg">
+<meta property="og:url" content="https://diangelomachoa.github.io/GITECA-apps/blog/tendencia-sig-nativo-nube.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="blog.css">
+</head><body>
+<nav><div class="wrap"><a class="brand" href="../index.html">GITECA</a>
+<ul><li><a href="../index.html#servicios">Servicios</a></li><li><a href="../index.html#proyectos">Proyectos</a></li><li><a href="../index.html#cursos">Cursos</a></li><li><a href="./" aria-current="page">Blog</a></li><li><a href="../index.html#contacto">Contacto</a></li></ul></div></nav>
+
+<main class="wrap"><article class="articulo">
+  <a class="volver" href="./">← Todas las entradas</a>
+  <header>
+    <span class="meta"><time datetime="2026-11-18">18 nov 2026</time><span>Equipo GITECA</span><span>5 min de lectura</span></span>
+    <h1>SIG nativo en la nube: GeoParquet, DuckDB y PMTiles para datos forestales grandes</h1>
+    <p class="bajada">Los formatos y motores «nativos en la nube» se volvieron la base del análisis geoespacial moderno. Permiten trabajar con bases enormes, como censos forestales o alertas de deforestación, desde una laptop o un navegador.</p>
+    <div class="tags"><span>Tendencias SIG</span><span>Bases de datos</span><span>SIG libre</span><span>Automatización</span></div>
+  </header>
+  <figure style="margin:0"><img class="portada" src="img/tendencia-sig-nativo-nube.jpg" alt="Columnas de datos estilizadas con los campos geom, id, tipo, ha y fecha"><figcaption>Ilustración: GITECA.</figcaption></figure>
+
+  <h2>La novedad</h2>
+  <p>El «SIG nativo en la nube» agrupa formatos pensados para leerse por partes, directamente desde un almacenamiento en internet, sin descargar todo el archivo ni montar un servidor de mapas:</p>
+  <ul>
+    <li><b>GeoParquet:</b> tablas geográficas en columnas, comprimidas y rápidas de consultar. Ya es un formato estándar y los tipos geométricos llegaron de forma nativa a Parquet e Iceberg.</li>
+    <li><b>DuckDB Spatial:</b> una base de datos que corre en la propia computadora, o en el navegador, y consulta GeoParquet, Shapefile o GeoPackage con SQL.</li>
+    <li><b>PMTiles y FlatGeobuf:</b> archivos únicos de teselas o vectores que se publican en cualquier hosting estático y se cargan solo en la zona visible.</li>
+    <li><b>STAC y COG:</b> catálogos e imágenes satelitales optimizadas para leer solo el recorte que se necesita.</li>
+  </ul>
+
+  <h2>Por qué importa para el bosque</h2>
+  <p>Las bases forestales crecen rápido: guías de transporte, censos comerciales, alertas tempranas, catastro de títulos habilitantes. Muchas instituciones las manejan en Excel o en geodatabases pesadas que solo abre un equipo con licencia. Con GeoParquet y DuckDB, un cruce de millones de registros se resuelve en segundos con una consulta SQL, y el resultado se publica como un mapa web sin pagar servidores.</p>
+
+  <h2>Cómo lo aplicaríamos</h2>
+  <div class="aplicacion">
+    <div><b>Cruces de control en segundos</b>Unir alertas de pérdida de bosque con el catastro de concesiones y permisos en una sola consulta SQL, para listar qué títulos tienen alertas y cuántas hectáreas suman.</div>
+    <div><b>Visores sin servidor</b>Publicar el catastro forestal o los puntos de un censo como PMTiles en GitHub Pages, con la misma rapidez de un servidor de mapas y costo cero de mantenimiento.</div>
+    <div><b>Reportes automatizados</b>Conectar R o Python a DuckDB para generar cada mes los mismos cuadros y mapas desde archivos GeoParquet versionados, sin copiar y pegar.</div>
+    <div><b>Intercambio con instituciones</b>Entregar bases grandes en GeoParquet en lugar de decenas de shapefiles: un solo archivo, más liviano y con los nombres de campo completos.</div>
+  </div>
+
+  <h2>Limitaciones y cuidados</h2>
+  <ul>
+    <li><b>No reemplaza a PostGIS.</b> Para sistemas con edición simultánea y transacciones, una base como PostGIS sigue siendo el registro oficial; GeoParquet y DuckDB brillan en el análisis.</li>
+    <li><b>Rendimiento variable.</b> Las uniones espaciales muy pesadas no siempre rinden igual que en PostGIS, y leer por internet es más lento que en disco local.</li>
+    <li><b>Datos sensibles.</b> Un archivo publicado en un hosting estático es público: no subas datos personales ni ubicaciones de especies amenazadas.</li>
+  </ul>
+
+  <div class="fuente"><b>Fuentes:</b> GeoAwesome, «Beyond PostGIS: the rise of the spatial lakehouse», <a href="https://geoawesome.com/beyond-postgis-the-rise-of-the-spatial-lakehouse/" target="_blank" rel="noopener">artículo</a> · Chris Holmes, «A cloud native geo upgrade», <a href="https://cholmes.github.io/open-geodag-presentation/opengeo-dag.html" target="_blank" rel="noopener">presentación</a> · CARTO, «Iceberg V3 geometry, one year later», <a href="https://carto.com/blog/iceberg-v3-geometry-one-year-later/" target="_blank" rel="noopener">blog</a> · FOSS4G NA 2026, «DuckDB and spatial datasets: a geo-practitioner’s feedback», <a href="https://talks.osgeo.org/foss4g-na-2026/talk/LEHMUN/" target="_blank" rel="noopener">charla</a>. Análisis de aplicación: GITECA.</div>
+
+  <div class="compartir">
+    <a class="btn pri" href="../index.html#contacto">¿Lo aplicamos en tu proyecto?</a>
+    <a class="btn" href="tendencia-embeddings-satelitales.html">← Anterior: embeddings satelitales</a><a class="btn" href="tendencia-eudr-geolocalizacion.html">Siguiente: EUDR y geolocalización →</a>
+    <a class="btn" id="li" href="#" target="_blank" rel="noopener">Compartir en LinkedIn</a>
+  </div>
+</article></main>
+
+<footer><div class="wrap">© 2026 GITECA. Todos los derechos reservados. Iquitos, Perú · gitecaconsulting@gmail.com<br>Las fuentes citadas pertenecen a sus autores originales; el análisis de aplicación es de GITECA.</div></footer>
+<script>document.getElementById('li').href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href);</script>
+</body></html>
