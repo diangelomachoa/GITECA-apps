@@ -1,0 +1,67 @@
+<!doctype html><html lang="es" data-theme="light" style="color-scheme:light"><head>
+<!-- Google tag (gtag.js) · medición de visitas GITECA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modelos fundacionales y embeddings satelitales: clasificar el bosque con pocos datos de campo · Blog GITECA</title>
+<meta name="description" content="Los modelos fundacionales geoespaciales y los embeddings satelitales de Google en Earth Engine permiten mapear coberturas y cambios con pocas muestras. Qué son y cómo aplicarlos al sector forestal.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modelos fundacionales y embeddings satelitales para el bosque">
+<meta property="og:description" content="Qué son los embeddings satelitales y cómo usarlos para mapear coberturas y cambios con pocas muestras de campo.">
+<meta property="og:image" content="https://diangelomachoa.github.io/GITECA-apps/blog/img/tendencia-embeddings-satelitales.jpg">
+<meta property="og:url" content="https://diangelomachoa.github.io/GITECA-apps/blog/tendencia-embeddings-satelitales.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="blog.css">
+</head><body>
+<nav><div class="wrap"><a class="brand" href="../index.html">GITECA</a>
+<ul><li><a href="../index.html#servicios">Servicios</a></li><li><a href="../index.html#proyectos">Proyectos</a></li><li><a href="../index.html#cursos">Cursos</a></li><li><a href="./" aria-current="page">Blog</a></li><li><a href="../index.html#contacto">Contacto</a></li></ul></div></nav>
+
+<main class="wrap"><article class="articulo">
+  <a class="volver" href="./">← Todas las entradas</a>
+  <header>
+    <span class="meta"><time datetime="2026-11-18">18 nov 2026</time><span>Equipo GITECA</span><span>6 min de lectura</span></span>
+    <h1>Modelos fundacionales y embeddings satelitales: clasificar el bosque con pocos datos de campo</h1>
+    <p class="bajada">La gran tendencia GeoAI de 2026 son los modelos entrenados con millones de imágenes de satélite que luego se adaptan a tareas concretas. Para quien trabaja en la Amazonía, significa mapas de cobertura y de cambio con menos parcelas de entrenamiento.</p>
+    <div class="tags"><span>Tendencias SIG</span><span>Inteligencia artificial</span><span>Teledetección</span><span>Earth Engine</span></div>
+  </header>
+  <figure style="margin:0"><img class="portada" src="img/tendencia-embeddings-satelitales.jpg" alt="Mosaico de píxeles en tonos verdes y azules que representa un mapa de embeddings satelitales"><figcaption>Ilustración: GITECA.</figcaption></figure>
+
+  <h2>La novedad</h2>
+  <p>Un <b>modelo fundacional geoespacial</b> aprende de enormes volúmenes de imágenes satelitales una «representación» general de la superficie terrestre, que luego se ajusta a una tarea específica con pocos datos propios. En 2026 estos modelos dejaron de ser solo de investigación:</p>
+  <ul>
+    <li><b>Embeddings de Google en Earth Engine.</b> El conjunto <code style="overflow-wrap:anywhere">GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL</code>, generado con el modelo AlphaEarth Foundations, resume cada píxel de 10 m en un vector de 64 valores que integra un año de observaciones de varios sensores. Está disponible de 2017 a 2025, con licencia CC-BY 4.0.</li>
+    <li><b>Modelos en software de escritorio.</b> ArcGIS incorpora modelos fundacionales como Prithvi y Clay como base para el aprendizaje profundo con imágenes.</li>
+    <li><b>Modelos de visión y lenguaje.</b> Empiezan a aparecer modelos que responden preguntas en lenguaje natural sobre una imagen satelital, todavía en fase temprana.</li>
+  </ul>
+
+  <h2>Por qué importa para el bosque</h2>
+  <p>Clasificar coberturas en la Amazonía choca siempre con lo mismo: nubes, pocas parcelas de verificación y clases difíciles de separar, como aguajal, bosque de varillal o purma. Con los embeddings, buena parte del trabajo de preparar índices, compuestos sin nubes y series temporales ya viene resuelta: basta un clasificador sencillo y un conjunto pequeño de puntos bien elegidos.</p>
+
+  <h2>Cómo lo aplicaríamos</h2>
+  <div class="aplicacion">
+    <div><b>Mapas de cobertura con pocas muestras</b>Un random forest sobre los 64 valores del embedding, entrenado con los puntos de un inventario o de una inspección ocular, para separar tipos de bosque en un título habilitante o una cuenca.</div>
+    <div><b>Detección de cambios año a año</b>Comparar el embedding de un píxel entre dos años para marcar dónde cambió la superficie: apertura de caminos, chacras nuevas o extracción selectiva, como insumo para priorizar supervisiones.</div>
+    <div><b>Búsqueda por similitud</b>Partir de unos pocos aguajales o cochas conocidos y encontrar en toda la región los píxeles más parecidos, útil para estratificar inventarios o ubicar ecosistemas frágiles.</div>
+    <div><b>Complemento de nuestras apps</b>Las herramientas GITECA en Earth Engine, como el visor forestal o el monitoreo de aguajales, pueden sumar los embeddings como capa adicional sin cambiar de plataforma.</div>
+  </div>
+
+  <h2>Limitaciones y cuidados</h2>
+  <ul>
+    <li><b>Resolución anual.</b> Un embedding resume un año completo: sirve para coberturas y cambios entre años, no para alertas semanales.</li>
+    <li><b>Difícil de interpretar.</b> Los 64 valores no son bandas físicas; el resultado debe validarse con campo y con imágenes de alta resolución.</li>
+    <li><b>Evaluación independiente.</b> Buena parte de la información disponible viene de los propios proveedores; conviene medir la exactitud con datos propios antes de usar los mapas en decisiones oficiales.</li>
+  </ul>
+
+  <div class="fuente"><b>Fuentes:</b> Google, «Satellite Embedding V1», <a href="https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_SATELLITE_EMBEDDING_V1_ANNUAL" target="_blank" rel="noopener">catálogo de datos de Earth Engine</a> · Google DeepMind, «AlphaEarth Foundations helps map our planet in unprecedented detail», <a href="https://deepmind.google/blog/alphaearth-foundations-helps-map-our-planet-in-unprecedented-detail/" target="_blank" rel="noopener">julio de 2025</a> · Esri, «GeoAI in the age of foundation models», <a href="https://www.esri.com/about/newsroom/arcnews/geoai-in-the-age-of-foundation-models" target="_blank" rel="noopener">ArcNews</a> · Atlas, «GeoAI in 2026: what GIS professionals actually need to know», <a href="https://atlas.co/blog/geo-ai-in-2026-what-gis-professionals-actually-need-to-know/" target="_blank" rel="noopener">blog</a>. Análisis de aplicación: GITECA.</div>
+
+  <div class="compartir">
+    <a class="btn pri" href="../index.html#contacto">¿Lo aplicamos en tu proyecto?</a>
+    <a class="btn" href="tendencia-sig-nativo-nube.html">Siguiente: SIG nativo en la nube →</a>
+    <a class="btn" id="li" href="#" target="_blank" rel="noopener">Compartir en LinkedIn</a>
+  </div>
+</article></main>
+
+<footer><div class="wrap">© 2026 GITECA. Todos los derechos reservados. Iquitos, Perú · gitecaconsulting@gmail.com<br>Las fuentes citadas pertenecen a sus autores originales; el análisis de aplicación es de GITECA.</div></footer>
+<script>document.getElementById('li').href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href);</script>
+</body></html>

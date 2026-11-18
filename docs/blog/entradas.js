@@ -4,6 +4,33 @@
    3) la portada del sitio y blog/index.html se actualizan solas. */
 window.GITECA_BLOG = [
   {
+    slug: "tendencia-eudr-geolocalizacion",
+    titulo: "EUDR: desde el 30 de diciembre, cada parcela exportada a Europa necesita su geolocalización",
+    resumen: "Qué exige el reglamento europeo contra la deforestación a la madera, el cacao y el café del Perú, y cómo prepararse con SIG y teledetección.",
+    fecha: '2026-11-18',
+    etiquetas: ["Tendencias SIG", "Trazabilidad", "Deforestación"],
+    imagen: "img/tendencia-eudr-geolocalizacion.jpg",
+    autor: 'Equipo GITECA'
+  },
+  {
+    slug: "tendencia-sig-nativo-nube",
+    titulo: "SIG nativo en la nube: GeoParquet, DuckDB y PMTiles para datos forestales grandes",
+    resumen: "Consultar millones de registros con SQL y publicar visores sin servidor: la base moderna del análisis geoespacial, aplicada al control forestal.",
+    fecha: '2026-11-18',
+    etiquetas: ["Tendencias SIG", "Bases de datos", "SIG libre"],
+    imagen: "img/tendencia-sig-nativo-nube.jpg",
+    autor: 'Equipo GITECA'
+  },
+  {
+    slug: "tendencia-embeddings-satelitales",
+    titulo: "Modelos fundacionales y embeddings satelitales: clasificar el bosque con pocos datos de campo",
+    resumen: "Los embeddings de Google en Earth Engine y los modelos fundacionales geoespaciales permiten mapear coberturas y cambios con pocas muestras.",
+    fecha: '2026-11-18',
+    etiquetas: ["Tendencias SIG", "Inteligencia artificial", "Teledetección"],
+    imagen: "img/tendencia-embeddings-satelitales.jpg",
+    autor: 'Equipo GITECA'
+  },
+  {
     slug: "herramienta-rio-vivo",
     titulo: "RÍO VIVO: cuánto avanza el río sobre tu pueblo, medido con 40 años de satélite",
     resumen: "App de Google Earth Engine que mide la erosión y sedimentación de los ríos amazónicos, el retroceso de las orillas hacia los pueblos, las playas en aguas bajas y la ocupación a lo largo de carreteras, de 1985 a hoy.",
