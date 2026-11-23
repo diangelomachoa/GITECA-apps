@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GRNK32Q1VK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GRNK32Q1VK');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Descarga de imágenes satelitales y DEM gratis · GITECA</title>
+<meta name="description" content="Busca y descarga gratis, sin registro, imágenes Sentinel-2 y Landsat y modelos de elevación (Copernicus DEM, NASADEM, ALOS) recortados a tu área de interés en GeoTIFF.">
+<link rel="canonical" href="https://www.gitecaconsulting.com/apps/descargas.html">
+<meta property="og:title" content="Descarga gratis Sentinel-2, Landsat y DEM recortados a tu área · GITECA">
+<meta property="og:description" content="Dibuja tu área, elige la imagen y descarga el GeoTIFF. Sin registro.">
+<meta property="og:url" content="https://www.gitecaconsulting.com/apps/descargas.html">
+<meta property="og:image" content="https://www.gitecaconsulting.com/mapas/logo_giteca.png">
+<link rel="icon" type="image/png" href="../mapas/logo_giteca.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{--paper:#F4F1EA;--panel:#FBFAF6;--fg:#16231C;--muted:#5B665F;--line:#D9D3C5;--ink:#16352a;--green:#2E7D3E;--blue:#1C5D99;--soft:#E8EFE6;--warn:#8a5a00;
+--mono:"IBM Plex Mono",ui-monospace,monospace;--disp:Outfit,system-ui,sans-serif}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--fg);font:400 15px/1.45 "Source Sans 3",system-ui,sans-serif}
+h1,h2,h3{font-family:var(--disp);margin:0}a{color:var(--blue)}
+.app{display:grid;grid-template-columns:420px minmax(0,1fr);height:100vh}
+.panel{border-right:1px solid var(--line);background:var(--panel);overflow-y:auto;display:flex;flex-direction:column}
+.brand{padding:14px 18px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--line)}
+.brand img{width:38px;height:38px;border-radius:8px;background:#fff}
+.brand b{display:block;font:600 .8rem var(--mono);letter-spacing:.08em;line-height:1.25}
+.brand span{font:400 .74rem var(--mono);color:var(--muted)}
+.brand a{margin-left:auto;font-size:.85rem}
+.cuerpo{padding:16px 18px 24px}
+.titular{font:700 1.5rem/1.15 var(--disp);margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 14px;font-size:.93rem}
+.paso{border:1px solid var(--line);background:#fff;padding:12px 14px;margin-bottom:12px}
+.paso h3{font:600 .72rem var(--mono);letter-spacing:.12em;color:var(--ink);margin-bottom:8px}
+.paso h3 i{font-style:normal;display:inline-block;background:var(--ink);color:#fff;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;margin-right:6px}
+label{display:block;font-size:.82rem;color:var(--muted);margin:6px 0 2px}
+select,input[type=date],input[type=number],input[type=text]{width:100%;font:inherit;font-size:.92rem;padding:7px 8px;border:1px solid var(--line);background:#fff;color:var(--fg)}
+.fila{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fila4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.fila4 input{font-size:.8rem;padding:6px 5px}
+button,.btn{font:600 .9rem "Source Sans 3",sans-serif;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:8px 12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+button.sec,.btn.sec{background:#fff;color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.nota{font-size:.8rem;color:var(--muted);margin:6px 0 0}
+.estado{font:500 .78rem var(--mono);color:var(--muted);margin:8px 0}
+.res{display:grid;gap:8px}
+.it{display:grid;grid-template-columns:72px 1fr;gap:10px;border:1px solid var(--line);background:#fff;padding:8px;cursor:pointer;text-align:left;color:var(--fg);font-weight:400}
+.it:hover{border-color:var(--ink)}.it[aria-pressed=true]{border:2px solid var(--ink);padding:7px}
+.it img{width:72px;height:72px;object-fit:cover;background:#e9e6dd}
+.it b{font:600 .9rem var(--disp)}.it small{display:block;font:400 .74rem var(--mono);color:var(--muted);word-break:break-all}
+.tag{display:inline-block;font:500 .7rem var(--mono);padding:1px 6px;border:1px solid var(--line);margin:3px 4px 0 0}
+.tag.ok{background:#e6f2e3;border-color:#b9d8b2}.tag.mal{background:#fff4d6;border-color:#edd38a}
+.det{border:2px solid var(--ink);background:#fff;padding:12px 14px;margin:12px 0}
+.det h3{font:600 1rem var(--disp);margin-bottom:6px}
+.opc label{display:flex;gap:8px;align-items:flex-start;color:var(--fg);font-size:.88rem;margin:5px 0}
+.opc input{margin-top:3px}
+.peso{font:500 .78rem var(--mono);margin:6px 0}.peso.mal{color:#a8321e}
+.full{list-style:none;padding:0;margin:6px 0 0;display:flex;flex-wrap:wrap;gap:5px}
+.full a{font:500 .75rem var(--mono);border:1px solid var(--line);padding:3px 7px;text-decoration:none}
+details{border:1px solid var(--line);background:#fff;padding:10px 14px;margin-bottom:12px}
+summary{cursor:pointer;font-weight:600}
+pre{background:#16231C;color:#e8efe6;font:400 .74rem/1.45 var(--mono);padding:10px;overflow-x:auto;white-space:pre}
+.fuentes{font-size:.85rem;padding-left:18px;margin:6px 0}
+.pie{margin-top:auto;border-top:1px solid var(--line);padding:12px 18px;font-size:.76rem;color:var(--muted)}
+.mapwrap{position:relative;min-height:0}
+#mapa{position:absolute;inset:0;background:#e9e6dd}
+.flota{position:absolute;z-index:500;background:rgba(251,250,246,.96);border:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.herr{top:12px;left:56px;display:flex;gap:6px;padding:6px}
+.herr button{font-size:.85rem;padding:6px 10px}
+.aviso{bottom:14px;left:12px;padding:8px 12px;font-size:.85rem;display:none;max-width:340px}
+.capas{top:12px;right:12px;padding:6px 10px;font-size:.85rem}
+.leaflet-container.dib{cursor:crosshair}
+@media (max-width:860px){.app{display:flex;flex-direction:column;height:auto}.mapwrap{height:60vh;order:-1}.panel{border-right:0;overflow:visible}.herr{left:50px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="panel">
+ <div class="brand"><img src="../mapas/logo_giteca.png" alt="Logo GITECA"><div><b>DESCARGAS<br>SATELITALES</b><span>Datos abiertos · GITECA</span></div><a href="../index.html">← Inicio</a></div>
+ <div class="cuerpo">
+  <h1 class="titular">Imágenes Sentinel, Landsat y DEM gratis, recortadas a tu área</h1>
+  <p class="lead">Dibuja tu área de interés, elige el sensor y descarga el GeoTIFF. Sin registro y sin costo: los datos vienen del catálogo público Microsoft Planetary Computer.</p>
+
+  <div class="paso"><h3><i>1</i>ÁREA DE INTERÉS</h3>
+   <div class="btns" style="margin-top:0"><button id="b-dib" type="button">▭ Dibujar en el mapa</button><button id="b-vista" class="sec" type="button">Usar vista actual</button>
+   <label class="btn sec" style="margin:0;color:var(--ink);font-size:.9rem">⇪ GeoJSON / KML<input id="f-aoi" type="file" accept=".geojson,.json,.kml" hidden></label></div>
+   <label>Límites en grados (oeste, sur, este, norte)</label>
+   <div class="fila4"><input id="w" type="text" inputmode="decimal" aria-label="Oeste"><input id="s" type="text" inputmode="decimal" aria-label="Sur"><input id="e" type="text" inputmode="decimal" aria-label="Este"><input id="n" type="text" inputmode="decimal" aria-label="Norte"></div>
+   <p class="nota" id="aoi-info">Haz clic en dos esquinas opuestas para dibujar un rectángulo.</p>
+  </div>
+
+  <div class="paso"><h3><i>2</i>PRODUCTO Y FECHAS</h3>
+   <label for="col">Producto</label>
+   <select id="col">
+    <option value="s2">Sentinel-2 L2A · 10 m · desde 2015 (reflectancia de superficie)</option>
+    <option value="ls">Landsat 4–9 Colección 2 L2 · 30 m · desde 1982</option>
+    <option value="cop">DEM Copernicus GLO-30 · 30 m</option>
+    <option value="nasa">DEM NASADEM · 30 m (SRTM reprocesado)</option>
+    <option value="alos">DEM ALOS World 3D AW3D30 · 30 m</option>
+   </select>
+   <div id="fechas"><div class="fila"><div><label for="d1">Desde</label><input id="d1" type="date"></div><div><label for="d2">Hasta</label><input id="d2" type="date"></div></div>
+   <label for="nub">Nubosidad máxima de la escena: <b id="nub-v">40</b> %</label><input id="nub" type="range" min="0" max="100" step="5" value="40" style="width:100%"></div>
+   <div class="btns"><button id="b-buscar" type="button">Buscar imágenes</button></div>
+   <p class="estado" id="estado" role="status"></p>
+  </div>
+
+  <div id="res" class="res"></div>
+  <div id="det"></div>
+
+  <details><summary>Descarga masiva con R o Python</summary>
+   <p class="nota">Para muchas escenas o áreas grandes, usa estos scripts. Se actualizan con el área, producto y fechas que elijas arriba.</p>
+   <label>R (paquete rstac)</label><pre id="cod-r"></pre>
+   <label>Python (pystac-client + planetary-computer)</label><pre id="cod-py"></pre>
+  </details>
+
+  <details><summary>Preguntas frecuentes</summary>
+   <p class="nota"><b>¿Qué tamaño puedo recortar?</b> Hasta unos 60 MB por archivo (por ejemplo, unos 25 × 25 km de Sentinel-2 en 4 bandas). Para áreas mayores usa la escena completa o los scripts.</p>
+   <p class="nota"><b>¿En qué sistema viene el recorte?</b> GeoTIFF en coordenadas geográficas WGS 84 (EPSG:4326) a la resolución nativa, con una banda final de máscara (255 = dato válido). La escena completa conserva su proyección UTM original.</p>
+   <p class="nota"><b>Landsat:</b> los valores son números digitales. Reflectancia = DN × 0.0000275 − 0.2; temperatura (lwir11) = DN × 0.00341802 + 149 K.</p>
+   <p class="nota"><b>Sentinel-2:</b> reflectancia = DN ÷ 10 000 (en escenas desde 2022 resta antes 1 000 por el desplazamiento de la línea base 04.00).</p>
+   <p class="nota"><b>DEM:</b> elevaciones en metros. Copernicus DEM es un modelo de superficie (incluye el dosel del bosque); en zonas boscosas la altura del terreno es menor.</p>
+  </details>
+
+  <details><summary>Otras fuentes oficiales y gratuitas</summary>
+   <ul class="fuentes">
+    <li><a href="https://browser.dataspace.copernicus.eu" target="_blank" rel="noopener">Copernicus Browser</a> – Sentinel-1, 2, 3 y 5P (requiere cuenta gratuita).</li>
+    <li><a href="https://earthexplorer.usgs.gov" target="_blank" rel="noopener">USGS EarthExplorer</a> – Landsat, SRTM y más (cuenta gratuita).</li>
+    <li><a href="https://portal.opentopography.org" target="_blank" rel="noopener">OpenTopography</a> – DEM globales.</li>
+    <li><a href="https://geobosques.minam.gob.pe" target="_blank" rel="noopener">GeoBosques – MINAM</a> – pérdida de bosque y alertas en el Perú.</li>
+    <li><a href="https://planetarycomputer.microsoft.com/catalog" target="_blank" rel="noopener">Catálogo de Planetary Computer</a> – Sentinel-1, MODIS, ESA WorldCover y otros.</li>
+   </ul>
+  </details>
+ </div>
+ <div class="pie">Datos: Copernicus Sentinel-2 (ESA), procesados por ESA; Landsat (USGS/NASA); Copernicus DEM GLO-30 © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, provisto bajo COPERNICUS por la Unión Europea y la ESA; NASADEM (NASA JPL); AW3D30 © JAXA. Servicio de búsqueda y recorte: Microsoft Planetary Computer (servicio gratuito de terceros; su disponibilidad no depende de GITECA). Mapa base: Esri.<br>© 2026 GITECA Consulting E.I.R.L. · Gino Machoa · ¿Necesitas el procesamiento hecho? <a href="../index.html#contacto">Escríbenos</a>.</div>
+</aside>
+<div class="mapwrap">
+ <div id="mapa"></div>
+ <div class="flota herr"><button id="b-dib2" type="button">▭ Dibujar área</button><button id="b-lim" class="sec" type="button">Borrar</button></div>
+ <div class="flota capas"><label style="display:flex;gap:6px;align-items:center;margin:0;color:var(--fg)"><input type="checkbox" id="c-sat"> Fondo satelital</label></div>
+ <div class="flota aviso" id="aviso"></div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const API="https://planetarycomputer.microsoft.com/api";
+const MAXMB=60;
+const COL={
+ s2:{id:"sentinel-2-l2a",nom:"Sentinel-2 L2A",grado:0.0000898,nubes:true,
+  presets:[{n:"Color natural (RGB, 8 bits)",a:["visual"],b:1},
+   {n:"Bandas 10 m: B02 azul, B03 verde, B04 rojo, B08 NIR",a:["B02","B03","B04","B08"],b:2},
+   {n:"Multiespectral (10 bandas, remuestreadas a 10 m): B02–B08, B8A, B11, B12",a:["B02","B03","B04","B05","B06","B07","B08","B8A","B11","B12"],b:2},
+   {n:"NDVI (calculado)",a:["B08","B04"],e:"(B08-B04)/(B08+B04)",b:8},
+   {n:"SCL: clasificación de escena (nubes, sombras, agua)",a:["SCL"],b:1}],
+  full:["visual","B02","B03","B04","B08","B11","B12","SCL"]},
+ ls:{id:"landsat-c2-l2",nom:"Landsat C2 L2",grado:0.000269,nubes:true,
+  presets:[{n:"Color natural: red, green, blue",a:["red","green","blue"],b:2},
+   {n:"Multiespectral: blue, green, red, nir08, swir16, swir22",a:["blue","green","red","nir08","swir16","swir22"],b:2},
+   {n:"NDVI (con factor de escala aplicado)",a:["nir08","red"],e:"((nir08*0.0000275-0.2)-(red*0.0000275-0.2))/((nir08*0.0000275-0.2)+(red*0.0000275-0.2))",b:8},
+   {n:"Temperatura de superficie (lwir11, DN)",a:["lwir11"],b:2},
+   {n:"QA_PIXEL: máscara de nubes",a:["qa_pixel"],b:2}],
+  full:["red","green","blue","nir08","swir16","swir22","lwir11","qa_pixel","mtl.txt"]},
+ cop:{id:"cop-dem-glo-30",nom:"Copernicus DEM GLO-30",grado:0.000278,nubes:false,dem:true,presets:[{n:"Elevación en metros (float32)",a:["data"],b:4}],full:["data"]},
+ nasa:{id:"nasadem",nom:"NASADEM",grado:0.000278,nubes:false,dem:true,presets:[{n:"Elevación en metros",a:["elevation"],b:2}],full:["elevation"]},
+ alos:{id:"alos-dem",nom:"ALOS AW3D30",grado:0.000278,nubes:false,dem:true,presets:[{n:"Elevación en metros",a:["data"],b:2}],full:["data"]}
+};
+const $=id=>document.getElementById(id);
+const ev=(n,p)=>{try{gtag("event",n,p||{})}catch(e){}};
+const map=L.map("mapa",{zoomControl:true}).setView([-8.5,-74.5],6);
+const gris=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",{attribution:"Esri",maxZoom:16}).addTo(map);
+const sat=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{attribution:"Esri, Maxar, Earthstar Geographics",maxZoom:18});
+map.createPane("ref");map.getPane("ref").style.zIndex=450;map.getPane("ref").style.pointerEvents="none";
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{pane:"ref",maxZoom:16}).addTo(map);
+$("c-sat").onchange=e=>{if(e.target.checked){sat.addTo(map);gris.remove()}else{gris.addTo(map);sat.remove()}};
+
+/* ---- Área de interés ---- */
+let aoi=null,rect=null,dib=false,p1=null,prov=null;
+function fijar(b,ajustar){
+ b=b.map(v=>Math.round(v*1e5)/1e5);
+ if(b[0]>b[2])[b[0],b[2]]=[b[2],b[0]];if(b[1]>b[3])[b[1],b[3]]=[b[3],b[1]];
+ aoi=b;["w","s","e","n"].forEach((k,i)=>$(k).value=b[i]);
+ const ll=[[b[1],b[0]],[b[3],b[2]]];
+ if(rect)rect.setBounds(ll);else rect=L.rectangle(ll,{color:"#16352a",weight:2,fill:false,dashArray:"6 4"}).addTo(map);
+ const kmx=(b[2]-b[0])*111.32*Math.cos((b[1]+b[3])/2*Math.PI/180),kmy=(b[3]-b[1])*110.57;
+ $("aoi-info").textContent=`Área: ${kmx.toFixed(1)} × ${kmy.toFixed(1)} km (${(kmx*kmy).toFixed(0)} km²)`;
+ if(ajustar)map.fitBounds(ll,{padding:[30,30]});
+ codigo();if(sel)detalle(sel);
+}
+function modoDib(on){dib=on;p1=null;map.getContainer().classList.toggle("dib",on);
+ $("aviso").style.display=on?"block":"none";$("aviso").textContent="Haz clic en la primera esquina del área.";}
+$("b-dib").onclick=$("b-dib2").onclick=()=>modoDib(!dib);
+map.on("click",e=>{if(!dib)return;
+ if(!p1){p1=e.latlng;$("aviso").textContent="Ahora haz clic en la esquina opuesta.";return}
+ if(prov){prov.remove();prov=null}
+ fijar([p1.lng,p1.lat,e.latlng.lng,e.latlng.lat]);modoDib(false);ev("descargas_aoi",{metodo:"dibujo"});});
+map.on("mousemove",e=>{if(!dib||!p1)return;const ll=[p1,e.latlng];if(prov)prov.setBounds(ll);else prov=L.rectangle(ll,{color:"#1C5D99",weight:1,fill:false,interactive:false}).addTo(map)});
+$("b-lim").onclick=()=>{if(rect){rect.remove();rect=null}aoi=null;["w","s","e","n"].forEach(k=>$(k).value="");limpiarRes()};
+$("b-vista").onclick=()=>{const b=map.getBounds();fijar([b.getWest(),b.getSouth(),b.getEast(),b.getNorth()]);ev("descargas_aoi",{metodo:"vista"})};
+["w","s","e","n"].forEach(k=>$(k).onchange=()=>{const v=["w","s","e","n"].map(x=>parseFloat($(x).value.replace(",",".")));if(v.every(isFinite))fijar(v,true)});
+$("f-aoi").onchange=async e=>{const f=e.target.files[0];if(!f)return;const t=await f.text();let pts=[];
+ try{if(/\.kml$/i.test(f.name)){const x=new DOMParser().parseFromString(t,"text/xml");
+   [...x.getElementsByTagName("coordinates")].forEach(c=>c.textContent.trim().split(/\s+/).forEach(p=>{const [lo,la]=p.split(",").map(Number);if(isFinite(lo)&&isFinite(la))pts.push([lo,la])}));}
+  else{const rec=o=>{if(Array.isArray(o)&&typeof o[0]==="number")pts.push(o);else if(Array.isArray(o))o.forEach(rec);else if(o&&typeof o==="object")Object.values(o).forEach(rec)};rec(JSON.parse(t).features||JSON.parse(t));}
+  if(!pts.length)throw 0;
+  const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);
+  if(Math.max(...xs.map(Math.abs))>180)throw 1;
+  fijar([Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)],true);ev("descargas_aoi",{metodo:"archivo"});
+ }catch(err){alert(err===1?"El archivo parece estar en coordenadas proyectadas (UTM). Expórtalo en WGS 84 (EPSG:4326).":"No se pudieron leer coordenadas del archivo.")}
+ e.target.value=""};
+
+/* ---- Producto y fechas ---- */
+const hoy=new Date(),ant=new Date(Date.now()-90*864e5);
+$("d2").value=hoy.toISOString().slice(0,10);$("d1").value=ant.toISOString().slice(0,10);
+$("nub").oninput=e=>{$("nub-v").textContent=e.target.value;codigo()};
+$("col").onchange=()=>{$("fechas").style.display=COL[$("col").value].dem?"none":"block";limpiarRes();codigo()};
+["d1","d2"].forEach(k=>$(k).onchange=codigo);
+
+/* ---- Búsqueda ---- */
+let items=[],sel=null,huellas=L.layerGroup().addTo(map),vista=null;
+function limpiarRes(){items=[];sel=null;$("res").innerHTML="";$("det").innerHTML="";$("estado").textContent="";huellas.clearLayers();if(vista){vista.remove();vista=null}}
+function dentro(x,y,r){let c=false;for(let i=0,j=r.length-1;i<r.length;j=i++){const [xi,yi]=r[i],[xj,yj]=r[j];if((yi>y)!=(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
+function cobertura(g){const polys=g.type==="Polygon"?[g.coordinates]:g.type==="MultiPolygon"?g.coordinates:[];let n=0,k=0;
+ for(let i=0;i<12;i++)for(let j=0;j<12;j++){const x=aoi[0]+(i+.5)/12*(aoi[2]-aoi[0]),y=aoi[1]+(j+.5)/12*(aoi[3]-aoi[1]);n++;
+  if(polys.some(p=>dentro(x,y,p[0])&&!p.slice(1).some(h=>dentro(x,y,h))))k++}return Math.round(100*k/n)}
+$("b-buscar").onclick=async()=>{
+ if(!aoi){$("estado").textContent="Primero define el área de interés (paso 1).";return}
+ const c=COL[$("col").value];limpiarRes();$("estado").textContent="Buscando en el catálogo…";$("b-buscar").disabled=true;
+ const body={collections:[c.id],bbox:aoi,limit:c.dem?20:40};
+ if(!c.dem){body.datetime=$("d1").value+"T00:00:00Z/"+$("d2").value+"T23:59:59Z";body.query={"eo:cloud_cover":{"lte":+$("nub").value}};body.sortby=[{field:"datetime",direction:"desc"}]}
+ try{const r=await fetch(API+"/stac/v1/search",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error("HTTP "+r.status);const d=await r.json();
+  items=d.features.map(f=>(f._cob=cobertura(f.geometry),f));
+  if(!c.dem)items.sort((a,b)=>(b._cob>=90)-(a._cob>=90)||b.properties.datetime.localeCompare(a.properties.datetime));
+  else items.sort((a,b)=>b._cob-a._cob);
+  $("estado").textContent=items.length?`${items.length} resultado(s). Elige uno para ver opciones de descarga.`:"Sin resultados. Amplía las fechas o la nubosidad.";
+  pintar(c);ev("descargas_busqueda",{producto:c.id,n:items.length});
+ }catch(err){$("estado").textContent="Error al consultar el catálogo ("+err.message+"). Intenta de nuevo en unos minutos."}
+ $("b-buscar").disabled=false};
+function pintar(c){
+ $("res").innerHTML=items.map((f,i)=>{const p=f.properties,fe=(p.datetime||p.start_datetime||"").slice(0,10);
+  const nb=p["eo:cloud_cover"]!=null?`<span class="tag">nubes ${Math.round(p["eo:cloud_cover"])} %</span>`:"";
+  const pl=p.platform?`<span class="tag">${p.platform}</span>`:"";
+  const cb=`<span class="tag ${f._cob>=90?"ok":"mal"}">cubre ${f._cob} % del área</span>`;
+  const img=f.assets.rendered_preview?`<img loading="lazy" src="${f.assets.rendered_preview.href}" alt="Vista previa">`:"<span></span>";
+  return `<button type="button" class="it" data-i="${i}" aria-pressed="false">${img}<span><b>${c.dem?f.id:fe}</b><small>${c.dem?"":f.id}</small>${nb}${pl}${cb}</span></button>`}).join("");
+ items.forEach((f,i)=>{L.geoJSON(f.geometry,{style:{color:"#1C5D99",weight:1,fill:false,opacity:.5}}).on("click",()=>elegir(i)).addTo(huellas)});
+ document.querySelectorAll(".it").forEach(b=>b.onclick=()=>elegir(+b.dataset.i));
+}
+async function elegir(i){sel=items[i];document.querySelectorAll(".it").forEach(b=>b.setAttribute("aria-pressed",b.dataset.i==i));
+ detalle(sel);if(vista){vista.remove();vista=null}
+ try{const tj=sel.assets.tilejson;if(tj){const t=await (await fetch(tj.href)).json();vista=L.tileLayer(t.tiles[0],{maxZoom:18,opacity:.95,attribution:"Microsoft Planetary Computer"}).addTo(map)}}catch(e){}
+ if(window.innerWidth>860)$("det").scrollIntoView({behavior:"smooth",block:"nearest"});}
+const tokens={};
+async function token(id){if(tokens[id])return tokens[id];const t=await (await fetch(API+"/sas/v1/token/"+id)).json();return tokens[id]=t.token}
+function detalle(f){
+ const c=COL[$("col").value];const p=f.properties;
+ const px=Math.round((aoi[2]-aoi[0])/c.grado),py=Math.round((aoi[3]-aoi[1])/c.grado);
+ $("det").innerHTML=`<div class="det"><h3>${c.nom} · ${(p.datetime||"").slice(0,10)||f.id}</h3>
+  <p class="nota" style="margin-top:0">${f.id}</p>
+  <div class="opc">${c.presets.map((s,k)=>`<label><input type="radio" name="pre" value="${k}" ${k===0?"checked":""}> ${s.n}</label>`).join("")}</div>
+  <p class="peso" id="peso"></p>
+  ${f._cob<100?`<p class="nota">Esta escena cubre ~${f._cob} % de tu área; fuera de ella el recorte vendrá vacío (máscara = 0).</p>`:""}
+  <div class="btns"><a class="btn" id="b-rec" href="#" target="_blank" rel="noopener">⬇ Descargar recorte (GeoTIFF)</a></div>
+  <p class="nota">Escena completa, banda por banda (proyección original, enlaces válidos por unas horas):</p>
+  <ul class="full" id="full"><li class="nota">Generando enlaces…</li></ul></div>`;
+ const upd=()=>{const s=c.presets[+document.querySelector("input[name=pre]:checked").value];
+  const nb=(s.e?1:s.a.length)+1, mb=px*py*nb*s.b/1048576, ok=mb<=MAXMB;
+  $("peso").className="peso"+(ok?"":" mal");
+  $("peso").textContent=`${px.toLocaleString("es-PE")} × ${py.toLocaleString("es-PE")} píxeles · ~${mb<1?mb.toFixed(2):Math.round(mb)} MB`+(ok?"":` · supera ${MAXMB} MB: reduce el área o descarga la escena completa`);
+  let u=`${API}/data/v1/item/bbox/${aoi.join(",")}.tif?collection=${c.id}&item=${encodeURIComponent(f.id)}`+s.a.map(a=>"&assets="+a).join("");
+  if(s.e)u+="&expression="+encodeURIComponent(s.e)+"&asset_as_band=true";
+  const b=$("b-rec");b.href=ok?u:"#";b.style.opacity=ok?1:.45;b.style.pointerEvents=ok?"auto":"none";
+  b.onclick=()=>ev("descargas_recorte",{producto:c.id,preset:s.n,mb:Math.round(mb)});};
+ document.querySelectorAll("input[name=pre]").forEach(r=>r.onchange=upd);upd();
+ token(c.id).then(t=>{$("full").innerHTML=c.full.filter(a=>f.assets[a]).map(a=>`<li><a href="${f.assets[a].href}?${t}" target="_blank" rel="noopener" data-a="${a}">${a}</a></li>`).join("");
+  document.querySelectorAll("#full a").forEach(x=>x.onclick=()=>ev("descargas_escena",{producto:c.id,banda:x.dataset.a}))})
+  .catch(()=>{$("full").innerHTML='<li class="nota">No se pudieron generar los enlaces; intenta de nuevo.</li>'});
+}
+
+/* ---- Código para descarga masiva ---- */
+function codigo(){const c=COL[$("col").value],b=aoi||[-73.4,-3.9,-73.1,-3.6];const a=c.presets[c.dem?0:1].a;
+ const fe=c.dem?"":`${$("d1").value}/${$("d2").value}`;
+ $("cod-r").textContent=`# install.packages("rstac")
+library(rstac)
+it <- stac("https://planetarycomputer.microsoft.com/api/stac/v1") |>
+  stac_search(collections = "${c.id}",
+              bbox = c(${b.join(", ")})${c.dem?"":`,
+              datetime = "${fe}"`}) |>
+${c.nubes?`  ext_query(\`eo:cloud_cover\` <= ${$("nub").value}) |>\n`:""}  post_request() |>
+  items_sign(sign_planetary_computer())
+assets_download(it, asset_names = c(${a.map(x=>`"${x}"`).join(", ")}),
+                output_dir = "descargas", overwrite = TRUE)`;
+ $("cod-py").textContent=`# pip install pystac-client planetary-computer
+import pystac_client, planetary_computer, urllib.request, os
+cat = pystac_client.Client.open("https://planetarycomputer.microsoft.com/api/stac/v1",
+                                modifier=planetary_computer.sign_inplace)
+bus = cat.search(collections=["${c.id}"], bbox=[${b.join(", ")}]${c.dem?"":`,
+                 datetime="${fe}"`}${c.nubes?`,
+                 query={"eo:cloud_cover": {"lte": ${$("nub").value}}}`:""})
+os.makedirs("descargas", exist_ok=True)
+for it in bus.items():
+    for a in [${a.map(x=>`"${x}"`).join(", ")}]:
+        urllib.request.urlretrieve(it.assets[a].href, f"descargas/{it.id}_{a}.tif")`;}
+codigo();
+</script>
+</body>
+</html>
