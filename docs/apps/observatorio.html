@@ -8,138 +8,230 @@
 <meta name="description" content="Monitoreo diario con datos abiertos: creciente y vaciante de los ríos amazónicos (inundación y sequía), focos de calor, peligro meteorológico de incendio y pérdida de bosque en la Amazonía peruana.">
 <link rel="icon" type="image/png" href="../mapas/logo_giteca.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-:root{--bg:#F5F8F4;--surface:#fff;--fg:#13261C;--muted:#4D6157;--line:#D5E0D7;--green:#2E7D3E;--blue:#1C5D99;--soft:#E3EFE5}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.5 "Source Sans 3",system-ui,sans-serif}
-h1,h2,h3{font-family:Outfit,system-ui,sans-serif;margin:0}
-header.top{background:#16352a;color:#fff;padding:14px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-header.top img{width:46px;height:46px;border-radius:10px;background:#fff}
-header.top h1{font-size:1.35rem}header.top p{margin:2px 0 0;color:#cfe5d6;font-size:.92rem}
-header.top a.back{margin-left:auto;color:#cfe5d6;font-size:.9rem}
-.wrap{max-width:1280px;margin:0 auto;padding:16px}
-.aviso{background:#fff7e0;border:1px solid #f0d58a;border-radius:10px;padding:8px 12px;font-size:.88rem;margin-bottom:12px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.tab{font:600 .95rem "Source Sans 3",sans-serif;padding:9px 14px;border-radius:999px;border:2px solid var(--green);background:#fff;color:var(--fg);cursor:pointer}
-.tab[aria-selected=true]{background:var(--green);color:#fff}
-.grid{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;align-items:start}@media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{background:var(--surface);border-radius:12px;box-shadow:0 4px 16px rgba(15,40,25,.08);padding:14px}
-#mapa{height:560px;border-radius:12px}@media(max-width:600px){#mapa{height:420px}}
-.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}@media(max-width:700px){.kpis{grid-template-columns:1fr 1fr}}
-.kpi{background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(15,40,25,.06)}.kpi small{color:var(--muted)}.kpi b{display:block;font:700 1.5rem Outfit,sans-serif}
-table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{padding:6px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--muted);font-weight:600}
-tr.sel{background:var(--soft)}tbody tr{cursor:pointer}
-.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap}
-.muy_bajo{background:#8c510a}.bajo{background:#d8a24a}.normal{background:#4d9a5a}.alto{background:#2b7bb9}.muy_alto{background:#173f8a}.sin_dato{background:#999}
-.bajo,.normal,.f-alto,.f-moderado,.f-bajo{color:#13261C}.f-muy_alto{background:#b2182b}.f-alto{background:#ef6b33}.f-moderado{background:#f2b632}.f-bajo{background:#4d9a5a}
-.leyenda{font-size:.85rem;color:var(--muted);margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.nota{font-size:.85rem;color:var(--muted)}a{color:var(--blue)}
-.panel[hidden]{display:none}
-footer{color:var(--muted);font-size:.85rem;padding:18px 16px 28px;max-width:1280px;margin:0 auto}
+:root{--paper:#F4F1EA;--panel:#FBFAF6;--fg:#16231C;--muted:#5B665F;--line:#D9D3C5;--ink:#16352a;--green:#2E7D3E;--blue:#1C5D99;--soft:#E8EFE6;
+--mono:"IBM Plex Mono",ui-monospace,monospace;--disp:Outfit,system-ui,sans-serif}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--fg);font:400 15px/1.45 "Source Sans 3",system-ui,sans-serif;
+background-image:linear-gradient(rgba(22,53,42,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(22,53,42,.045) 1px,transparent 1px);background-size:24px 24px}
+h1,h2,h3{font-family:var(--disp);margin:0}a{color:var(--blue)}
+.app{display:grid;grid-template-columns:220px minmax(0,1fr) 430px;height:100vh}
+/* Barra lateral */
+.side{border-right:1px solid var(--line);display:flex;flex-direction:column;background:rgba(244,241,234,.92)}
+.brand{padding:16px 16px 10px;display:flex;gap:10px;align-items:center}
+.brand img{width:38px;height:38px;border-radius:8px;background:#fff}
+.brand b{display:block;font:600 .82rem var(--mono);letter-spacing:.08em;line-height:1.25}
+.brand span{font:400 .75rem var(--mono);color:var(--muted)}
+.idx-t{font:500 .7rem var(--mono);letter-spacing:.12em;color:var(--muted);padding:14px 16px 6px}
+.lam{display:flex;gap:12px;align-items:center;width:calc(100% - 20px);margin:0 0 8px 10px;padding:12px 12px;border:1px solid var(--line);background:var(--panel);
+font:500 .95rem "Source Sans 3",sans-serif;color:var(--fg);text-align:left;cursor:pointer}
+.lam i{font:500 .75rem var(--mono);font-style:normal;color:var(--muted)}
+.lam[aria-selected=true]{border-left:4px solid var(--ink);background:#fff;font-weight:600}
+.lam[aria-selected=true] i{color:var(--ink)}
+.ficha{margin-top:auto;border-top:1px solid var(--line);font-size:.8rem}
+.ficha div{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.ficha p{margin:0;padding:7px 10px}.ficha p+p{border-left:1px solid var(--line)}
+.ficha small{display:block;font:500 .64rem var(--mono);letter-spacing:.1em;color:var(--muted)}
+.ficha .full{grid-template-columns:1fr}.ficha a{font-size:.8rem}
+/* Centro */
+.centro{display:flex;flex-direction:column;min-width:0}
+.barra{height:52px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 16px;background:rgba(251,250,246,.9)}
+.barra b{font:600 .85rem var(--mono);letter-spacing:.1em;white-space:nowrap}.barra a.back{white-space:nowrap}
+.barra .aviso{margin-left:auto;font:500 .7rem var(--mono);color:#8a5a00;background:#fff4d6;border:1px solid #edd38a;padding:4px 8px}
+.barra a.back{font-size:.85rem}
+.mapwrap{position:relative;flex:1;min-height:0}
+#mapa{position:absolute;inset:0;background:#e9e6dd}
+.flota{position:absolute;z-index:500;background:rgba(251,250,246,.96);border:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.ley{top:12px;right:12px;width:230px;padding:12px 14px}
+.ley h3{font:600 .72rem var(--mono);letter-spacing:.12em;margin-bottom:4px}.ley .sub{font-size:.78rem;color:var(--muted);margin:0 0 8px}
+.ley ul{list-style:none;margin:0;padding:0;font-size:.85rem}.ley li{display:flex;align-items:center;gap:8px;margin:4px 0}
+.sw{width:14px;height:14px;display:inline-block;border-radius:2px;flex:none}.dot{border-radius:50%}
+.anio{bottom:14px;left:12px;padding:8px 12px;font-size:.85rem;display:none}.anio select{font:inherit}
+/* Panel derecho */
+.panel{border-left:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:18px 20px 30px}
+.panel h2{font-size:1.45rem}.fecha{font:500 .75rem var(--mono);letter-spacing:.1em;color:var(--muted);margin:4px 0 14px}
+.titular{font:700 1.75rem/1.15 var(--disp);margin:0 0 6px}.titular em{font-style:normal;color:var(--blue)}
+.lead{color:var(--muted);margin:0 0 14px}
+.dist{display:flex;height:16px;border:1px solid var(--line);margin:4px 0 4px}.dist span{height:100%}
+.dist-l{display:flex;justify-content:space-between;font:500 .68rem var(--mono);color:var(--muted);margin-bottom:14px}
+.kp{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-bottom:16px}
+.kp div{padding:10px 10px 10px 12px;border-bottom:1px solid var(--line);border-left:3px solid var(--k,#c9c2b2)}
+.kp div:nth-child(even){border-right:0}
+.kp small{display:block;font:600 .64rem var(--mono);letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.kp b{display:block;font:500 1.65rem/1.2 var(--mono)}.kp span{font-size:.78rem;color:var(--muted)}
+.sec{font:600 .74rem var(--mono);letter-spacing:.12em;margin:18px 0 8px;text-transform:uppercase}
+table{width:100%;border-collapse:collapse;font-size:.88rem}th,td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:600 .64rem var(--mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}tbody tr{cursor:pointer}tr.sel{background:var(--soft)}
+.pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:.76rem;font-weight:600;color:#fff;white-space:nowrap}
+.muy_bajo{background:#8c510a}.bajo{background:#d8a24a}.normal{background:#5aa66a}.alto{background:#2b7bb9}.muy_alto{background:#173f8a}.sin_dato{background:#999}
+.f-muy_alto{background:#b2182b}.f-alto{background:#ef6b33}.f-moderado{background:#f2b632}.f-bajo{background:#5aa66a}
+.bajo,.normal,.f-alto,.f-moderado,.f-bajo{color:#13261C}
+.nota{font-size:.8rem;color:var(--muted)}.cv{position:relative;height:250px}
+.vista[hidden]{display:none}
+.leaflet-container{font-family:"Source Sans 3",sans-serif}
+@media(max-width:1100px){.app{grid-template-columns:190px minmax(0,1fr) 360px}}
+@media(max-width:860px){.app{display:block;height:auto}.side{border-right:0;border-bottom:1px solid var(--line)}.idx{display:flex;overflow-x:auto}.lam{width:auto;flex:none;margin:0 0 8px 10px}.ficha{display:none}
+.mapwrap{flex:none;height:62vh}.panel{border-left:0}.ley{width:150px;font-size:.78rem;padding:8px 10px}.ley .sub{display:none}.barra .aviso{display:none}}
 </style>
 </head>
 <body>
-<header class="top"><img src="../mapas/logo_giteca.png" alt="Logo GITECA">
-<div><h1>Observatorio de amenazas de la Amazonía peruana</h1><p>Ríos (inundación y sequía) · Incendios forestales · Pérdida de bosque — datos abiertos, actualización diaria</p></div>
-<a class="back" href="../index.html">← Volver a GITECA</a></header>
-<div class="wrap">
-<p class="aviso"><b>Herramienta experimental, orientativa y no oficial.</b> No reemplaza los avisos de SENAMHI, ANA, INDECI, SERFOR ni MINAM. Ante una emergencia, sigue las indicaciones de las autoridades. <span id="act"></span></p>
-<div class="tabs" role="tablist">
-<button class="tab" role="tab" aria-selected="true" data-p="rios">Ríos: creciente y vaciante</button>
-<button class="tab" role="tab" aria-selected="false" data-p="fuego">Incendios forestales</button>
-<button class="tab" role="tab" aria-selected="false" data-p="bosque">Pérdida de bosque</button>
+<div class="app">
+<aside class="side">
+<div class="brand"><img src="../mapas/logo_giteca.png" alt="Logo GITECA"><div><b>OBSERVATORIO<br>AMAZONÍA</b><span>Perú · GITECA</span></div></div>
+<div class="idx-t">ÍNDICE DE LÁMINAS</div>
+<div class="idx" role="tablist">
+<button class="lam" role="tab" data-p="rios" aria-selected="true"><i>01</i>Ríos: creciente y vaciante</button>
+<button class="lam" role="tab" data-p="fuego" aria-selected="false"><i>02</i>Incendios forestales</button>
+<button class="lam" role="tab" data-p="bosque" aria-selected="false"><i>03</i>Pérdida de bosque</button>
+<button class="lam" role="tab" data-p="metodo" aria-selected="false"><i>04</i>Metodología y fuentes</button>
 </div>
-<div class="kpis" id="kpis"></div>
-<div class="grid">
-<div class="card"><div id="mapa"></div><div class="leyenda" id="ley"></div></div>
-<div>
-<section class="panel card" id="p-rios">
-<h2 style="font-size:1.1rem">Estado de los ríos frente a lo normal (1991–2020)</h2>
-<table><thead><tr><th>Río · lugar</th><th>Estado hoy</th><th>Próx. 14 días</th><th>Amenaza</th></tr></thead><tbody id="t-rios"></tbody></table>
-<h3 style="font-size:1rem;margin-top:12px" id="g-tit">Caudal (m³/s)</h3>
-<div style="position:relative;height:300px"><canvas id="graf" role="img" aria-label="Gráfico del caudal del río seleccionado: últimos 90 días, pronóstico a 30 días y rango normal histórico"></canvas></div>
-<p class="nota">Línea negra: caudal simulado (últimos 90 días y pronóstico a 30 días, mediana del ensamble). Banda azul: rango probable del pronóstico (p25–p75). Banda gris: rango normal para la fecha (p10–p90, 1991–2020); línea gris: mediana histórica.</p>
-</section>
-<section class="panel card" id="p-fuego" hidden>
-<h2 style="font-size:1.1rem">Peligro meteorológico de incendio (próximos 7 días)</h2>
+<div class="ficha">
+<div class="full"><p><small>PROYECTO</small>Observatorio de amenazas de la Amazonía peruana</p></div>
+<div><p><small>DATOS AL</small><span id="f-fecha">–</span></p><p><small>ACTUALIZACIÓN</small>Diaria · 06:15</p></div>
+<div><p><small>FUENTES</small>GloFAS · FIRMS · GFW</p><p><small>MÉTODO</small>Percentiles 1991–2020</p></div>
+<div class="full"><p><small>AVISO</small>No es producto oficial · <a href="../index.html">GITECA</a></p></div>
+</div>
+</aside>
+
+<main class="centro">
+<div class="barra"><b id="lam-t">LÁMINA 01 · RÍOS</b><span class="aviso">EXPERIMENTAL · NO OFICIAL</span><a class="back" href="../index.html">← GITECA</a></div>
+<div class="mapwrap"><div id="mapa"></div>
+<div class="flota ley" id="ley"></div>
+<div class="flota anio" id="anio"><label>Pérdida de bosque desde <select id="y1"></select></label> <label>hasta <select id="y2"></select></label></div>
+</div>
+</main>
+
+<section class="panel" aria-live="polite">
+<div class="vista" id="v-rios">
+<h2>Panorama de los ríos</h2><p class="fecha" id="fr">–</p>
+<p class="titular" id="tit-rios">–</p><p class="lead" id="lead-rios"></p>
+<div class="dist" id="dist"></div><div class="dist-l"><span>MUY BAJO</span><span>NORMAL</span><span>MUY ALTO</span></div>
+<div class="kp" id="kp-rios"></div>
+<div class="sec">Estado por estación</div>
+<table><thead><tr><th>Río · lugar</th><th>Hoy</th><th>14 días</th><th>Amenaza</th></tr></thead><tbody id="t-rios"></tbody></table>
+<div class="sec" id="g-tit">Caudal (m³/s)</div>
+<div class="cv"><canvas id="graf" role="img" aria-label="Caudal del río seleccionado: últimos 90 días, pronóstico a 30 días y rango normal histórico"></canvas></div>
+<p class="nota">Negro: caudal simulado. Azul: pronóstico (mediana, banda p25–p75). Gris: rango normal para la fecha (p10–p90, 1991–2020) y mediana histórica.</p>
+</div>
+
+<div class="vista" id="v-fuego" hidden>
+<h2>Panorama de incendios</h2><p class="fecha" id="ff">–</p>
+<p class="titular" id="tit-fuego">–</p><p class="lead" id="lead-fuego"></p>
+<div class="kp" id="kp-fuego"></div>
+<div class="sec">Focos de calor por día · Perú</div>
+<div class="cv" style="height:200px"><canvas id="graf2" role="img" aria-label="Número de focos de calor por día en el Perú"></canvas></div>
+<div class="sec">Peligro meteorológico · próximos 7 días</div>
 <table><thead><tr><th>Lugar</th><th>Peor día</th><th>Índice</th><th>Peligro</th></tr></thead><tbody id="t-fuego"></tbody></table>
-<p class="nota">Índice de Angström a las 13:00 (I = HR/20 + (27 − T)/10): &lt; 2,0 muy alto; 2,0–2,5 alto; 2,5–4,0 moderado; &gt; 4,0 bajo. Focos de calor: NOAA-20 VIIRS 375 m (NASA FIRMS), últimos 7 días, confianza nominal y alta. Un foco de calor no siempre es un incendio forestal (también quemas agrícolas).</p>
-<h3 style="font-size:1rem;margin-top:12px">Focos de calor por día en el Perú</h3>
-<div style="position:relative;height:220px"><canvas id="graf2" role="img" aria-label="Gráfico de barras con el número de focos de calor por día en el Perú"></canvas></div>
-</section>
-<section class="panel card" id="p-bosque" hidden>
-<h2 style="font-size:1.1rem">Pérdida de cobertura arbórea (Hansen / UMD, Global Forest Watch)</h2>
-<p>El mapa muestra la pérdida de cobertura arbórea detectada con Landsat entre 2001 y el último año publicado. Usa el filtro para ver un periodo.</p>
-<label>Desde <select id="y1"></select></label> <label>hasta <select id="y2"></select></label>
-<p class="nota">Pérdida de cobertura arbórea no es lo mismo que deforestación: incluye causas naturales y aprovechamiento. Para alertas tempranas oficiales del Perú consulta <a href="https://geobosques.minam.gob.pe/" target="_blank" rel="noopener">GeoBosques – MINAM</a>; para alertas GLAD/RADD, <a href="https://www.globalforestwatch.org/map/country/PER/" target="_blank" rel="noopener">Global Forest Watch</a>. También puedes probar nuestra app de <a href="../index.html#proyectos">alertas RADD en Google Earth Engine</a>.</p>
-</section>
-</div></div>
+<p class="nota">Índice de Angström a las 13:00 (HR/20 + (27 − T)/10). Es un índice simple, calibrado para climas templados, que tiende a sobrestimar el peligro en la selva; úsese como referencia relativa. Un foco de calor no siempre es un incendio forestal: también detecta quemas agrícolas.</p>
 </div>
-<footer>Fuentes: GloFAS v4 – Copernicus Emergency Management Service (CC BY 4.0), pronósticos meteorológicos vía Open-Meteo; NASA FIRMS (VIIRS NOAA-20); Hansen/UMD/Google/USGS/NASA, Global Forest Watch (CC BY 4.0); límites: Natural Earth. Enfoque inspirado en el «Observatorio de riesgo de inundación – Argentina frente a El Niño 2026–27» (diamedego); código propio de GITECA. © 2026 GITECA Consulting E.I.R.L. · Gino Machoa. Uso sujeto a las licencias de cada fuente.</footer>
+
+<div class="vista" id="v-bosque" hidden>
+<h2>Pérdida de bosque</h2><p class="fecha">HANSEN / UMD · GLOBAL FOREST WATCH</p>
+<p class="titular">Pérdida de cobertura arbórea <em id="per">2001–2024</em></p>
+<p class="lead">Áreas donde Landsat detectó la pérdida de cobertura arbórea (30 m). Elige el periodo en el selector del mapa.</p>
+<div class="kp"><div style="--k:#e41a80"><small>Fuente</small><b style="font-size:1.05rem">Hansen / UMD</b><span>Global Forest Watch</span></div><div style="--k:#e41a80"><small>Resolución</small><b>30 m</b><span>Landsat</span></div></div>
+<p class="nota">Pérdida de cobertura arbórea no es lo mismo que deforestación: incluye causas naturales y aprovechamiento. Alertas tempranas oficiales: <a href="https://geobosques.minam.gob.pe/" target="_blank" rel="noopener">GeoBosques – MINAM</a>. Alertas GLAD/RADD: <a href="https://www.globalforestwatch.org/map/country/PER/" target="_blank" rel="noopener">Global Forest Watch</a>.</p>
+</div>
+
+<div class="vista" id="v-metodo" hidden>
+<h2>Metodología y fuentes</h2><p class="fecha">DOCUMENTACIÓN TÉCNICA</p>
+<div class="sec">Ríos</div><p>Caudal diario simulado por GloFAS v4 (Copernicus EMS) en 10 celdas de ~5 km sobre el cauce principal. El estado compara el caudal de hoy con los percentiles 10, 25, 75 y 90 de 1991–2020 para la misma fecha (ventana de ±7 días). La tendencia compara el caudal de hoy con la mediana del pronóstico a 14 días (±5 %). Lluvia acumulada: pronóstico meteorológico vía Open-Meteo.</p>
+<div class="sec">Incendios</div><p>Focos de calor NOAA-20 VIIRS 375 m (NASA FIRMS), últimos 7 días, confianza nominal y alta, dentro del límite del Perú. Peligro meteorológico: índice de Angström con la temperatura y la humedad pronosticadas a las 13:00.</p>
+<div class="sec">Bosque</div><p>Pérdida de cobertura arbórea de Hansen et al. (UMD/Google/USGS/NASA), servida por Global Forest Watch y decodificada en el navegador.</p>
+<div class="sec">Limitaciones</div><p>Los caudales son simulados, no medidos: sirven para ver la tendencia frente a lo normal. Para niveles oficiales consulta SENAMHI y ANA. Herramienta experimental, orientativa y no oficial.</p>
+<div class="sec">Créditos</div><p class="nota">GloFAS – Copernicus EMS (CC BY 4.0); Open-Meteo; NASA FIRMS; Hansen/UMD/Google/USGS/NASA – GFW (CC BY 4.0); límites: Natural Earth; mapa base: Esri (Light Gray Canvas, World Hillshade). Enfoque inspirado en el «Observatorio de riesgo de inundación – Argentina frente a El Niño 2026–27» (diamedego); código propio. © 2026 GITECA Consulting E.I.R.L. · Gino Machoa.</p>
+</div>
+</section>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 const EST={muy_bajo:"Muy bajo",bajo:"Bajo",normal:"Normal",alto:"Alto",muy_alto:"Muy alto",sin_dato:"Sin dato"};
-const COL={muy_bajo:"#8c510a",bajo:"#d8a24a",normal:"#4d9a5a",alto:"#2b7bb9",muy_alto:"#173f8a",sin_dato:"#999"};
-const FCOL={muy_alto:"#b2182b",alto:"#ef6b33",moderado:"#f2b632",bajo:"#4d9a5a"};
+const COL={muy_bajo:"#8c510a",bajo:"#d8a24a",normal:"#5aa66a",alto:"#2b7bb9",muy_alto:"#173f8a",sin_dato:"#999"};
+const FCOL={muy_alto:"#b2182b",alto:"#ef6b33",moderado:"#f2b632",bajo:"#5aa66a"};
 const FTX={muy_alto:"Muy alto",alto:"Alto",moderado:"Moderado",bajo:"Bajo"};
+const TIT={rios:"LÁMINA 01 · RÍOS",fuego:"LÁMINA 02 · INCENDIOS",bosque:"LÁMINA 03 · BOSQUE",metodo:"LÁMINA 04 · METODOLOGÍA"};
 const fmt=n=>n==null?"–":Math.round(n).toLocaleString("es-PE");
-const map=L.map("mapa",{zoomControl:true}).setView([-7.5,-74.5],5);
-L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",{attribution:"Esri",maxZoom:13}).addTo(map);
-let D=null,gRio=null,gFoc=null,capaRios=L.layerGroup(),capaFocos=L.layerGroup(),capaPel=L.layerGroup(),capaHansen=null,y1=2001,y2=2024;
+const fechaLarga=t=>new Date(t).toLocaleDateString("es-PE",{day:"numeric",month:"short",year:"numeric"}).toUpperCase();
+const map=L.map("mapa",{zoomControl:true,attributionControl:true}).setView([-7.8,-74.2],6);
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",{attribution:"Esri, HERE, Garmin, © OpenStreetMap",maxZoom:13}).addTo(map);
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}",{opacity:.28,maxZoom:13}).addTo(map);
+map.createPane("ref");map.getPane("ref").style.zIndex=450;map.getPane("ref").style.pointerEvents="none";
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{pane:"ref",maxZoom:13}).addTo(map);
+let D=null,gRio=null,gFoc=null,capaRios=L.layerGroup(),capaFocos=L.layerGroup(),capaPel=L.layerGroup(),capaHansen=null,y1=2001,y2=2024,actual="rios";
 
-// Capa de pérdida Hansen (teselas codificadas de GFW, decodificadas en el navegador)
 const Hansen=L.GridLayer.extend({createTile:function(c,done){const t=document.createElement("canvas");t.width=t.height=256;const img=new Image();img.crossOrigin="anonymous";
 img.onload=()=>{const x=t.getContext("2d");x.drawImage(img,0,0,256,256);const d=x.getImageData(0,0,256,256);const p=d.data;
 for(let i=0;i<p.length;i+=4){const yr=2000+p[i+2];if(p[i+3]>0&&p[i+2]>0&&yr>=y1&&yr<=y2){const a=Math.min(255,60+p[i]*2);p[i]=228;p[i+1]=26;p[i+2]=128;p[i+3]=a}else p[i+3]=0}
 x.putImageData(d,0,0);done(null,t)};img.onerror=()=>done(null,t);img.src=`https://tiles.globalforestwatch.org/umd_tree_cover_loss/latest/dynamic/${c.z}/${c.x}/${c.y}.png`;return t}});
 
-fetch("../datos/observatorio.json?"+Date.now()).then(r=>r.json()).then(d=>{D=d;
-document.getElementById("act").textContent="Actualizado: "+new Date(d.actualizado).toLocaleString("es-PE",{dateStyle:"medium",timeStyle:"short"})+".";
-pintarRios();pintarFuego();vista("rios");}).catch(()=>{document.getElementById("kpis").innerHTML='<div class="kpi">No se pudieron cargar los datos. Intenta más tarde.</div>'});
+fetch("../datos/peru.geojson").then(r=>r.json()).then(g=>L.geoJSON(g,{style:{color:"#16352a",weight:1.6,fill:false,dashArray:"4 3"},interactive:false}).addTo(map));
+fetch("../datos/observatorio.json?"+Date.now()).then(r=>r.json()).then(d=>{D=d;const f=fechaLarga(d.actualizado);
+document.getElementById("f-fecha").textContent=new Date(d.actualizado).toLocaleDateString("es-PE");
+document.getElementById("fr").textContent=f+" · GLOFAS";document.getElementById("ff").textContent=f+" · NASA FIRMS";
+pintarRios();pintarFuego();vista("rios");}).catch(()=>{document.getElementById("tit-rios").textContent="No se pudieron cargar los datos."});
 
-function pintarRios(){const tb=document.getElementById("t-rios");tb.innerHTML="";
-(D.rios||[]).forEach((e,k)=>{const tr=document.createElement("tr");
-tr.innerHTML=`<td><b>${e.rio}</b><br><span class="nota">${e.lugar} · ${e.region}</span></td><td><span class="pill ${e.estado}">${EST[e.estado]}</span><br><span class="nota">${fmt(e.q_hoy)} m³/s</span></td><td>${e.tendencia==="creciente"?"▲ Creciente":e.tendencia==="vaciante"?"▼ Vaciante":"■ Estable"}<br><span class="nota">${e.cambio_14d_pct>0?"+":""}${e.cambio_14d_pct}%</span></td><td>${e.amenaza}</td>`;
-tr.onclick=()=>{selRio(k);map.setView([e.lat,e.lon],7)};tb.appendChild(tr);
-L.circleMarker([e.lat,e.lon],{radius:9,color:"#fff",weight:2,fillColor:COL[e.estado],fillOpacity:.95}).bindPopup(`<b>${e.rio} – ${e.lugar}</b><br>Estado: ${EST[e.estado]}<br>Caudal hoy: ${fmt(e.q_hoy)} m³/s<br>En 14 días: ${fmt(e.q_14d)} m³/s (${e.tendencia})<br>Lluvia últimos 30 días: ${e.lluvia_30d_mm??"–"} mm<br>Lluvia próximos 16 días: ${e.lluvia_16d_mm??"–"} mm`).on("click",()=>selRio(k)).addTo(capaRios)});
-if(D.rios&&D.rios.length)selRio(0)}
+function pintarRios(){const r=D.rios||[],tb=document.getElementById("t-rios");tb.innerHTML="";
+const nb=r.filter(e=>["bajo","muy_bajo"].includes(e.estado)).length,na=r.filter(e=>["alto","muy_alto"].includes(e.estado)).length,nc=r.filter(e=>e.tendencia==="creciente").length,nv=r.filter(e=>e.tendencia==="vaciante").length;
+document.getElementById("tit-rios").innerHTML=na?`<em>${na} de ${r.length}</em> ríos con nivel alto`:nb?`<em>${nb} de ${r.length}</em> ríos con nivel bajo`:`Ríos en <em>nivel normal</em>`;
+document.getElementById("lead-rios").textContent=`${nc} en creciente y ${nv} en vaciante en los próximos 14 días. Estado frente a lo normal para la fecha (1991–2020).`;
+const orden=["muy_bajo","bajo","normal","alto","muy_alto"];document.getElementById("dist").innerHTML=orden.map(k=>{const n=r.filter(e=>e.estado===k).length;return n?`<span title="${EST[k]}: ${n}" style="width:${n/r.length*100}%;background:${COL[k]}"></span>`:""}).join("");
+const mx=r.reduce((a,e)=>Math.abs(e.cambio_14d_pct)>Math.abs(a.cambio_14d_pct)?e:a,r[0]),ll=r.reduce((a,e)=>(e.lluvia_16d_mm||0)>(a.lluvia_16d_mm||0)?e:a,r[0]);
+document.getElementById("kp-rios").innerHTML=`<div style="--k:#173f8a"><small>Nivel alto o muy alto</small><b>${na}<span style="font-size:1rem">/${r.length}</span></b><span>posible inundación</span></div>
+<div style="--k:#8c510a"><small>Nivel bajo o muy bajo</small><b>${nb}<span style="font-size:1rem">/${r.length}</span></b><span>sequía hidrológica o recuperación</span></div>
+<div style="--k:#1C5D99"><small>Mayor cambio a 14 días</small><b>${mx.cambio_14d_pct>0?"+":""}${mx.cambio_14d_pct}%</b><span>${mx.rio} · ${mx.lugar}</span></div>
+<div style="--k:#5aa66a"><small>Lluvia máx. · 16 días</small><b>${ll.lluvia_16d_mm??"–"}<span style="font-size:1rem"> mm</span></b><span>${ll.lugar}</span></div>`;
+r.forEach((e,k)=>{const tr=document.createElement("tr");
+tr.innerHTML=`<td><b>${e.rio}</b><br><span class="nota">${e.lugar}</span></td><td><span class="pill ${e.estado}">${EST[e.estado]}</span><br><span class="nota">${fmt(e.q_hoy)} m³/s</span></td><td>${e.tendencia==="creciente"?"▲":e.tendencia==="vaciante"?"▼":"■"} ${e.cambio_14d_pct>0?"+":""}${e.cambio_14d_pct}%</td><td class="nota">${e.amenaza}</td>`;
+tr.onclick=()=>{selRio(k);map.flyTo([e.lat,e.lon],8)};tb.appendChild(tr);
+L.circleMarker([e.lat,e.lon],{radius:10,color:"#fff",weight:2.5,fillColor:COL[e.estado],fillOpacity:1}).bindTooltip(`${e.rio} · ${e.lugar}`,{direction:"top"}).bindPopup(`<b>${e.rio} – ${e.lugar}</b><br>Estado: ${EST[e.estado]}<br>Caudal hoy: ${fmt(e.q_hoy)} m³/s<br>En 14 días: ${fmt(e.q_14d)} m³/s (${e.tendencia})<br>Lluvia 30 días: ${e.lluvia_30d_mm??"–"} mm · próximos 16: ${e.lluvia_16d_mm??"–"} mm`).on("click",()=>selRio(k)).addTo(capaRios)});
+if(r.length)selRio(0)}
 
 function selRio(k){const e=D.rios[k];[...document.querySelectorAll("#t-rios tr")].forEach((r,i)=>r.classList.toggle("sel",i===k));
-document.getElementById("g-tit").textContent=`Caudal (m³/s) · ${e.rio} en ${e.lugar}`;const s=e.serie,lab=s.map(x=>x.t.slice(5));
+document.getElementById("g-tit").textContent=`Caudal (m³/s) · ${e.rio} en ${e.lugar}`;const s=e.serie,lab=s.map(x=>x.t.slice(8)+"/"+x.t.slice(5,7));
 const hoy=new Date().toISOString().slice(0,10),obs=s.map(x=>x.t<=hoy?x.q:null),pro=s.map(x=>x.t>=hoy?(x.med??x.q):null);
-const ds=[{label:"Normal p90",data:s.map(x=>x.c[4]),borderWidth:0,pointRadius:0,backgroundColor:"rgba(120,120,120,.18)",fill:"+1"},{label:"Normal p10",data:s.map(x=>x.c[0]),borderWidth:0,pointRadius:0,fill:false},
-{label:"Mediana histórica",data:s.map(x=>x.c[2]),borderColor:"#999",borderDash:[4,4],borderWidth:1.5,pointRadius:0,fill:false},
-{label:"Pronóstico p75",data:s.map(x=>x.t>=hoy?x.p75:null),borderWidth:0,pointRadius:0,backgroundColor:"rgba(28,93,153,.25)",fill:"+1"},{label:"Pronóstico p25",data:s.map(x=>x.t>=hoy?x.p25:null),borderWidth:0,pointRadius:0,fill:false},
-{label:"Simulado",data:obs,borderColor:"#13261C",borderWidth:2,pointRadius:0,fill:false},{label:"Pronóstico (mediana)",data:pro,borderColor:"#1C5D99",borderWidth:2,pointRadius:0,fill:false}];
+const ds=[{label:"p90",data:s.map(x=>x.c[4]),borderWidth:0,pointRadius:0,backgroundColor:"rgba(120,110,90,.16)",fill:"+1"},{label:"p10",data:s.map(x=>x.c[0]),borderWidth:0,pointRadius:0,fill:false},
+{label:"Mediana histórica",data:s.map(x=>x.c[2]),borderColor:"#9a9180",borderDash:[4,4],borderWidth:1.4,pointRadius:0,fill:false},
+{label:"p75",data:s.map(x=>x.t>=hoy?x.p75:null),borderWidth:0,pointRadius:0,backgroundColor:"rgba(28,93,153,.22)",fill:"+1"},{label:"p25",data:s.map(x=>x.t>=hoy?x.p25:null),borderWidth:0,pointRadius:0,fill:false},
+{label:"Simulado",data:obs,borderColor:"#16231C",borderWidth:2,pointRadius:0,fill:false},{label:"Pronóstico",data:pro,borderColor:"#1C5D99",borderWidth:2,pointRadius:0,fill:false}];
+const vis=["Simulado","Pronóstico","Mediana histórica"];
 if(gRio)gRio.destroy();gRio=new Chart(document.getElementById("graf"),{type:"line",data:{labels:lab,datasets:ds},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
-plugins:{legend:{labels:{filter:i=>["Simulado","Pronóstico (mediana)","Mediana histórica"].includes(i.text)}},tooltip:{filter:i=>["Simulado","Pronóstico (mediana)","Mediana histórica"].includes(i.dataset.label)}},scales:{x:{ticks:{maxTicksLimit:8}},y:{ticks:{callback:v=>fmt(v)}}}}})}
+plugins:{legend:{labels:{boxWidth:12,font:{size:11},filter:i=>vis.includes(i.text)}},tooltip:{filter:i=>vis.includes(i.dataset.label)}},scales:{x:{ticks:{maxTicksLimit:6,font:{size:10}},grid:{display:false}},y:{ticks:{callback:v=>fmt(v),font:{size:10}}}}}})}
 
-function pintarFuego(){const tb=document.getElementById("t-fuego");tb.innerHTML=(D.incendio_peligro||[]).length?"":'<tr><td colspan="4" class="nota">El pronóstico de peligro no está disponible en esta actualización. Vuelve a consultar mañana.</td></tr>';
-(D.incendio_peligro||[]).slice().sort((a,b)=>a.peor.angstrom-b.peor.angstrom).forEach(c=>{const p=c.peor;
-tb.insertAdjacentHTML("beforeend",`<tr><td>${c.lugar}</td><td>${p.t.slice(8)}/${p.t.slice(5,7)}<br><span class="nota">${p.t13} °C · HR ${p.hr13} %</span></td><td>${String(p.angstrom).replace(".",",")}</td><td><span class="pill f-${p.clase}">${FTX[p.clase]}</span></td></tr>`);
-L.circleMarker([c.lat,c.lon],{radius:8,color:"#fff",weight:2,fillColor:FCOL[p.clase],fillOpacity:.95}).bindPopup(`<b>${c.lugar}</b><br>Peor día: ${p.t}<br>Índice de Angström: ${p.angstrom} (${FTX[p.clase]})<br>13:00 → ${p.t13} °C, HR ${p.hr13} %<br>Viento máx.: ${p.viento_max} km/h`).addTo(capaPel)});
-const f=D.focos||{};(f.puntos||[]).forEach(p=>L.circleMarker([p[1],p[0]],{radius:3,color:"#d7301f",weight:0,fillColor:"#fc4e2a",fillOpacity:.8}).bindPopup(`Foco de calor<br>${p[2]} · ${p[4]==="D"?"día":"noche"}<br>FRP: ${p[3]} MW`).addTo(capaFocos));
-const pd=f.por_dia||{};if(gFoc)gFoc.destroy();gFoc=new Chart(document.getElementById("graf2"),{type:"bar",data:{labels:Object.keys(pd).map(t=>t.slice(5)),datasets:[{label:"Focos",data:Object.values(pd),backgroundColor:"#ef6b33"}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}})}
+function pintarFuego(){const c=D.incendio_peligro||[],f=D.focos||{},tb=document.getElementById("t-fuego");
+tb.innerHTML=c.length?"":'<tr><td colspan="4" class="nota">El pronóstico de peligro no está disponible en esta actualización.</td></tr>';
+const na=c.filter(x=>["alto","muy_alto"].includes(x.peor.clase)).length;
+document.getElementById("tit-fuego").innerHTML=`<em>${fmt(f.total_7d)}</em> focos de calor en 7 días`;
+document.getElementById("lead-fuego").textContent=`${na} de ${c.length} lugares con peligro meteorológico alto o muy alto en la próxima semana.`;
+const pd=f.por_dia||{},mxd=Object.entries(pd).sort((a,b)=>b[1]-a[1])[0]||["–",0],peor=c.slice().sort((a,b)=>a.peor.angstrom-b.peor.angstrom)[0];
+document.getElementById("kp-fuego").innerHTML=`<div style="--k:#ef6b33"><small>Focos · último día</small><b>${fmt(f.n_ultimo_dia)}</b><span>${f.ultimo_dia||""}</span></div>
+<div style="--k:#b2182b"><small>Día con más focos</small><b>${fmt(mxd[1])}</b><span>${mxd[0]}</span></div>
+<div style="--k:#b2182b"><small>Peligro alto o muy alto</small><b>${na}<span style="font-size:1rem">/${c.length}</span></b><span>lugares evaluados</span></div>
+<div style="--k:#f2b632"><small>Lugar más crítico</small><b style="font-size:1.15rem">${peor?peor.lugar:"–"}</b><span>${peor?"índice "+String(peor.peor.angstrom).replace(".",",")+" · "+peor.peor.t:""}</span></div>`;
+c.slice().sort((a,b)=>a.peor.angstrom-b.peor.angstrom).forEach(x=>{const p=x.peor;
+tb.insertAdjacentHTML("beforeend",`<tr><td>${x.lugar}</td><td>${p.t.slice(8)}/${p.t.slice(5,7)}<br><span class="nota">${p.t13} °C · HR ${p.hr13} %</span></td><td>${String(p.angstrom).replace(".",",")}</td><td><span class="pill f-${p.clase}">${FTX[p.clase]}</span></td></tr>`);
+L.circleMarker([x.lat,x.lon],{radius:9,color:"#fff",weight:2.5,fillColor:FCOL[p.clase],fillOpacity:1}).bindTooltip(x.lugar,{direction:"top"}).bindPopup(`<b>${x.lugar}</b><br>Peor día: ${p.t}<br>Índice de Angström: ${p.angstrom} (${FTX[p.clase]})<br>13:00 → ${p.t13} °C, HR ${p.hr13} %<br>Viento máx.: ${p.viento_max} km/h`).addTo(capaPel)});
+(f.puntos||[]).forEach(p=>L.circleMarker([p[1],p[0]],{radius:2.5,weight:0,fillColor:"#e8452c",fillOpacity:.75,interactive:true}).bindPopup(`Foco de calor<br>${p[2]} · ${p[4]==="D"?"día":"noche"}<br>FRP: ${p[3]} MW`).addTo(capaFocos));
+if(gFoc)gFoc.destroy();gFoc=new Chart(document.getElementById("graf2"),{type:"bar",data:{labels:Object.keys(pd).map(t=>t.slice(8)+"/"+t.slice(5,7)),datasets:[{label:"Focos",data:Object.values(pd),backgroundColor:"#ef6b33"}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{ticks:{font:{size:10}}}}}})}
 
-function kpis(p){const k=document.getElementById("kpis");
-if(p==="rios"){const r=D.rios||[];k.innerHTML=`<div class="kpi"><small>Estaciones</small><b>${r.length}</b></div><div class="kpi"><small>Con nivel alto o muy alto</small><b>${r.filter(e=>["alto","muy_alto"].includes(e.estado)).length}</b></div><div class="kpi"><small>Con nivel bajo o muy bajo</small><b>${r.filter(e=>["bajo","muy_bajo"].includes(e.estado)).length}</b></div><div class="kpi"><small>En creciente (14 días)</small><b>${r.filter(e=>e.tendencia==="creciente").length}</b></div>`}
-else if(p==="fuego"){const f=D.focos||{},c=D.incendio_peligro||[];k.innerHTML=`<div class="kpi"><small>Focos de calor (7 días)</small><b>${f.total_7d??"–"}</b></div><div class="kpi"><small>Focos el último día${f.ultimo_dia?" ("+f.ultimo_dia.slice(5)+")":""}</small><b>${f.n_ultimo_dia??"–"}</b></div><div class="kpi"><small>Lugares con peligro alto o muy alto</small><b>${c.filter(x=>["alto","muy_alto"].includes(x.peor.clase)).length}</b></div><div class="kpi"><small>Lugares evaluados</small><b>${c.length}</b></div>`}
-else k.innerHTML=`<div class="kpi"><small>Fuente</small><b style="font-size:1.05rem">Hansen / UMD · GFW</b></div><div class="kpi"><small>Periodo</small><b>${y1}–${y2}</b></div><div class="kpi"><small>Resolución</small><b>30 m</b></div><div class="kpi"><small>Alertas tempranas</small><b style="font-size:1.05rem"><a href="https://geobosques.minam.gob.pe/" target="_blank" rel="noopener">GeoBosques</a></b></div>`}
+function leyenda(p){const L1=document.getElementById("ley");
+if(p==="rios"||p==="metodo")L1.innerHTML=`<h3>ESTADO DE LOS RÍOS</h3><p class="sub">Caudal de hoy frente a lo normal para la fecha (1991–2020)</p><ul>${["muy_bajo","bajo","normal","alto","muy_alto"].map(k=>`<li><span class="sw dot" style="background:${COL[k]}"></span>${EST[k]}</li>`).join("")}</ul>`;
+if(p==="fuego")L1.innerHTML=`<h3>INCENDIOS</h3><p class="sub">Focos (7 días) y peligro meteorológico (7 días)</p><ul><li><span class="sw dot" style="background:#e8452c;width:8px;height:8px"></span>Foco de calor VIIRS</li>${Object.keys(FTX).map(k=>`<li><span class="sw dot" style="background:${FCOL[k]}"></span>Peligro ${FTX[k].toLowerCase()}</li>`).join("")}</ul>`;
+if(p==="bosque")L1.innerHTML=`<h3>PÉRDIDA DE BOSQUE</h3><p class="sub">Hansen / UMD · ${y1}–${y2}</p><ul><li><span class="sw" style="background:#e41a80"></span>Pérdida de cobertura arbórea</li></ul>`}
 
-function vista(p){document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.p===p));
-["rios","fuego","bosque"].forEach(x=>document.getElementById("p-"+x).hidden=x!==p);
+function vista(p){actual=p;document.querySelectorAll(".lam").forEach(b=>b.setAttribute("aria-selected",b.dataset.p===p));
+["rios","fuego","bosque","metodo"].forEach(x=>document.getElementById("v-"+x).hidden=x!==p);document.getElementById("lam-t").textContent=TIT[p];
 [capaRios,capaFocos,capaPel].forEach(c=>map.removeLayer(c));if(capaHansen)map.removeLayer(capaHansen);
-const ley=document.getElementById("ley");
-if(p==="rios"){capaRios.addTo(map);ley.innerHTML=Object.keys(EST).filter(k=>k!=="sin_dato").map(k=>`<span class="pill ${k}">${EST[k]}</span>`).join("")+" nivel frente a lo normal para la fecha"}
-if(p==="fuego"){capaFocos.addTo(map);capaPel.addTo(map);ley.innerHTML='<span style="color:#fc4e2a">●</span> foco de calor (7 días) · peligro: '+Object.keys(FTX).map(k=>`<span class="pill f-${k}">${FTX[k]}</span>`).join("")}
-if(p==="bosque"){if(!capaHansen)capaHansen=new Hansen({opacity:.9,maxZoom:12,attribution:"Hansen/UMD/Google/USGS/NASA · GFW"});capaHansen.addTo(map);ley.innerHTML='<span style="color:#e41a80">■</span> pérdida de cobertura arbórea en el periodo elegido'}
-if(D)kpis(p);try{gtag("event","observatorio_tab",{tab:p})}catch(e){}}
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>vista(b.dataset.p));
+document.getElementById("anio").style.display=p==="bosque"?"block":"none";
+if(p==="rios"||p==="metodo")capaRios.addTo(map);
+if(p==="fuego"){capaFocos.addTo(map);capaPel.addTo(map)}
+if(p==="bosque"){if(!capaHansen)capaHansen=new Hansen({opacity:.9,maxZoom:12,attribution:"Hansen/UMD/Google/USGS/NASA · GFW"});capaHansen.addTo(map)}
+leyenda(p);document.querySelector(".panel").scrollTop=0;try{gtag("event","observatorio_tab",{tab:p})}catch(e){}}
+document.querySelectorAll(".lam").forEach(b=>b.onclick=()=>vista(b.dataset.p));
 const s1=document.getElementById("y1"),s2=document.getElementById("y2");for(let y=2001;y<=2024;y++){s1.add(new Option(y,y));s2.add(new Option(y,y))}s1.value=2001;s2.value=2024;
-[s1,s2].forEach(s=>s.onchange=()=>{y1=Math.min(+s1.value,+s2.value);y2=Math.max(+s1.value,+s2.value);if(capaHansen)capaHansen.redraw();kpis("bosque")});
-L.geoJSON(null).addTo(map);fetch("../datos/peru.geojson").then(r=>r.json()).then(g=>L.geoJSON(g,{style:{color:"#16352a",weight:1.5,fill:false}}).addTo(map));
+[s1,s2].forEach(s=>s.onchange=()=>{y1=Math.min(+s1.value,+s2.value);y2=Math.max(+s1.value,+s2.value);if(capaHansen)capaHansen.redraw();document.getElementById("per").textContent=y1+"–"+y2;leyenda("bosque")});
 </script>
 </body>
 </html>
