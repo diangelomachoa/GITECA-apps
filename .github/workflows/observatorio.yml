@@ -27,7 +27,7 @@ jobs:
         run: |
           git config user.name "GITECA bot"
           git config user.email "actions@users.noreply.github.com"
-          git add docs/datos/observatorio.json docs/datos/rios_amazonicos_clima.json
+          git add docs/datos/*.json
           git diff --cached --quiet || git commit -m "Observatorio: datos del $(date -u +%F)"
           git pull --rebase
           git push
