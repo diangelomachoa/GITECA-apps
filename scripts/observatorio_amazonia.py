@@ -2,18 +2,22 @@
 """Observatorio de amenazas de la Amazonía peruana – GITECA (fase 1).
 - Ríos: caudal GloFAS vs. climatología 1991–2020 → creciente / vaciante, riesgo de inundación o sequía hidrológica.
 - Lluvia: acumulado pronosticado 16 días y lluvia de los últimos 30 días.
-- Incendios: focos de calor VIIRS (NASA FIRMS, últimas 24 h y 7 días) dentro del Perú
-  e índice meteorológico de peligro de incendio (Angström) para los próximos 7 días.
+- Incendios: focos de calor VIIRS (NASA FIRMS, 7 días) dentro del Perú e Índice Meteorológico de
+  Incendios (FWI, sistema canadiense) para hoy y los próximos 7 días.
+- Sequía meteorológica: lluvia de los últimos 30 y 90 días frente a 1991–2020 (percentiles).
 Escribe docs/datos/observatorio.json. Solo biblioteca estándar de Python.
 © 2026 Gino Machoa – GITECA Consulting E.I.R.L.
 """
-import csv, io, json, os, time, urllib.request
+import csv, io, json, os, sys, time, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import fwi as FWI
 from datetime import date, datetime, timezone
 
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "datos")
 SALIDA = os.path.join(BASE, "observatorio.json")
 CLIMA = os.path.join(BASE, "rios_amazonicos_clima.json")
 PERU = os.path.join(BASE, "peru.geojson")
+CLIMA_LL = os.path.join(BASE, "lluvia_clima.json")
 
 ESTACIONES = [  # celdas GloFAS (~5 km) verificadas sobre el cauce principal
     {"id": "iquitos", "rio": "Amazonas", "lugar": "Iquitos", "region": "Loreto", "lat": -3.725, "lon": -73.225},
@@ -83,12 +87,6 @@ def dentro(lon, lat, anillo):
         j = i
     return r
 
-def angstrom(hr, t):  # Índice de Angström: < 2.0 peligro muy alto; 2.0–2.5 alto; 2.5–4.0 moderado; > 4.0 bajo
-    return round(hr / 20 + (27 - t) / 10, 2)
-
-def clase_ang(i):
-    return "muy_alto" if i < 2.0 else "alto" if i < 2.5 else "moderado" if i < 4.0 else "bajo"
-
 def rios(salida):
     clima = json.load(open(CLIMA, encoding="utf-8")) if os.path.exists(CLIMA) else {}
     for e in ESTACIONES:
@@ -134,21 +132,70 @@ def rios(salida):
                                "tendencia": tend, "amenaza": amenaza, "lluvia_30d_mm": pasado,
                                "lluvia_16d_mm": futuro, "serie": serie})
 
-def peligro_incendio(salida):
+def clima_lluvia(nom, lat, lon):
+    d = get(f"https://archive-api.open-meteo.com/v1/archive?latitude={lat}&longitude={lon}"
+            "&start_date=1990-09-01&end_date=2020-12-31&daily=precipitation_sum&timezone=America%2FLima")["daily"]
+    t, p = d["time"], [x or 0 for x in d["precipitation_sum"]]
+    acc = [0]
+    for x in p: acc.append(acc[-1] + x)
+    por30, por90 = {}, {}
+    for k in range(90, len(t)):
+        if t[k] < "1991-01-01": continue
+        doy = min(datetime.strptime(t[k], "%Y-%m-%d").timetuple().tm_yday, 365)
+        por30.setdefault(doy, []).append(acc[k + 1] - acc[k - 29])
+        por90.setdefault(doy, []).append(acc[k + 1] - acc[k - 89])
+    res = {}
+    for doy in range(1, 366):
+        a, b = [], []
+        for kk in range(-3, 4):
+            dd = (doy - 1 + kk) % 365 + 1; a += por30.get(dd, []); b += por90.get(dd, [])
+        res[str(doy)] = {"d30": [round(pct(a, q), 1) for q in (10, 25, 50, 75, 90)],
+                         "d90": [round(pct(b, q), 1) for q in (10, 25, 50, 75, 90)]}
+    return res
+
+def clase_seq(v, c):
+    p10, p25, p50, p75, p90 = c
+    return "severa" if v < p10 else "moderada" if v < p25 else "normal" if v <= p75 else "humedo" if v <= p90 else "muy_humedo"
+
+def puntos(salida):
+    """FWI (incendios) y sequía meteorológica para las ciudades amazónicas."""
+    clima = json.load(open(CLIMA_LL, encoding="utf-8")) if os.path.exists(CLIMA_LL) else {}
+    for nom, lat, lon in CIUDADES:
+        if nom not in clima:
+            try:
+                print("Climatología de lluvia:", nom); clima[nom] = clima_lluvia(nom, lat, lon)
+                json.dump(clima, open(CLIMA_LL, "w", encoding="utf-8"), separators=(",", ":")); time.sleep(20)
+            except Exception as ex:
+                print("Sin climatología para", nom, ex); break
     la, lo = coords([(c[1], c[2]) for c in CIUDADES])
     d = lista(get(f"https://api.open-meteo.com/v1/forecast?latitude={la}&longitude={lo}"
-                  "&hourly=temperature_2m,relative_humidity_2m&daily=precipitation_sum,wind_speed_10m_max"
-                  "&forecast_days=7&timezone=America%2FLima"))
+                  "&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation"
+                  "&past_days=92&forecast_days=7&timezone=America%2FLima"))
+    hoy = date.today().isoformat()
     for (nom, lat, lon), r in zip(CIUDADES, d):
-        h = r["hourly"]; dias = []
-        for k, t in enumerate(r["daily"]["time"]):
-            j = h["time"].index(f"{t}T13:00")
-            ia = angstrom(h["relative_humidity_2m"][j], h["temperature_2m"][j])
-            dias.append({"t": t, "angstrom": ia, "clase": clase_ang(ia), "t13": h["temperature_2m"][j],
-                         "hr13": h["relative_humidity_2m"][j], "lluvia": r["daily"]["precipitation_sum"][k],
-                         "viento_max": r["daily"]["wind_speed_10m_max"][k]})
-        peor = min(dias, key=lambda x: x["angstrom"])
-        salida["incendio_peligro"].append({"lugar": nom, "lat": lat, "lon": lon, "peor": peor, "dias": dias})
+        h = r["hourly"]; dias = []; diario = {}
+        for k, t in enumerate(h["time"]):
+            diario[t[:10]] = diario.get(t[:10], 0) + (h["precipitation"][k] or 0)
+            if t.endswith("T12:00"):
+                lluvia24 = sum(x or 0 for x in h["precipitation"][max(0, k - 23):k + 1])
+                dias.append({"t": t[:10], "T": h["temperature_2m"][k], "H": h["relative_humidity_2m"][k],
+                             "W": h["wind_speed_10m"][k], "r": lluvia24})
+        ser = FWI.serie(dias, lat)
+        prox = [x for x in ser if x["t"] >= hoy][:8]
+        for x in prox: x["clase"] = FWI.clase(x["fwi"])
+        hoyx = prox[0] if prox else ser[-1]
+        peor = max(prox, key=lambda x: x["fwi"]) if prox else hoyx
+        salida["incendio_peligro"].append({"lugar": nom, "lat": lat, "lon": lon, "hoy": hoyx, "peor": peor, "dias": prox})
+        obs = [(t, v) for t, v in sorted(diario.items()) if t < hoy]
+        l30 = round(sum(v for _, v in obs[-30:]), 1); l90 = round(sum(v for _, v in obs[-90:]), 1)
+        item = {"lugar": nom, "lat": lat, "lon": lon, "lluvia_30d": l30, "lluvia_90d": l90}
+        if nom in clima:
+            doy = str(min(date.today().timetuple().tm_yday, 365)); c = clima[nom][doy]
+            item.update({"normal_30d": c["d30"][2], "normal_90d": c["d90"][2],
+                         "pct_30d": round(100 * l30 / c["d30"][2]) if c["d30"][2] else None,
+                         "pct_90d": round(100 * l90 / c["d90"][2]) if c["d90"][2] else None,
+                         "clase_30d": clase_seq(l30, c["d30"]), "clase_90d": clase_seq(l90, c["d90"])})
+        salida["sequia"].append(item)
 
 def focos(salida):
     g = json.load(open(PERU, encoding="utf-8"))["geometry"]
@@ -176,8 +223,8 @@ def focos(salida):
 def main():
     os.makedirs(BASE, exist_ok=True)
     salida = {"actualizado": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-              "rios": [], "incendio_peligro": [], "focos": {}}
-    for nombre, fn in (("rios", rios), ("incendio_peligro", peligro_incendio), ("focos", focos)):
+              "rios": [], "incendio_peligro": [], "sequia": [], "focos": {}}
+    for nombre, fn in (("rios", rios), ("puntos", puntos), ("focos", focos)):
         try:
             fn(salida); print("OK", nombre)
         except Exception as ex:
