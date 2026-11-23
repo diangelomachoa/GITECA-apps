@@ -77,6 +77,7 @@ th{font:600 .64rem var(--mono);letter-spacing:.08em;color:var(--muted);text-tran
 .cap-n{font-size:.72rem;color:var(--muted);margin:6px 0 0}.ex{border-top:1px solid var(--line);margin-top:6px!important;padding-top:4px!important}
 body.oscuro .limite{stroke:#fff}
 .vista[hidden]{display:none}
+.dl{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}.dl span{font-size:.85rem;min-width:170px;flex:1 1 170px}.dl button{font:600 .74rem var(--mono);letter-spacing:.06em;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:5px 10px;cursor:pointer}.dl button:hover{background:var(--ink);color:#fff}
 .leaflet-container{font-family:"Source Sans 3",sans-serif}
 @media(max-width:1100px){.app{grid-template-columns:190px minmax(0,1fr) 380px}}
 @media(max-width:860px){.app{display:block;height:auto}.side{border-right:0;border-bottom:1px solid var(--line)}.idx{display:flex;overflow-x:auto}.lam{width:auto;flex:none;margin:0 0 8px 10px}.ficha{display:none}
@@ -143,6 +144,7 @@ body.oscuro .limite{stroke:#fff}
 <div class="sec" id="g-tit">Caudal (m³/s)</div>
 <div class="cv"><canvas id="graf" role="img" aria-label="Caudal del río seleccionado: últimos 90 días, pronóstico a 30 días y rango normal histórico"></canvas></div>
 <p class="nota">Negro: caudal simulado. Azul: pronóstico (mediana, banda p25–p75). Gris: rango normal para la fecha (p10–p90, 1991–2020). Elige un río en la tabla o en el mapa.</p>
+<div class="sec">Descargar datos</div><div class="dl" data-ds="rios" data-t="Estaciones (10 puntos)"></div>
 <div class="sec">Estado por estación</div>
 <table><thead><tr><th>Río · lugar</th><th>Hoy</th><th>14 días</th><th>Amenaza</th></tr></thead><tbody id="t-rios"></tbody></table>
 </div>
@@ -155,6 +157,7 @@ body.oscuro .limite{stroke:#fff}
 <div><div class="sec" id="g2-tit">Índice FWI · próximos días</div><div class="cv" style="height:220px"><canvas id="graf3" role="img" aria-label="Índice meteorológico de incendios del lugar seleccionado para los próximos días"></canvas></div></div>
 <div><div class="sec">Focos de calor por día · Perú</div><div class="cv" style="height:220px"><canvas id="graf2" role="img" aria-label="Número de focos de calor por día en el Perú"></canvas></div></div>
 </div>
+<div class="sec">Descargar datos</div><div class="dl" data-ds="focos" data-t="Focos de calor · 7 días"></div><div class="dl" data-ds="fwi" data-t="Peligro FWI · 12 ciudades"></div>
 <div class="sec">Peligro meteorológico de incendio (FWI)</div>
 <table><thead><tr><th>Lugar</th><th>Hoy</th><th>Peor día</th><th>Peligro</th></tr></thead><tbody id="t-fuego"></tbody></table>
 <p class="nota">FWI: Índice Meteorológico de Incendios del sistema canadiense (Van Wagner, 1987), el mismo que usan EFFIS y GWIS; clases según umbrales EFFIS. Un foco de calor no siempre es un incendio forestal: también detecta quemas agrícolas.</p>
@@ -166,6 +169,7 @@ body.oscuro .limite{stroke:#fff}
 <div class="kp" id="kp-seq"></div>
 <div class="sec">Lluvia frente a lo normal (% del promedio 1991–2020)</div>
 <div class="cv" style="height:300px"><canvas id="graf4" role="img" aria-label="Lluvia de los últimos 30 y 90 días como porcentaje de lo normal por ciudad"></canvas></div>
+<div class="sec">Descargar datos</div><div class="dl" data-ds="sequia" data-t="Sequía · 12 ciudades"></div>
 <div class="sec">Detalle por ciudad</div>
 <table><thead><tr><th>Lugar</th><th>30 días</th><th>90 días</th><th>Estado (90 d)</th></tr></thead><tbody id="t-seq"></tbody></table>
 <p class="nota">Lluvia acumulada (modelo meteorológico vía Open-Meteo) comparada con los percentiles de 1991–2020 para la misma fecha (ERA5). Severa: por debajo del percentil 10; moderada: entre p10 y p25; húmedo: por encima de p75.</p>
@@ -177,7 +181,7 @@ body.oscuro .limite{stroke:#fff}
 <p class="lead" id="lead-bos">Alertas integradas de pérdida de bosque detectadas con Landsat, Sentinel-2 y radar Sentinel-1 (10–30 m). Cambia el periodo o pasa a la pérdida anual histórica con el selector del mapa.</p>
 <div class="kp"><div style="--k:#d7191c"><small>Alerta confirmada</small><b style="font-size:1.05rem">Alta confianza</b><span>detectada por más de un sistema o repetida</span></div><div style="--k:#fdae61"><small>Alerta</small><b style="font-size:1.05rem">Confianza nominal</b><span>una sola detección</span></div>
 <div style="--k:#e41a80"><small>Pérdida histórica</small><b style="font-size:1.05rem">2001–2024</b><span>Hansen/UMD, 30 m</span></div><div style="--k:#1C5D99"><small>Escala</small><b style="font-size:1.05rem">Acércate</b><span>a nivel 8–12 para ver parches</span></div></div>
-<p class="nota">Sugerencia: activa el mapa base «Satélite del día» o «Sentinel-2» y la capa de áreas protegidas para ver dónde ocurre la pérdida. Una alerta no confirma deforestación ilegal: requiere verificación. Alertas oficiales del Perú: <a href="https://geobosques.minam.gob.pe/" target="_blank" rel="noopener">GeoBosques – MINAM</a>. Para descargar imágenes de tu zona usa <a href="descargas.html">Descargas satelitales</a>.</p>
+<p class="nota">Las alertas son capas ráster (píxeles), por lo que no se exportan como puntos; para descargarlas por área usa <a href="https://data.globalforestwatch.org" target="_blank" rel="noopener">Global Forest Watch Open Data</a>. </p><p class="nota">Sugerencia: activa el mapa base «Satélite del día» o «Sentinel-2» y la capa de áreas protegidas para ver dónde ocurre la pérdida. Una alerta no confirma deforestación ilegal: requiere verificación. Alertas oficiales del Perú: <a href="https://geobosques.minam.gob.pe/" target="_blank" rel="noopener">GeoBosques – MINAM</a>. Para descargar imágenes de tu zona usa <a href="descargas.html">Descargas satelitales</a>.</p>
 </div>
 
 <div class="vista" id="v-metodo" hidden>
@@ -195,6 +199,7 @@ body.oscuro .limite{stroke:#fff}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.bundled.min.js"></script>
 <script>
 const EST={muy_bajo:"Muy bajo",bajo:"Bajo",normal:"Normal",alto:"Alto",muy_alto:"Muy alto",sin_dato:"Sin dato"};
@@ -366,6 +371,51 @@ const s1=$("y1"),s2=$("y2");for(let y=2001;y<=2024;y++){s1.add(new Option(y,y));
 [s1,s2].forEach(s=>s.onchange=()=>{y1=Math.min(+s1.value,+s2.value);y2=Math.max(+s1.value,+s2.value);capaHansen.redraw();capasBosque();leyenda("bosque")});
 $("b-modo").onchange=()=>{capasBosque();leyenda("bosque")};
 $("b-dias").onchange=e=>{alDias=+e.target.value;capaAlertas.redraw();capasBosque();leyenda("bosque")};
+/* ---------- Descarga de datos: CSV, KML, GPX, SHP ---------- */
+const DS={
+ rios:{nom:"rios_estado",tit:"Estado de los ríos",filas:()=>(D.rios||[]).map(e=>({lat:e.lat,lon:e.lon,nombre:e.rio+" - "+e.lugar,
+  c:{rio:e.rio,lugar:e.lugar,estado:EST[e.estado],q_hoy_m3s:e.q_hoy,q_14d_m3s:e.q_14d,tendencia:e.tendencia,cambio14d:e.cambio_14d_pct,amenaza:e.amenaza,lluv30d_mm:e.lluvia_30d_mm,lluv16d_mm:e.lluvia_16d_mm,fecha:(D.actualizado||"").slice(0,10)}}))},
+ focos:{nom:"focos_calor_viirs_7d",tit:"Focos de calor (7 días)",filas:()=>((D.focos||{}).puntos||[]).map(p=>({lat:p[1],lon:p[0],nombre:"Foco "+p[2],c:{fecha:p[2],frp_mw:p[3]==null?null:+p[3],turno:p[4]==="D"?"dia":"noche",sensor:"NOAA-20 VIIRS"}}))},
+ fwi:{nom:"peligro_incendio_fwi",tit:"Peligro de incendio FWI",filas:()=>(D.incendio_peligro||[]).filter(x=>x.hoy).map(x=>({lat:x.lat,lon:x.lon,nombre:x.lugar,
+  c:{lugar:x.lugar,fecha:x.hoy.t,fwi_hoy:x.hoy.fwi,clase_hoy:FTX[x.hoy.clase],fwi_max:x.peor.fwi,fecha_max:x.peor.t,clase_max:FTX[x.peor.clase],ffmc:x.hoy.ffmc,dmc:x.hoy.dmc,dc:x.hoy.dc,isi:x.hoy.isi,bui:x.hoy.bui}}))},
+ sequia:{nom:"sequia_meteorologica",tit:"Sequía meteorológica",filas:()=>(D.sequia||[]).filter(x=>x.clase_90d).map(x=>({lat:x.lat,lon:x.lon,nombre:x.lugar,
+  c:{lugar:x.lugar,lluv30d_mm:x.lluvia_30d,pct_30d:x.pct_30d,clase_30d:STX[x.clase_30d],lluv90d_mm:x.lluvia_90d,norm90d_mm:x.normal_90d,pct_90d:x.pct_90d,clase_90d:STX[x.clase_90d],fecha:(D.actualizado||"").slice(0,10)}}))}
+};
+const esc=v=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function bajar(blob,nombre){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=nombre;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
+const CRED="Observatorio de amenazas de la Amazonía peruana – GITECA (gitecaconsulting.com). Datos experimentales, no oficiales.";
+function aCSV(f){const ks=Object.keys(f[0].c),q=v=>{v=v??"";v=String(v);return /[",;\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+ return "﻿"+["lat,lon,"+ks.join(","),...f.map(r=>[r.lat,r.lon,...ks.map(k=>q(r.c[k]))].join(","))].join("\r\n")}
+function aKML(f,t){return `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>${esc(t)}</name><description>${esc(CRED)}</description>\n`+
+ f.map(r=>`<Placemark><name>${esc(r.nombre)}</name><ExtendedData>${Object.entries(r.c).map(([k,v])=>`<Data name="${k}"><value>${esc(v)}</value></Data>`).join("")}</ExtendedData><Point><coordinates>${r.lon},${r.lat},0</coordinates></Point></Placemark>`).join("\n")+"\n</Document></kml>"}
+function aGPX(f,t){return `<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="GITECA Observatorio" xmlns="http://www.topografix.com/GPX/1/1"><metadata><name>${esc(t)}</name><desc>${esc(CRED)}</desc></metadata>\n`+
+ f.map(r=>`<wpt lat="${r.lat}" lon="${r.lon}"><name>${esc(r.nombre)}</name><desc>${esc(Object.entries(r.c).map(([k,v])=>k+": "+(v??"")).join("; "))}</desc></wpt>`).join("\n")+"\n</gpx>"}
+function aSHP(f){const n=f.length,ks=Object.keys(f[0].c),te=new TextEncoder();
+ const campos=ks.map(k=>{const vals=f.map(r=>r.c[k]),num=vals.every(v=>v==null||typeof v==="number");
+  if(num){const dec=Math.min(4,Math.max(0,...vals.map(v=>v==null?0:(String(v).split(".")[1]||"").length)));return{k,t:"N",d:dec,l:Math.min(19,Math.max(4,...vals.map(v=>v==null?1:v.toFixed(dec).length))+1)}}
+  return{k,t:"C",d:0,l:Math.min(254,Math.max(1,...vals.map(v=>te.encode(String(v??"")).length)))}});
+ const xs=f.map(r=>r.lon),ys=f.map(r=>r.lat),bb=[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];
+ const cab=(len)=>{const b=new ArrayBuffer(100),v=new DataView(b);v.setInt32(0,9994);v.setInt32(24,len/2);v.setInt32(28,1000,true);v.setInt32(32,1,true);bb.forEach((x,i)=>v.setFloat64(36+8*i,x,true));return new Uint8Array(b)};
+ const shp=new Uint8Array(100+28*n),shx=new Uint8Array(100+8*n);shp.set(cab(shp.length));shx.set(cab(shx.length));
+ const vs=new DataView(shp.buffer),vx=new DataView(shx.buffer);
+ f.forEach((r,i)=>{const o=100+28*i;vs.setInt32(o,i+1);vs.setInt32(o+4,10);vs.setInt32(o+8,1,true);vs.setFloat64(o+12,r.lon,true);vs.setFloat64(o+20,r.lat,true);vx.setInt32(100+8*i,o/2);vx.setInt32(104+8*i,10)});
+ const lr=1+campos.reduce((a,c)=>a+c.l,0),lh=32+32*campos.length+1,dbf=new Uint8Array(lh+lr*n+1).fill(0),vd=new DataView(dbf.buffer),h=new Date();
+ dbf[0]=3;dbf[1]=h.getFullYear()-1900;dbf[2]=h.getMonth()+1;dbf[3]=h.getDate();vd.setInt32(4,n,true);vd.setInt16(8,lh,true);vd.setInt16(10,lr,true);
+ campos.forEach((c,i)=>{const o=32+32*i;dbf.set(te.encode(c.k.slice(0,10)),o);dbf[o+11]=c.t.charCodeAt(0);dbf[o+16]=c.l;dbf[o+17]=c.d});dbf[lh-1]=13;
+ f.forEach((r,i)=>{let o=lh+lr*i;dbf[o++]=32;campos.forEach(c=>{const v=r.c[c.k];let s;
+  if(c.t==="N"){s=v==null?"":v.toFixed(c.d);s=te.encode(s.padStart(c.l," "))}else{s=te.encode(String(v??"")).slice(0,c.l);const p=new Uint8Array(c.l).fill(32);p.set(s);s=p}
+  dbf.set(s.slice(0,c.l),o);o+=c.l})});dbf[dbf.length-1]=26;
+ return{shp,shx,dbf,prj:'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]]',cpg:"UTF-8"}}
+async function exportar(id,fmt){const d=DS[id],f=d.filas();if(!f.length){alert("No hay datos para exportar en esta actualización.");return}
+ const fe=(D.actualizado||"").slice(0,10),base=`${d.nom}_${fe}`;
+ if(fmt==="csv")bajar(new Blob([aCSV(f)],{type:"text/csv;charset=utf-8"}),base+".csv");
+ if(fmt==="kml")bajar(new Blob([aKML(f,d.tit+" · "+fe)],{type:"application/vnd.google-earth.kml+xml"}),base+".kml");
+ if(fmt==="gpx")bajar(new Blob([aGPX(f,d.tit+" · "+fe)],{type:"application/gpx+xml"}),base+".gpx");
+ if(fmt==="shp"){const s=aSHP(f),z=new JSZip();["shp","shx","dbf","prj","cpg"].forEach(e=>z.file(base+"."+e,s[e]));z.file("LEEME.txt",CRED+"\r\nSistema de coordenadas: WGS 84 (EPSG:4326). Fuente: "+d.tit+", "+fe+".");
+  bajar(await z.generateAsync({type:"blob"}),base+"_shp.zip")}
+ ev("observatorio_descarga",{capa:id,formato:fmt})}
+document.querySelectorAll(".dl").forEach(el=>{el.innerHTML=`<span>${el.dataset.t}</span>`+["shp","kml","gpx","csv"].map(x=>`<button type="button" data-f="${x}">${x.toUpperCase()}</button>`).join("");
+ el.querySelectorAll("button").forEach(b=>b.onclick=()=>D&&exportar(el.dataset.ds,b.dataset.f))});
 </script>
 </body>
 </html>
