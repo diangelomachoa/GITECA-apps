@@ -8,6 +8,7 @@
 <meta name="description" content="Monitoreo diario con datos abiertos: creciente y vaciante de los ríos amazónicos (inundación y sequía), focos de calor, peligro de incendio (FWI), sequía, alertas de deforestación y pérdida de bosque en la Amazonía peruana.">
 <link rel="icon" type="image/png" href="../mapas/logo_giteca.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 :root{--paper:#F4F1EA;--panel:#FBFAF6;--fg:#16231C;--muted:#5B665F;--line:#D9D3C5;--ink:#16352a;--green:#2E7D3E;--blue:#1C5D99;--soft:#E8EFE6;
@@ -51,7 +52,7 @@ font:500 .95rem "Source Sans 3",sans-serif;color:var(--fg);text-align:left;curso
 /* Panel derecho */
 .panel{border-left:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:18px 20px 30px}
 .panel h2{font-size:1.45rem}.fecha{font:500 .75rem var(--mono);letter-spacing:.1em;color:var(--muted);margin:4px 0 14px}
-.titular{font:700 1.75rem/1.15 var(--disp);margin:0 0 6px}.titular em{font-style:normal;color:var(--blue)}
+.titular{font:700 1.75rem/1.15 var(--disp);margin:0 0 6px;overflow-wrap:anywhere}.ley .sub{overflow-wrap:anywhere}.titular em{font-style:normal;color:var(--blue)}
 .lead{color:var(--muted);margin:0 0 14px}
 .dist{display:flex;height:16px;border:1px solid var(--line);margin:4px 0 4px}.dist span{height:100%}
 .dist-l{display:flex;justify-content:space-between;font:500 .68rem var(--mono);color:var(--muted);margin-bottom:14px}
@@ -77,10 +78,15 @@ th{font:600 .64rem var(--mono);letter-spacing:.08em;color:var(--muted);text-tran
 .cap-n{font-size:.72rem;color:var(--muted);margin:6px 0 0}.ex{border-top:1px solid var(--line);margin-top:6px!important;padding-top:4px!important}
 body.oscuro .limite{stroke:#fff}
 .vista[hidden]{display:none}
+.a-tabs{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 10px}.a-tab{font:600 .8rem "Source Sans 3",sans-serif;border:1px solid var(--line);background:#fff;color:var(--fg);padding:6px 10px;cursor:pointer}.a-tab[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.a-sub{border:1px solid var(--line);background:#fff;padding:10px 12px;margin-bottom:6px}.a-sub[hidden]{display:none}.a-sub p{margin:0 0 6px;font-size:.9rem}
+.a-g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px;margin-bottom:8px}.a-g3 select,.a-g3 input{font:inherit;font-size:.88rem;padding:6px;border:1px solid var(--line);background:#fff;width:100%}.a-r{display:flex;align-items:center;gap:6px;font-size:.85rem}.a-r input{width:70px!important}
+.a-btn{font:600 .88rem "Source Sans 3",sans-serif;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:7px 12px;cursor:pointer}.a-btn.sec{background:#fff;color:var(--ink)}
+.estado{font:500 .78rem var(--mono);color:var(--muted);margin:8px 0}.dl button[data-ad]{white-space:nowrap}.leaflet-container.dib{cursor:crosshair}.pop-btn{margin-top:6px;font:600 .8rem "Source Sans 3",sans-serif;background:#16352a;color:#fff;border:0;padding:5px 10px;cursor:pointer}
 .dl{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}.dl span{font-size:.85rem;min-width:170px;flex:1 1 170px}.dl button{font:600 .74rem var(--mono);letter-spacing:.06em;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:5px 10px;cursor:pointer}.dl button:hover{background:var(--ink);color:#fff}
 .leaflet-container{font-family:"Source Sans 3",sans-serif}
 @media(max-width:1100px){.app{grid-template-columns:190px minmax(0,1fr) 380px}}
-@media(max-width:860px){.app{display:block;height:auto}.side{border-right:0;border-bottom:1px solid var(--line)}.idx{display:flex;overflow-x:auto}.lam{width:auto;flex:none;margin:0 0 8px 10px}.ficha{display:none}
+@media(max-width:860px){.app{display:block;height:auto}.barra{flex-wrap:wrap;height:auto;padding:8px 12px;row-gap:4px}.barra b{width:100%}.barra a.back{font-size:.8rem}.side{border-right:0;border-bottom:1px solid var(--line)}.idx{display:flex;overflow-x:auto}.lam{width:auto;flex:none;margin:0 0 8px 10px}.ficha{display:none}
 .mapwrap{flex:none;height:62vh}.panel{border-left:0}.ley{width:150px;font-size:.78rem;padding:8px 10px}.ley .sub{display:none}.barra .aviso{display:none}.capas{width:200px;bottom:auto;top:84px;left:10px;right:auto;max-height:calc(100% - 130px)}.anio{bottom:30px;left:8px;max-width:calc(100% - 16px);font-size:.78rem;padding:6px 8px}.anio select{max-width:52vw}.leaflet-control-attribution{font-size:9px;max-width:100%}}
 </style>
 </head>
@@ -94,7 +100,8 @@ body.oscuro .limite{stroke:#fff}
 <button class="lam" role="tab" data-p="fuego" aria-selected="false"><i>02</i>Incendios forestales</button>
 <button class="lam" role="tab" data-p="sequia" aria-selected="false"><i>03</i>Sequía meteorológica</button>
 <button class="lam" role="tab" data-p="bosque" aria-selected="false"><i>04</i>Deforestación y alertas</button>
-<button class="lam" role="tab" data-p="metodo" aria-selected="false"><i>05</i>Metodología y fuentes</button>
+<button class="lam" role="tab" data-p="area" aria-selected="false"><i>05</i>Análisis por área</button>
+<button class="lam" role="tab" data-p="metodo" aria-selected="false"><i>06</i>Metodología y fuentes</button>
 </div>
 <div class="ficha">
 <div class="full"><p><small>PROYECTO</small>Observatorio de amenazas de la Amazonía peruana</p></div>
@@ -105,7 +112,7 @@ body.oscuro .limite{stroke:#fff}
 </aside>
 
 <main class="centro">
-<div class="barra"><b id="lam-t">LÁMINA 01 · RÍOS</b><span class="aviso">EXPERIMENTAL · NO OFICIAL</span><a class="back" href="descargas.html">Descargar imágenes</a><a class="back" href="../index.html">← GITECA</a></div>
+<div class="barra"><b id="lam-t">LÁMINA 01 · RÍOS</b><span class="aviso">EXPERIMENTAL · NO OFICIAL</span><a class="back" href="#area" id="ir-area">Analizar mi área</a><a class="back" href="descargas.html">Descargar imágenes</a><a class="back" href="../index.html">← GITECA</a></div>
 <div class="mapwrap"><div id="mapa"></div>
 <div class="flota ley" id="ley"></div>
 <div class="flota anio" id="anio">
@@ -180,8 +187,40 @@ body.oscuro .limite{stroke:#fff}
 <p class="titular" id="tit-bos">Alertas de deforestación de los <em>últimos 90 días</em></p>
 <p class="lead" id="lead-bos">Alertas integradas de pérdida de bosque detectadas con Landsat, Sentinel-2 y radar Sentinel-1 (10–30 m). Cambia el periodo o pasa a la pérdida anual histórica con el selector del mapa.</p>
 <div class="kp"><div style="--k:#d7191c"><small>Alerta confirmada</small><b style="font-size:1.05rem">Alta confianza</b><span>detectada por más de un sistema o repetida</span></div><div style="--k:#fdae61"><small>Alerta</small><b style="font-size:1.05rem">Confianza nominal</b><span>una sola detección</span></div>
-<div style="--k:#e41a80"><small>Pérdida histórica</small><b style="font-size:1.05rem">2001–2024</b><span>Hansen/UMD, 30 m</span></div><div style="--k:#1C5D99"><small>Escala</small><b style="font-size:1.05rem">Acércate</b><span>a nivel 8–12 para ver parches</span></div></div>
+<div style="--k:#e41a80"><small>Pérdida histórica</small><b style="font-size:1.05rem">2001–2025</b><span>Hansen/UMD, 30 m</span></div><div style="--k:#1C5D99"><small>Escala</small><b style="font-size:1.05rem">Acércate</b><span>a nivel 8–12 para ver parches</span></div></div>
 <p class="nota">Las alertas son capas ráster (píxeles), por lo que no se exportan como puntos; para descargarlas por área usa <a href="https://data.globalforestwatch.org" target="_blank" rel="noopener">Global Forest Watch Open Data</a>. </p><p class="nota">Sugerencia: activa el mapa base «Satélite del día» o «Sentinel-2» y la capa de áreas protegidas para ver dónde ocurre la pérdida. Una alerta no confirma deforestación ilegal: requiere verificación. Alertas oficiales del Perú: <a href="https://geobosques.minam.gob.pe/" target="_blank" rel="noopener">GeoBosques – MINAM</a>. Para descargar imágenes de tu zona usa <a href="descargas.html">Descargas satelitales</a>.</p>
+</div>
+
+<div class="vista" id="v-area" hidden>
+<h2>Análisis por área</h2><p class="fecha">PÉRDIDA DE BOSQUE · ALERTAS · FOCOS · SEQUÍA EN TU ÁREA</p>
+<div class="a-tabs" role="tablist">
+<button type="button" class="a-tab" data-a="lim" aria-selected="true">Límite político</button>
+<button type="button" class="a-tab" data-a="anp" aria-selected="false">ANP · ACR · comunidades</button>
+<button type="button" class="a-tab" data-a="dib" aria-selected="false">Dibujar</button>
+<button type="button" class="a-tab" data-a="pto" aria-selected="false">Punto + radio</button>
+<button type="button" class="a-tab" data-a="sub" aria-selected="false">Subir mi capa</button>
+</div>
+<div class="a-sub" id="as-lim"><div class="a-g3"><select id="l-dep"><option value="">Departamento…</option></select><select id="l-pro"><option value="">Provincia (opcional)</option></select><select id="l-dis"><option value="">Distrito (opcional)</option></select></div><button type="button" class="a-btn" id="l-ir">Analizar</button><p class="nota">Límites referenciales INEI (versión simplificada). Los departamentos muy grandes, como Loreto, se analizan por provincia.</p></div>
+<div class="a-sub" id="as-anp" hidden><p>Haz clic en el mapa sobre un <b>área natural protegida, ACR, ACP, comunidad nativa, comunidad campesina o reserva indígena</b> y en la ventana elige <b>«Analizar esta área»</b>. Las capas ya están activadas.</p><p class="nota">Fuentes: WDPA (UNEP-WCMC e IUCN, con datos de SERNANP) y LandMark (IBC vía RAISG), servidas por Global Forest Watch.</p></div>
+<div class="a-sub" id="as-dib" hidden><button type="button" class="a-btn" id="a-pol">▱ Dibujar polígono</button> <button type="button" class="a-btn sec" id="a-rec">▭ Dibujar rectángulo</button><p class="nota">Polígono: clic en cada vértice y clic en el primero para cerrar.</p></div>
+<div class="a-sub" id="as-pto" hidden><p class="nota" style="margin-top:0">Haz clic en el mapa para colocar el punto de referencia o escribe sus coordenadas (grados decimales, WGS 84).</p><div class="a-g3"><input id="p-lat" type="text" inputmode="decimal" placeholder="Latitud (-8.38)" aria-label="Latitud"><input id="p-lon" type="text" inputmode="decimal" placeholder="Longitud (-74.55)" aria-label="Longitud"><label class="a-r">Radio <input id="p-r" type="number" min="0.5" max="60" step="0.5" value="5"> km</label></div><button type="button" class="a-btn" id="p-ir">Analizar alrededor del punto</button></div>
+<div class="a-sub" id="as-sub" hidden><label class="a-btn" style="display:inline-flex">⇪ Elegir archivo<input id="a-file" type="file" accept=".zip,.kml,.geojson,.json" hidden></label><p class="nota">Shapefile comprimido en .zip (con .shp, .shx, .dbf y .prj), KML o GeoJSON con polígonos. El archivo se procesa en tu navegador: no se sube a ningún servidor.</p></div>
+<p class="estado" id="a-est" role="status">Elige un área para empezar.</p>
+<div id="a-res" hidden>
+<p class="titular" id="a-tit"></p><p class="lead" id="a-lead"></p>
+<div class="kp" id="a-kp"></div>
+<div class="duo">
+<div><div class="sec">Pérdida de bosque por año (ha)</div><div class="cv" style="height:230px"><canvas id="graf5" role="img" aria-label="Hectáreas de pérdida de cobertura arbórea por año dentro del área"></canvas></div></div>
+<div><div class="sec">Alertas por mes · últimos 12 meses (ha)</div><div class="cv" style="height:230px"><canvas id="graf6" role="img" aria-label="Hectáreas con alertas de deforestación por mes dentro del área"></canvas></div></div>
+</div>
+<div class="sec">Contexto del área</div>
+<table><tbody id="a-ctx"></tbody></table>
+<div class="sec">Descargar</div>
+<div class="dl"><span>Límite del área</span><button type="button" data-ad="shp">SHP</button><button type="button" data-ad="kml">KML</button><button type="button" data-ad="geojson">GEOJSON</button></div>
+<div class="dl"><span>Resultados por año y mes</span><button type="button" data-ad="csv">CSV</button></div>
+<div class="dl"><span>Focos de calor en el área</span><button type="button" data-ad="focos">SHP + KML + GPX + CSV</button></div>
+<p class="nota">Estimación propia contando píxeles de las teselas de Global Forest Watch (Hansen/UMD y alertas GLAD/RADD) dentro del área. Puede diferir de las cifras oficiales de GeoBosques – MINAM, que usan otra metodología y otro mapa de bosque. «Pérdida de cobertura arbórea» incluye causas naturales.</p>
+</div>
 </div>
 
 <div class="vista" id="v-metodo" hidden>
@@ -189,6 +228,7 @@ body.oscuro .limite{stroke:#fff}
 <div class="sec">Ríos</div><p>Caudal diario simulado por GloFAS v4 (Copernicus EMS) en 10 celdas de ~5 km sobre el cauce principal. El estado compara el caudal de hoy con los percentiles 10, 25, 75 y 90 de 1991–2020 para la misma fecha (ventana de ±7 días). La tendencia compara el caudal de hoy con la mediana del pronóstico a 14 días (±5 %).</p>
 <div class="sec">Incendios</div><p>Focos de calor NOAA-20 VIIRS 375 m (NASA FIRMS), últimos 7 días, confianza nominal y alta, dentro del Perú. Peligro: Índice Meteorológico de Incendios (FWI) del sistema canadiense, calculado cada día con temperatura, humedad y viento a mediodía y la lluvia de 24 h, con 92 días de arranque para los códigos de humedad del combustible (FFMC, DMC, DC). Clases EFFIS: muy bajo &lt;5,2; bajo 5,2–11,2; moderado 11,2–21,3; alto 21,3–38; muy alto 38–50; extremo &gt;50.</p>
 <div class="sec">Sequía</div><p>Lluvia acumulada de 30 y 90 días frente a los percentiles 10, 25, 50, 75 y 90 de 1991–2020 para la misma fecha (reanálisis ERA5, ventana de ±3 días).</p>
+<div class="sec">Análisis por área</div><p>Se cuentan en el navegador los píxeles de las teselas de Global Forest Watch al mayor detalle posible (zoom 14, ~9 m, en áreas pequeñas; hasta zoom 11, ~75 m, en áreas grandes) que caen dentro del polígono, ponderando el área real de cada píxel según la latitud. Es una estimación rápida; para cifras oficiales usa GeoBosques. Límites políticos: INEI, versión simplificada (repositorio peru-geojson, MPL 2.0). ANP, ACR y ACP: WDPA; comunidades: LandMark/IBC.</p>
 <div class="sec">Bosque</div><p>Alertas integradas de deforestación (GLAD-L, GLAD-S2 y RADD) y pérdida de cobertura arbórea de Hansen et al., servidas por Global Forest Watch y decodificadas en el navegador.</p>
 <div class="sec">Mapas base y capas</div><p>Imagen diaria NASA VIIRS y lluvia IMERG y aerosoles MODIS vía NASA GIBS; Sentinel-2 cloudless 2023 (EOX); áreas protegidas: WDPA (UNEP-WCMC e IUCN, Protected Planet); tierras indígenas: LandMark; vía Global Forest Watch.</p>
 <div class="sec">Limitaciones</div><p>Los caudales son simulados, no medidos. Para niveles y avisos oficiales consulta SENAMHI, ANA, SERFOR y MINAM. Herramienta experimental, orientativa y no oficial.</p>
@@ -200,6 +240,10 @@ body.oscuro .limite{stroke:#fff}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/shpjs/4.0.4/shp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.11/pako.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/upng-js/2.1.0/UPNG.min.js"></script>
 <script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.bundled.min.js"></script>
 <script>
 const EST={muy_bajo:"Muy bajo",bajo:"Bajo",normal:"Normal",alto:"Alto",muy_alto:"Muy alto",sin_dato:"Sin dato"};
@@ -208,7 +252,7 @@ const FCOL={muy_bajo:"#5aa66a",bajo:"#b5d36b",moderado:"#f2b632",alto:"#ef6b33",
 const FTX={muy_bajo:"Muy bajo",bajo:"Bajo",moderado:"Moderado",alto:"Alto",muy_alto:"Muy alto",extremo:"Extremo"};
 const SCOL={severa:"#8c510a",moderada:"#d8a24a",normal:"#5aa66a",humedo:"#67a9cf",muy_humedo:"#2166ac"};
 const STX={severa:"Sequía severa",moderada:"Sequía moderada",normal:"Normal",humedo:"Húmedo",muy_humedo:"Muy húmedo"};
-const TIT={rios:"LÁMINA 01 · RÍOS",fuego:"LÁMINA 02 · INCENDIOS",sequia:"LÁMINA 03 · SEQUÍA",bosque:"LÁMINA 04 · BOSQUE",metodo:"LÁMINA 05 · METODOLOGÍA"};
+const TIT={rios:"LÁMINA 01 · RÍOS",fuego:"LÁMINA 02 · INCENDIOS",sequia:"LÁMINA 03 · SEQUÍA",bosque:"LÁMINA 04 · BOSQUE",area:"LÁMINA 05 · ANÁLISIS POR ÁREA",metodo:"LÁMINA 06 · METODOLOGÍA"};
 const $=id=>document.getElementById(id);
 const fmt=n=>n==null?"–":Math.round(n).toLocaleString("es-PE");
 const dec=n=>n==null?"–":String(n).replace(".",",");
@@ -245,19 +289,22 @@ $("f-viirs").onchange=e=>{fViirs=e.target.value;BASES.viirs[0].setUrl(gibs("VIIR
 $("cap-t").onclick=()=>{const c=$("cap-c"),o=c.hidden;c.hidden=!o;$("cap-t").setAttribute("aria-expanded",o)};
 if(window.innerWidth<860){$("cap-c").hidden=true;$("cap-t").setAttribute("aria-expanded",false)}
 
+const CATC={"Área de Conservación Regional":["#6a3d9a","#9e7cc1"],"Área de Conservación Privada":["#1f78b4","#7fb3d5"],"Comunidad Nativa":["#8e4b0f","#d9a066"],"Comunidad Campesina":["#b35806","#fdb863"],"Reserva Indígena":["#b2182b","#ef8a62"]};
 const vg=(ds,color,fill)=>L.vectorGrid.protobuf(`https://tiles.globalforestwatch.org/${ds}/latest/default/{z}/{x}/{y}.pbf`,{pane:"sobre",interactive:true,maxNativeZoom:12,maxZoom:18,
- vectorTileLayerStyles:{[ds]:{weight:1.2,color,fill:true,fillColor:fill,fillOpacity:.18}},attribution:ds.startsWith("wdpa")?"WDPA – UNEP-WCMC e IUCN":"LandMark"})
- .on("click",e=>{const p=e.layer.properties||{};L.popup().setLatLng(e.latlng).setContent(`<b>${p.name||"Sin nombre"}</b><br>${p.desig||p.category||""}${p.iucn_cat&&p.iucn_cat!=="Not Reported"?" · UICN "+p.iucn_cat:""}${p.status_yr?"<br>Desde "+p.status_yr:""}${p.form_rec?"<br>"+p.form_rec:""}`).openOn(map)});
+ vectorTileLayerStyles:{[ds]:p=>{const k=CATC[p.desig||p.category]||[color,fill];return{weight:1.2,color:k[0],fill:true,fillColor:k[1],fillOpacity:.18}}},attribution:ds.startsWith("wdpa")?"WDPA – UNEP-WCMC e IUCN":"LandMark"})
+ .on("click",e=>{const p=e.layer.properties||{};window._sel=p.gfw_geostore_id?{id:p.gfw_geostore_id,n:(p.desig||p.category||"Área")+" "+(p.name||""),t:p.desig||p.category||"área"}:null;L.popup().setLatLng(e.latlng).setContent(`<b>${p.name||"Sin nombre"}</b><br>${p.desig||p.category||""}${p.iucn_cat&&!/Not/.test(p.iucn_cat)?" · UICN "+p.iucn_cat:""}${p.status_yr?"<br>Desde "+p.status_yr:""}${p.data_src?"<br>Fuente: "+p.data_src:""}${window._sel?'<br><button class="pop-btn" onclick="analizarSel()">Analizar esta área</button>':""}`).openOn(map)});
 /* Alertas integradas GFW: R*255+G = días desde 2014-12-31; B >= 200 = alta confianza */
-let alDias=90,y1=2001,y2=2024;
+let alDias=90,y1=2001,y2=2025;
 const DIA0=Date.UTC(2014,11,31);
-const Decod=L.GridLayer.extend({createTile:function(c,done){const t=document.createElement("canvas");t.width=t.height=256;const img=new Image();img.crossOrigin="anonymous";const tipo=this.options.tipo;
- img.onload=()=>{const x=t.getContext("2d");x.drawImage(img,0,0);const d=x.getImageData(0,0,256,256),p=d.data;
-  const corte=Math.floor((Date.now()-DIA0)/864e5)-alDias;
-  for(let i=0;i<p.length;i+=4){if(tipo==="alertas"){const dia=p[i]*255+p[i+1];if(p[i+3]>0&&dia>=corte&&dia<10000){const alta=p[i+2]>=200;p[i]=alta?215:253;p[i+1]=alta?25:174;p[i+2]=alta?28:97;p[i+3]=255}else p[i+3]=0}
-   else{const yr=2000+p[i+2];if(p[i+3]>0&&p[i+2]>0&&yr>=y1&&yr<=y2){const a=Math.min(255,60+p[i]*2);p[i]=228;p[i+1]=26;p[i+2]=128;p[i+3]=a}else p[i+3]=0}}
-  x.putImageData(d,0,0);done(null,t)};img.onerror=()=>done(null,t);
- img.src=tipo==="alertas"?`https://tiles.globalforestwatch.org/gfw_integrated_alerts/latest/dynamic/${c.z}/${c.x}/${c.y}.png?implementation=default`:`https://tiles.globalforestwatch.org/umd_tree_cover_loss/latest/dynamic/${c.z}/${c.x}/${c.y}.png`;return t}});
+/* Las teselas de GFW guardan datos en RGBA con alfa bajo: se decodifican con UPNG para evitar la pérdida por alfa premultiplicado del canvas */
+const crudo=u=>fetch(u).then(r=>r.ok?r.arrayBuffer():null).then(b=>{if(!b)return null;const im=UPNG.decode(b);return new Uint8Array(UPNG.toRGBA8(im)[0])}).catch(()=>null);
+const urlGFW=(tipo,z,x,y)=>tipo==="alertas"?`https://tiles.globalforestwatch.org/gfw_integrated_alerts/latest/dynamic/${z}/${x}/${y}.png?implementation=default`:`https://tiles.globalforestwatch.org/umd_tree_cover_loss/latest/dynamic/${z}/${x}/${y}.png`;
+const Decod=L.GridLayer.extend({createTile:function(c,done){const t=document.createElement("canvas");t.width=t.height=256;const tipo=this.options.tipo;
+ crudo(urlGFW(tipo,c.z,c.x,c.y)).then(p=>{if(!p){done(null,t);return}const x=t.getContext("2d"),d=x.createImageData(256,256),o=d.data;
+  const hoyD=Math.floor((Date.now()-DIA0)/864e5),corte=hoyD-alDias;
+  for(let i=0;i<p.length;i+=4){if(tipo==="alertas"){const dia=p[i]*255+p[i+1];if(p[i+3]>0&&dia>=corte&&dia<=hoyD){const alta=p[i+2]>=200;o[i]=alta?215:253;o[i+1]=alta?25:174;o[i+2]=alta?28:97;o[i+3]=255}}
+   else{const yr=2000+p[i+2];if(p[i+3]>0&&p[i+2]>0&&yr>=y1&&yr<=y2){o[i]=228;o[i+1]=26;o[i+2]=128;o[i+3]=Math.min(255,60+p[i]*2)}}}
+  x.putImageData(d,0,0);done(null,t)});return t}});
 const capaAlertas=new Decod({tipo:"alertas",pane:"sobre",maxNativeZoom:12,maxZoom:18,attribution:"GLAD/RADD · Global Forest Watch"});
 const capaHansen=new Decod({tipo:"hansen",pane:"sobre",opacity:.9,maxNativeZoom:12,maxZoom:18,attribution:"Hansen/UMD/Google/USGS/NASA · GFW"});
 const OV={anp:{capa:vg("wdpa_protected_areas","#1b7837","#5aae61")},ind:{capa:vg("landmark_indigenous_and_community_lands","#8e4b0f","#d9a066")},
@@ -351,8 +398,9 @@ function leyenda(p){let h="";
 if(p==="rios"||p==="metodo")h=`<h3>ESTADO DE LOS RÍOS</h3><p class="sub">Caudal de hoy frente a lo normal para la fecha (1991–2020)</p><ul>${["muy_bajo","bajo","normal","alto","muy_alto"].map(k=>`<li><span class="sw dot" style="background:${COL[k]}"></span>${EST[k]}</li>`).join("")}</ul>`;
 if(p==="fuego")h=`<h3>INCENDIOS</h3><p class="sub">Focos (7 días) y peligro FWI (peor día previsto)</p><ul><li><span class="sw dot" style="background:#e8452c;width:8px;height:8px"></span>Foco de calor VIIRS</li>${Object.keys(FTX).map(k=>`<li><span class="sw dot" style="background:${FCOL[k]}"></span>${FTX[k]}</li>`).join("")}</ul>`;
 if(p==="sequia")h=`<h3>SEQUÍA METEOROLÓGICA</h3><p class="sub">Lluvia de 90 días frente a lo normal</p><ul>${Object.keys(STX).map(k=>`<li><span class="sw dot" style="background:${SCOL[k]}"></span>${STX[k]}</li>`).join("")}</ul>`;
+if(p==="area")h=`<h3>ANÁLISIS POR ÁREA</h3><p class="sub">${AR.res?esc(AR.nombre):"Elige un área en el panel"}</p><ul><li><span class="sw" style="background:none;border:3px solid #f5c400"></span>Área analizada</li>${AR.res?`<li><span class="sw" style="background:#e41a80"></span>Pérdida 2001–2025</li><li><span class="sw" style="background:#d7191c"></span>Alerta (alta confianza)</li><li><span class="sw" style="background:#fdae61"></span>Alerta (nominal)</li>`:""}</ul>`;
 if(p==="bosque")h=$("b-modo").value==="alertas"?`<h3>ALERTAS DE DEFORESTACIÓN</h3><p class="sub">GLAD-L, GLAD-S2 y RADD · últimos ${alDias} días</p><ul><li><span class="sw" style="background:#d7191c"></span>Alta confianza</li><li><span class="sw" style="background:#fdae61"></span>Confianza nominal</li></ul>`:`<h3>PÉRDIDA DE BOSQUE</h3><p class="sub">Hansen / UMD · ${y1}–${y2}</p><ul><li><span class="sw" style="background:#e41a80"></span>Pérdida de cobertura arbórea</li></ul>`;
-const ex=[];if(OV.anp.on)ex.push(`<li><span class="sw" style="background:#5aae61;border:1px solid #1b7837"></span>Área protegida</li>`);if(OV.ind.on)ex.push(`<li><span class="sw" style="background:#d9a066;border:1px solid #8e4b0f"></span>Tierra indígena o comunal</li>`);
+const ex=[];if(OV.anp.on)ex.push(`<li><span class="sw" style="background:#5aae61;border:1px solid #1b7837"></span>ANP nacional</li><li><span class="sw" style="background:#9e7cc1;border:1px solid #6a3d9a"></span>Conservación regional (ACR)</li><li><span class="sw" style="background:#7fb3d5;border:1px solid #1f78b4"></span>Conservación privada (ACP)</li>`);if(OV.ind.on)ex.push(`<li><span class="sw" style="background:#d9a066;border:1px solid #8e4b0f"></span>Comunidad nativa</li><li><span class="sw" style="background:#fdb863;border:1px solid #b35806"></span>Comunidad campesina</li><li><span class="sw" style="background:#ef8a62;border:1px solid #b2182b"></span>Reserva indígena</li>`);
 if(OV.imerg.on)ex.push(`<li><span class="sw" style="background:linear-gradient(90deg,#9cf,#06f,#f0f)"></span>Lluvia IMERG (mm/h)</li>`);if(OV.aod.on)ex.push(`<li><span class="sw" style="background:linear-gradient(90deg,#ffffb2,#fd8d3c,#800026)"></span>Aerosoles/humo (AOD)</li>`);
 if(OV.alertas.on&&p!=="bosque")ex.push(`<li><span class="sw" style="background:#d7191c"></span>Alerta de deforestación</li>`);
 $("ley").innerHTML=h+(ex.length?`<ul class="ex">${ex.join("")}</ul>`:"")}
@@ -364,10 +412,10 @@ function vista(p){actual=p;document.querySelectorAll(".lam").forEach(b=>b.setAtt
 Object.keys(TIT).forEach(x=>$("v-"+x).hidden=x!==p);$("lam-t").textContent=TIT[p];
 [capaRios,capaFocos,capaPel,capaSeq].forEach(c=>map.removeLayer(c));
 $("anio").style.display=p==="bosque"?"block":"none";
-if(p==="rios"||p==="metodo")capaRios.addTo(map);if(p==="fuego"){capaFocos.addTo(map);capaPel.addTo(map)}if(p==="sequia")capaSeq.addTo(map);
-capasBosque();leyenda(p);document.querySelector(".panel").scrollTop=0;history.replaceState(null,"","#"+p);ev("observatorio_tab",{tab:p})}
+if(p==="rios"||p==="metodo")capaRios.addTo(map);map.getContainer().classList.toggle("dib",p==="area"&&AR.punto);if(p==="fuego"){capaFocos.addTo(map);capaPel.addTo(map)}if(p==="sequia")capaSeq.addTo(map);
+capasBosque();if(p==="area"&&AR.res){capaHansen.addTo(map);capaAlertas.addTo(map)}leyenda(p);document.querySelector(".panel").scrollTop=0;history.replaceState(null,"","#"+p);ev("observatorio_tab",{tab:p})}
 document.querySelectorAll(".lam").forEach(b=>b.onclick=()=>vista(b.dataset.p));
-const s1=$("y1"),s2=$("y2");for(let y=2001;y<=2024;y++){s1.add(new Option(y,y));s2.add(new Option(y,y))}s1.value=2001;s2.value=2024;
+const s1=$("y1"),s2=$("y2");for(let y=2001;y<=2025;y++){s1.add(new Option(y,y));s2.add(new Option(y,y))}s1.value=2001;s2.value=2025;
 [s1,s2].forEach(s=>s.onchange=()=>{y1=Math.min(+s1.value,+s2.value);y2=Math.max(+s1.value,+s2.value);capaHansen.redraw();capasBosque();leyenda("bosque")});
 $("b-modo").onchange=()=>{capasBosque();leyenda("bosque")};
 $("b-dias").onchange=e=>{alDias=+e.target.value;capaAlertas.redraw();capasBosque();leyenda("bosque")};
@@ -414,8 +462,145 @@ async function exportar(id,fmt){const d=DS[id],f=d.filas();if(!f.length){alert("
  if(fmt==="shp"){const s=aSHP(f),z=new JSZip();["shp","shx","dbf","prj","cpg"].forEach(e=>z.file(base+"."+e,s[e]));z.file("LEEME.txt",CRED+"\r\nSistema de coordenadas: WGS 84 (EPSG:4326). Fuente: "+d.tit+", "+fe+".");
   bajar(await z.generateAsync({type:"blob"}),base+"_shp.zip")}
  ev("observatorio_descarga",{capa:id,formato:fmt})}
-document.querySelectorAll(".dl").forEach(el=>{el.innerHTML=`<span>${el.dataset.t}</span>`+["shp","kml","gpx","csv"].map(x=>`<button type="button" data-f="${x}">${x.toUpperCase()}</button>`).join("");
+document.querySelectorAll(".dl[data-ds]").forEach(el=>{el.innerHTML=`<span>${el.dataset.t}</span>`+["shp","kml","gpx","csv"].map(x=>`<button type="button" data-f="${x}">${x.toUpperCase()}</button>`).join("");
  el.querySelectorAll("button").forEach(b=>b.onclick=()=>D&&exportar(el.dataset.ds,b.dataset.f))});
+/* ---------- Análisis por área ---------- */
+const AR={geo:null,nombre:"",tipo:"",capa:null,res:null,marca:null,circ:null,punto:false,gLoss:null,gAl:null};
+const capaArea=L.layerGroup().addTo(map);
+L.drawLocal.draw.handlers.polygon.tooltip={start:"Haz clic para empezar el polígono",cont:"Haz clic para seguir dibujando",end:"Haz clic en el primer punto para cerrar"};
+L.drawLocal.draw.handlers.rectangle.tooltip={start:"Haz clic y arrastra para dibujar el rectángulo"};
+L.drawLocal.draw.handlers.simpleshape.tooltip={end:"Suelta para terminar"};
+const dibPol=new L.Draw.Polygon(map,{shapeOptions:{color:"#f5c400",weight:3}}),dibRec=new L.Draw.Rectangle(map,{shapeOptions:{color:"#f5c400",weight:3}});
+map.on(L.Draw.Event.CREATED,e=>setArea(e.layer.toGeoJSON(),e.layerType==="rectangle"?"Rectángulo dibujado":"Polígono dibujado","dibujo"));
+$("a-pol").onclick=()=>{dibRec.disable();dibPol.enable()};$("a-rec").onclick=()=>{dibPol.disable();dibRec.enable()};
+document.querySelectorAll(".a-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".a-tab").forEach(x=>x.setAttribute("aria-selected",x===b));
+ document.querySelectorAll(".a-sub").forEach(s=>s.hidden=s.id!=="as-"+b.dataset.a);AR.punto=b.dataset.a==="pto";map.getContainer().classList.toggle("dib",AR.punto);
+ if(b.dataset.a==="anp")["anp","ind"].forEach(k=>{const c=document.querySelector(`[data-o=${k}]`);if(!c.checked){c.checked=true;c.onchange()}})});
+
+/* Límites políticos (INEI, simplificados) */
+const LIM={};const cargaLim=k=>LIM[k]||(LIM[k]=fetch(`../datos/limites/${k}.geojson`).then(r=>r.json()));
+const sDep=$("l-dep"),sPro=$("l-pro"),sDis=$("l-dis");
+cargaLim("departamentos").then(g=>{g.features.sort((a,b)=>a.properties.n.localeCompare(b.properties.n)).forEach(f=>sDep.add(new Option(f.properties.n,f.properties.u)))});
+sDep.onchange=async()=>{sPro.length=1;sDis.length=1;if(!sDep.value)return;const g=await cargaLim("provincias");
+ g.features.filter(f=>f.properties.u.slice(0,2)===sDep.value).sort((a,b)=>a.properties.n.localeCompare(b.properties.n)).forEach(f=>sPro.add(new Option(f.properties.n,f.properties.u)))};
+sPro.onchange=async()=>{sDis.length=1;if(!sPro.value)return;const g=await cargaLim("distritos");
+ g.features.filter(f=>f.properties.u.slice(0,4)===sPro.value).sort((a,b)=>a.properties.n.localeCompare(b.properties.n)).forEach(f=>sDis.add(new Option(f.properties.n,f.properties.u)))};
+$("l-ir").onclick=async()=>{let k,u,txt;if(sDis.value){k="distritos";u=sDis.value}else if(sPro.value){k="provincias";u=sPro.value}else if(sDep.value){k="departamentos";u=sDep.value}else{$("a-est").textContent="Elige al menos un departamento.";return}
+ const g=await cargaLim(k),f=g.features.find(x=>x.properties.u===u),p=f.properties;
+ txt=k==="distritos"?`Distrito ${p.n} (${p.p}, ${p.d})`:k==="provincias"?`Provincia ${p.n} (${p.d})`:`Departamento ${p.n}`;setArea(f,txt,"límite")};
+
+/* ANP, ACR, ACP y comunidades (clic en el mapa) */
+window.analizarSel=async()=>{const s=window._sel;if(!s)return;map.closePopup();$("a-est").textContent="Descargando el límite de "+s.n+"…";vista("area");
+ try{const r=await fetch("https://data-api.globalforestwatch.org/geostore/"+s.id);const d=await r.json();setArea({type:"Feature",geometry:d.data.gfw_geojson,properties:{}},s.n,s.t)}
+ catch(e){$("a-est").textContent="No se pudo descargar el límite de esta área."}};
+
+/* Punto de referencia + radio */
+map.on("click",e=>{if(!AR.punto||actual!=="area")return;$("p-lat").value=e.latlng.lat.toFixed(5);$("p-lon").value=e.latlng.lng.toFixed(5);marcaPunto()});
+function marcaPunto(){const la=+$("p-lat").value,lo=+$("p-lon").value,r=+$("p-r").value;if(!isFinite(la)||!isFinite(lo)||!(r>0))return null;
+ if(AR.marca)capaArea.removeLayer(AR.marca);AR.marca=L.marker([la,lo]).addTo(capaArea);return{la,lo,r}}
+$("p-ir").onclick=()=>{const p=marcaPunto();if(!p){$("a-est").textContent="Coloca un punto en el mapa o escribe sus coordenadas.";return}
+ if(p.r>60){$("a-est").textContent="El radio máximo es 60 km.";return}
+ const ring=[];for(let i=0;i<=72;i++){const a=i/72*2*Math.PI,dy=p.r/110.574*Math.cos(a),dx=p.r/(111.32*Math.cos(p.la*Math.PI/180))*Math.sin(a);ring.push([+(p.lo+dx).toFixed(6),+(p.la+dy).toFixed(6)])}
+ setArea({type:"Feature",geometry:{type:"Polygon",coordinates:[ring]},properties:{}},`Radio de ${p.r} km alrededor de ${p.la.toFixed(4)}, ${p.lo.toFixed(4)}`,"punto")};
+
+/* Subir capa propia */
+$("a-file").onchange=async e=>{const f=e.target.files[0];if(!f)return;$("a-est").textContent="Leyendo "+f.name+"…";
+ try{let g;if(/\.zip$/i.test(f.name)){g=await shp(await f.arrayBuffer());if(Array.isArray(g))g={type:"FeatureCollection",features:g.flatMap(x=>x.features)}}
+  else if(/\.kml$/i.test(f.name)){const x=new DOMParser().parseFromString(await f.text(),"text/xml"),feats=[];
+   [...x.getElementsByTagName("Polygon")].forEach(p=>{const rings=[...p.getElementsByTagName("coordinates")].map(c=>c.textContent.trim().split(/\s+/).map(s=>s.split(",").slice(0,2).map(Number)));feats.push({type:"Feature",geometry:{type:"Polygon",coordinates:rings},properties:{}})});g={type:"FeatureCollection",features:feats}}
+  else g=JSON.parse(await f.text());
+  const pol=poligonos(g);if(!pol.length)throw new Error("El archivo no contiene polígonos.");
+  if(pol.some(p=>p.some(r=>r.some(c=>Math.abs(c[0])>180||Math.abs(c[1])>90))))throw new Error("Las coordenadas parecen proyectadas (UTM). Exporta la capa en WGS 84 (EPSG:4326) o sube el .zip con su .prj.");
+  const pr=(g.features&&g.features[0]&&g.features[0].properties)||g.properties||{},nk=Object.keys(pr).find(k=>/^(nombre|name|nom|nomb|descripcio|denominaci)/i.test(k)&&pr[k]);setArea(g,nk?String(pr[nk]):f.name.replace(/\.[^.]+$/,"").replace(/_/g," "),"capa propia")}catch(err){$("a-est").textContent=err.message||"No se pudo leer el archivo."}e.target.value=""};
+
+/* Geometría */
+function poligonos(g){const out=[];const add=geo=>{if(!geo)return;if(geo.type==="Polygon")out.push(geo.coordinates);else if(geo.type==="MultiPolygon")geo.coordinates.forEach(p=>out.push(p));else if(geo.type==="GeometryCollection")geo.geometries.forEach(add)};
+ if(g.type==="FeatureCollection")g.features.forEach(f=>add(f.geometry));else if(g.type==="Feature")add(g.geometry);else add(g);return out}
+function dentroPol(x,y,pols){let c=false;for(const p of pols)for(const r of p)for(let i=0,j=r.length-1;i<r.length;j=i++){const [xi,yi]=r[i],[xj,yj]=r[j];if((yi>y)!=(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
+const lon2px=(lon,z)=>(lon+180)/360*256*2**z,lat2px=(lat,z)=>{const r=lat*Math.PI/180;return(1-Math.log(Math.tan(r)+1/Math.cos(r))/Math.PI)/2*256*2**z},px2lat=(py,z)=>{const n=Math.PI-2*Math.PI*py/(256*2**z);return 180/Math.PI*Math.atan(Math.sinh(n))};
+const dist=(a,b,c,d)=>{const R=6371,t=Math.PI/180,x=Math.sin((c-a)*t/2)**2+Math.cos(a*t)*Math.cos(c*t)*Math.sin((d-b)*t/2)**2;return 2*R*Math.asin(Math.sqrt(x))};
+
+function setArea(g,nombre,tipo){dibPol.disable();dibRec.disable();const pol=poligonos(g);if(!pol.length){$("a-est").textContent="No se encontró un polígono válido.";return}
+ AR.geo={type:"Feature",properties:{nombre},geometry:pol.length===1?{type:"Polygon",coordinates:pol[0]}:{type:"MultiPolygon",coordinates:pol}};AR.nombre=nombre;AR.tipo=tipo;AR.pol=pol;
+ if(AR.capa)capaArea.removeLayer(AR.capa);AR.capa=L.geoJSON(AR.geo,{style:{color:"#f5c400",weight:3,fill:true,fillOpacity:.04},interactive:false}).addTo(capaArea);
+ if(actual!=="area")vista("area");map.fitBounds(AR.capa.getBounds(),{padding:[30,30]});analizar()}
+
+let corrida=0;
+async function analizar(){const id=++corrida,pol=AR.pol,xs=pol.flat(2).map(c=>c[0]),ys=pol.flat(2).map(c=>c[1]);
+ const bb=[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];let z=null,tiles;
+ for(const zz of [14,13,12,11]){const x0=Math.floor(lon2px(bb[0],zz)/256),x1=Math.floor(lon2px(bb[2],zz)/256),y0=Math.floor(lat2px(bb[3],zz)/256),y1=Math.floor(lat2px(bb[1],zz)/256);
+  if((x1-x0+1)*(y1-y0+1)<=400){z=zz;tiles=[];for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++)tiles.push([x,y]);break}}
+ $("a-res").hidden=false;
+ if(!z){$("a-est").textContent="El área es demasiado grande para analizarla en el navegador (más de ~150 000 km²). Elige una provincia, un distrito o un área más pequeña.";return}
+ const hoyD=Math.floor((Date.now()-DIA0)/864e5),loss={},alM={},res={area:0,loss,alM,al90:0,al90a:0,z};
+ for(let y=2001;y<=2025;y++)loss[y]=0;
+ const meses=[];for(let k=11;k>=0;k--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-k);meses.push(d.toISOString().slice(0,7))}meses.forEach(m=>alM[m]=[0,0]);
+ const cv=new OffscreenCanvas(256,256),cx=cv.getContext("2d",{willReadFrequently:true});
+ let hechos=0;const cola=tiles.slice();
+ const trabajar=async()=>{while(cola.length&&id===corrida){const [tx,ty]=cola.shift();
+  cx.clearRect(0,0,256,256);cx.fillStyle="#000";cx.beginPath();
+  for(const p of pol)for(const r of p){r.forEach((c,i)=>{const px=lon2px(c[0],z)-tx*256,py=lat2px(c[1],z)-ty*256;i?cx.lineTo(px,py):cx.moveTo(px,py)});cx.closePath()}
+  cx.fill("evenodd");const m=cx.getImageData(0,0,256,256).data;let algo=false;for(let i=3;i<m.length;i+=4)if(m[i]>127){algo=true;break}
+  if(algo){const [h,a]=await Promise.all([crudo(urlGFW("hansen",z,tx,ty)),crudo(urlGFW("alertas",z,tx,ty))]);
+   for(let j=0;j<256;j++){const lat=px2lat(ty*256+j+.5,z),pa=(40075016.686*Math.cos(lat*Math.PI/180)/(256*2**z))**2/1e4;
+    for(let i=0;i<256;i++){const k=(j*256+i)*4;if(m[k+3]<128)continue;res.area+=pa;
+     if(h&&h[k+3]>0&&h[k+2]>0){const yr=2000+h[k+2];if(loss[yr]!=null)loss[yr]+=pa}
+     if(a&&a[k+3]>0){const dia=a[k]*255+a[k+1];if(dia<=hoyD&&dia>=hoyD-366){const f=new Date(DIA0+dia*864e5).toISOString().slice(0,7),alta=a[k+2]>=200;if(alM[f])alM[f][alta?0:1]+=pa;if(dia>=hoyD-90){res.al90+=pa;if(alta)res.al90a+=pa}}}}}}
+  hechos++;if(hechos%4===0)$("a-est").textContent=`Analizando ${AR.nombre}… ${Math.round(hechos/tiles.length*100)} %`}};
+ $("a-est").textContent=`Analizando ${AR.nombre}… 0 %`;await Promise.all(Array.from({length:8},trabajar));if(id!==corrida)return;
+ AR.res=res;mostrarArea();ev("observatorio_area",{tipo:AR.tipo,teselas:tiles.length,zoom:z})}
+
+function mostrarArea(){const r=AR.res,pol=AR.pol,ha=v=>v>=100?fmt(v):dec(Math.round(v*10)/10);
+ const tot=Object.values(r.loss).reduce((a,b)=>a+b,0),mx=Object.entries(r.loss).sort((a,b)=>b[1]-a[1])[0];
+ const fo=((D&&D.focos||{}).puntos||[]).filter(p=>dentroPol(p[0],p[1],pol));
+ const c=AR.capa.getBounds().getCenter(),cerca=arr=>(arr||[]).slice().sort((a,b)=>dist(c.lat,c.lng,a.lat,a.lon)-dist(c.lat,c.lng,b.lat,b.lon))[0];
+ const fw=cerca((D.incendio_peligro||[]).filter(x=>x.hoy)),sq=cerca((D.sequia||[]).filter(x=>x.clase_90d)),ri=cerca(D.rios);
+ AR.focos=fo;
+ const resm=Math.round(40075016.686*Math.cos(AR.capa.getBounds().getCenter().lat*Math.PI/180)/(256*2**r.z));$("a-est").textContent=`Resultado estimado con teselas de ~${resm} m de píxel (zoom ${r.z}).`+(r.z<=12?" En áreas grandes la pérdida tiende a subestimarse (≈15 %) y las alertas a sobrestimarse (hasta ≈2×); para mayor precisión analiza un área más pequeña.":"");
+ $("a-tit").innerHTML=`${esc(AR.nombre)}<br><em>${fmt(tot)} ha</em> de bosque perdidas en 2001–2025`;
+ $("a-lead").textContent=`Superficie analizada: ${fmt(r.area)} ha (${dec(Math.round(r.area/100)/1)} km²). Pérdida acumulada: ${dec(Math.round(tot/r.area*1000)/10)} % del área.`;
+ $("a-kp").innerHTML=`<div style="--k:#e41a80"><small>Pérdida 2001–2025</small><b>${fmt(tot)}<span style="font-size:1rem"> ha</span></b><span>${dec(Math.round(tot/r.area*1000)/10)} % del área</span></div>
+<div style="--k:#e41a80"><small>Año con más pérdida</small><b>${mx[1]>0?mx[0]:"–"}</b><span>${mx[1]>0?fmt(mx[1])+" ha":"sin pérdida detectada"}</span></div>
+<div style="--k:#d7191c"><small>Alertas · últimos 90 días</small><b>${ha(r.al90)}<span style="font-size:1rem"> ha</span></b><span>${ha(r.al90a)} ha de alta confianza</span></div>
+<div style="--k:#ef6b33"><small>Focos de calor · 7 días</small><b>${fo.length}</b><span>dentro del área</span></div>`;
+ const o=opcBase();o.plugins.legend.display=false;o.plugins.tooltip={callbacks:{label:i=>fmt(i.raw)+" ha"}};
+ if(AR.gLoss)AR.gLoss.destroy();AR.gLoss=new Chart($("graf5"),{type:"bar",data:{labels:Object.keys(r.loss),datasets:[{data:Object.values(r.loss).map(v=>Math.round(v)),backgroundColor:"#e41a80"}]},options:o});
+ const o2=opcBase();o2.scales.x.stacked=o2.scales.y.stacked=true;o2.plugins.tooltip={callbacks:{label:i=>i.dataset.label+": "+ha(i.raw)+" ha"}};
+ const ms=Object.keys(r.alM),nm=m=>new Date(m+"-15").toLocaleDateString("es-PE",{month:"short",year:"2-digit"});
+ if(AR.gAl)AR.gAl.destroy();AR.gAl=new Chart($("graf6"),{type:"bar",data:{labels:ms.map(nm),datasets:[{label:"Alta confianza",data:ms.map(m=>r.alM[m][0]),backgroundColor:"#d7191c"},{label:"Nominal",data:ms.map(m=>r.alM[m][1]),backgroundColor:"#fdae61"}]},options:o2});
+ $("a-ctx").innerHTML=`<tr><td>Peligro de incendio (FWI)</td><td>${fw?`<span class="pill f-${fw.peor.clase}">${FTX[fw.peor.clase]}</span> FWI máx. ${dec(fw.peor.fwi)} el ${dm(fw.peor.t)}`:"–"}</td><td class="nota">${fw?fw.lugar+" · "+Math.round(dist(c.lat,c.lng,fw.lat,fw.lon))+" km":""}</td></tr>
+<tr><td>Lluvia de 90 días</td><td>${sq?`<span class="pill s-${sq.clase_90d}">${STX[sq.clase_90d]}</span> ${sq.pct_90d}% de lo normal`:"–"}</td><td class="nota">${sq?sq.lugar+" · "+Math.round(dist(c.lat,c.lng,sq.lat,sq.lon))+" km":""}</td></tr>
+<tr><td>Río más cercano</td><td>${ri?`<span class="pill ${ri.estado}">${EST[ri.estado]}</span> ${ri.amenaza}`:"–"}</td><td class="nota">${ri?ri.rio+" en "+ri.lugar+" · "+Math.round(dist(c.lat,c.lng,ri.lat,ri.lon))+" km":""}</td></tr>`;
+ if(!OV.alertas.on){capaAlertas.addTo(map)}capaHansen.addTo(map);leyenda("area")}
+
+/* Descargas del área */
+function aSHPpol(g,attrs){const pol=poligonos(g),parts=[],pts=[];
+ const sa=r=>r.reduce((s,c,i)=>{const d=r[(i+1)%r.length];return s+(d[0]-c[0])*(d[1]+c[1])},0);// >0 horario
+ pol.forEach(p=>p.forEach((r,k)=>{let rr=r.slice();if(rr[0][0]!==rr[rr.length-1][0]||rr[0][1]!==rr[rr.length-1][1])rr.push(rr[0]);const hor=sa(rr)>0;if((k===0&&!hor)||(k>0&&hor))rr.reverse();parts.push(pts.length);rr.forEach(c=>pts.push(c))}));
+ const xs=pts.map(c=>c[0]),ys=pts.map(c=>c[1]),bb=[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];
+ const cl=44+4*parts.length+16*pts.length,shp=new Uint8Array(100+8+cl),shx=new Uint8Array(108),vs=new DataView(shp.buffer),vx=new DataView(shx.buffer);
+ [[vs,shp.length],[vx,shx.length]].forEach(([v,l])=>{v.setInt32(0,9994);v.setInt32(24,l/2);v.setInt32(28,1000,true);v.setInt32(32,5,true);bb.forEach((x,i)=>v.setFloat64(36+8*i,x,true))});
+ vs.setInt32(100,1);vs.setInt32(104,cl/2);let o=108;vs.setInt32(o,5,true);bb.forEach((x,i)=>vs.setFloat64(o+4+8*i,x,true));vs.setInt32(o+36,parts.length,true);vs.setInt32(o+40,pts.length,true);
+ parts.forEach((p,i)=>vs.setInt32(o+44+4*i,p,true));let q=o+44+4*parts.length;pts.forEach(c=>{vs.setFloat64(q,c[0],true);vs.setFloat64(q+8,c[1],true);q+=16});
+ vx.setInt32(100,50);vx.setInt32(104,cl/2);
+ const s=aSHP([{lat:0,lon:0,c:attrs}]);return{shp,shx,dbf:s.dbf,prj:s.prj,cpg:s.cpg}}
+function kmlPol(g,n){const pol=poligonos(g),ring=r=>`<LinearRing><coordinates>${r.map(c=>c[0]+","+c[1]+",0").join(" ")}</coordinates></LinearRing>`;
+ return `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>${esc(n)}</name><Style id="a"><LineStyle><color>ff00c4f5</color><width>3</width></LineStyle><PolyStyle><fill>0</fill></PolyStyle></Style><Placemark><name>${esc(n)}</name><styleUrl>#a</styleUrl><MultiGeometry>${pol.map(p=>`<Polygon><outerBoundaryIs>${ring(p[0])}</outerBoundaryIs>${p.slice(1).map(r=>`<innerBoundaryIs>${ring(r)}</innerBoundaryIs>`).join("")}</Polygon>`).join("")}</MultiGeometry></Placemark></Document></kml>`}
+const slug=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^\w]+/g,"_").replace(/^_|_$/g,"").slice(0,40).toLowerCase();
+document.querySelectorAll("[data-ad]").forEach(b=>b.onclick=async()=>{if(!AR.res)return;const n=slug(AR.nombre)||"area",fe=(D.actualizado||"").slice(0,10),t=b.dataset.ad,r=AR.res;
+ const attrs={nombre:AR.nombre.slice(0,120),tipo:AR.tipo,area_ha:Math.round(r.area),perd01_25:Math.round(Object.values(r.loss).reduce((a,c)=>a+c,0)),alert90_ha:Math.round(r.al90*10)/10,focos7d:AR.focos.length,fecha:fe};
+ if(t==="geojson"){const g=JSON.parse(JSON.stringify(AR.geo));g.properties=attrs;bajar(new Blob([JSON.stringify(g)],{type:"application/geo+json"}),`area_${n}.geojson`)}
+ if(t==="kml")bajar(new Blob([kmlPol(AR.geo,AR.nombre)],{type:"application/vnd.google-earth.kml+xml"}),`area_${n}.kml`);
+ if(t==="shp"){const s=aSHPpol(AR.geo,attrs),z=new JSZip();["shp","shx","dbf","prj","cpg"].forEach(e=>z.file(`area_${n}.${e}`,s[e]));bajar(await z.generateAsync({type:"blob"}),`area_${n}_shp.zip`)}
+ if(t==="csv"){const L1=["tipo,periodo,valor_ha,detalle"];Object.entries(r.loss).forEach(([y,v])=>L1.push(`perdida_hansen,${y},${v.toFixed(2)},`));Object.entries(r.alM).forEach(([m,v])=>{L1.push(`alerta_alta,${m},${v[0].toFixed(2)},`);L1.push(`alerta_nominal,${m},${v[1].toFixed(2)},`)});
+  L1.push(`area_total,,${r.area.toFixed(2)},"${AR.nombre.replace(/"/g,"'")}"`);L1.push(`focos_7d,,${AR.focos.length},conteo`);bajar(new Blob(["﻿"+L1.join("\r\n")],{type:"text/csv"}),`resultados_${n}_${fe}.csv`)}
+ if(t==="focos"){if(!AR.focos.length){alert("No hay focos de calor dentro del área en los últimos 7 días.");return}
+  const f=AR.focos.map(p=>({lat:p[1],lon:p[0],nombre:"Foco "+p[2],c:{fecha:p[2],frp_mw:+p[3],turno:p[4]==="D"?"dia":"noche"}})),s=aSHP(f),z=new JSZip();
+  ["shp","shx","dbf","prj","cpg"].forEach(e=>z.file(`focos_${n}.${e}`,s[e]));z.file(`focos_${n}.kml`,aKML(f,"Focos de calor · "+AR.nombre));z.file(`focos_${n}.gpx`,aGPX(f,"Focos de calor · "+AR.nombre));z.file(`focos_${n}.csv`,aCSV(f));
+  bajar(await z.generateAsync({type:"blob"}),`focos_${n}_${fe}.zip`)}
+ ev("observatorio_area_descarga",{formato:t})});
+
+$("ir-area").onclick=e=>{e.preventDefault();vista("area")};
 </script>
 </body>
 </html>
