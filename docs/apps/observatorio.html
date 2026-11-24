@@ -602,5 +602,12 @@ document.querySelectorAll("[data-ad]").forEach(b=>b.onclick=async()=>{if(!AR.res
 
 $("ir-area").onclick=e=>{e.preventDefault();vista("area")};
 </script>
+
+<!-- gtc-cta --><div id="gtc-cta" role="complementary" aria-label="Servicio GITECA relacionado" hidden><span>¿Necesitas este análisis revisado y entregado para tu título habilitante?</span><a href="../servicio-diagnostico-deforestacion.html">Ver servicio</a><a class="gtc-wa" href="https://wa.me/51928245012?text=Hola%20GITECA%2C%20us%C3%A9%20el%20Observatorio%20y%20quisiera%20un%20diagn%C3%B3stico%20de%20deforestaci%C3%B3n%20de%20mi%20t%C3%ADtulo%20habilitante." target="_blank" rel="noopener">Cotizar</a><button type="button" aria-label="Cerrar">×</button></div>
+<style>#gtc-cta{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:99999;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;max-width:calc(100% - 24px);width:max-content;padding:8px 10px 8px 16px;border-radius:14px;background:#13261C;color:#fff;font:500 14px/1.35 "Source Sans 3",system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.25)}#gtc-cta[hidden]{display:none}#gtc-cta a{color:#13261C;background:#9BE0A8;padding:5px 12px;border-radius:999px;text-decoration:none;font-weight:700;white-space:nowrap}#gtc-cta a.gtc-wa{background:#fff}#gtc-cta button{background:none;border:0;color:#fff;font-size:20px;line-height:1;cursor:pointer;padding:2px 6px}@media print{#gtc-cta{display:none}}</style>
+<script>(function(){var k="gtc-cta-observatorio",d=document.getElementById("gtc-cta");try{if(sessionStorage.getItem(k))return}catch(e){}
+setTimeout(function(){d.hidden=false;try{gtag("event","app_cta_visto",{app:"observatorio"})}catch(e){}},12000);
+d.querySelector("button").onclick=function(){d.hidden=true;try{sessionStorage.setItem(k,"1")}catch(e){}};
+d.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){try{gtag("event","app_cta_click",{app:"observatorio",destino:a.className?"whatsapp":"servicio"})}catch(e){}})})})();</script><!-- /gtc-cta -->
 </body>
 </html>
